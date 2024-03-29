@@ -1,7 +1,6 @@
 import hre from "hardhat";
 import { prepareDiamondLoupeFacet } from './prepareFacets/prepareDiamondLoupeFacet';
 import { prepareOwnershipFacet } from './prepareFacets/prepareOwnershipFacet';
-import { prepareERC20Facet } from './prepareFacets/prepareERC20Facet';
 import { prepareERC3643Facet } from './prepareFacets/prepareERC3643Facet';
 import { deployDiamond } from './deployDiamond';
 import { readFileSync } from 'fs';
@@ -16,21 +15,23 @@ async function main(): Promise<void> {
     // Deploy each facet individually
     const diamondLoupeFacetCut = await prepareDiamondLoupeFacet(contractOwner);
     const ownershipFacetCut = await prepareOwnershipFacet(contractOwner);
-    const erc20FacetCut = await prepareERC20Facet(contractOwner);
-    const erc3643FacetCut = await prepareERC3643Facet(contractOwner,erc3643FacetAbi);
+    const erc3643FacetCut = await prepareERC3643Facet(contractOwner, erc3643FacetAbi);
 
     // Combine all facet cuts into a single array
     const cut = [
         diamondLoupeFacetCut,
         ownershipFacetCut,
-        erc20FacetCut,
         erc3643FacetCut
     ];
 
+    // Check if the cut array is not empty and each element has a facetAddress property
+    if (cut.length === 0 || !cut[0].facetAddress) {
+        console.error("The cut array is empty or the first element does not have a facetAddress property.");
+        return; // Return early if the condition is not met
+    }
+
     // Deploy the Diamond contract with the combined facet cuts
     await deployDiamond(cut);
-
-  
 }
 
 if (require.main === module) {

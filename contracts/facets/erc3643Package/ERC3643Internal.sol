@@ -66,6 +66,11 @@ abstract contract ERC3643Internal is IERC3643Internal {
         return true;
     }
 
+    function _getBalance(address _userAddress) internal view returns (uint256) {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        return l.balances[_userAddress];
+    }
+    
     function _mintERC3643(address _to, uint256 _amount) internal {
         // This could involve updating the total supply and the balance of the recipient
         ERC3643Storage.Layout storage l = ERC3643Storage.layout();
