@@ -104,6 +104,8 @@ describe("ERC3643Facet Contract Tests", function () {
    // Assert that the balance is now the initial minted amount minus the burned amount
    assert.equal(balance, mintAmount - burnAmount);
 });
+
+
 });
 
 
