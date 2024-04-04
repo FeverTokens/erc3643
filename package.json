@@ -4,7 +4,8 @@
 		"deploy:local": "hardhat run scripts/deploy.ts",
 		"compile": "pnpm exec hardhat compile",
 		"clean": "pnpm exec hardhat clean",
-		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts"
+		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts",
+		"test:diamond": "pnpm exec hardhat test test/diamond.test.ts"
 	},
 	"devDependencies": {
 		"@nomicfoundation/hardhat-network-helpers": "^1.0.10",
@@ -37,5 +38,4 @@
 		"@nomicfoundation/hardhat-viem": "X.Y.Z",
 		"viem": "X.Y.Z"
 	}
-	
 }
