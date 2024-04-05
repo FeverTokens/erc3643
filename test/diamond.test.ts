@@ -9,18 +9,20 @@ import {loadFixture} from "@nomicfoundation/hardhat-toolbox-viem/network-helpers
 import {prepareDiamondLoupeFacet} from "../scripts/prepareFacets/prepareDiamondLoupeFacet";
 import {prepareOwnershipFacet} from "../scripts/prepareFacets/prepareOwnershipFacet";
 import {prepareERC3643Facet} from "../scripts/prepareFacets/prepareERC3643Facet";
-import {createWalletClient, http, mainnet} from "viem";
+import {createWalletClient, http} from "viem";
+import mainnet from 'viem';
+import { publicClient, walletClient } from "../clients/client";
 
 // Assuming the deploy function correctly initializes the facets
 const deploy = async () => {
 	const wallet = await hre.viem.getWalletClients();
 	const contractOwner = wallet[0].account.address;
 
-	const walletClient = createWalletClient({
-		wallet[0].account,
-		chain: mainnet,
-		transport: http(),
-	});
+	// const walletClient = createWalletClient({
+	// 	// wallet[0].account,
+	// 	// chain: mainnet,
+	// 	transport: http(),
+	// });
 
 	const erc3643FacetAbi = JSON.parse(
 		readFileSync(
@@ -56,7 +58,7 @@ const deploy = async () => {
 			),
 			"utf8",
 		),
-	);
+	).abi;
 	const diamondLoupeFacetAbi = JSON.parse(
 		readFileSync(
 			join(
@@ -65,7 +67,7 @@ const deploy = async () => {
 			),
 			"utf8",
 		),
-	);
+	).abi;
 	const ownershipFacetAbi = JSON.parse(
 		readFileSync(
 			join(
@@ -74,58 +76,75 @@ const deploy = async () => {
 			),
 			"utf8",
 		),
-	);
+	).abi;
 
 	const erc3643Facet = await hre.viem.deployContract("ERC3643Facet", []);
 
-	const diamondCutFacet = getContract({
-		address: diamondInstance.address as `0x${string}`,
-		abi: diamondCutFacetAbi.abi,
-		client: {wallet: wallet[0]},
-	});
+	// const diamondCutFacet = getContract({
+	// 	address: diamondInstance.address as `0x${string}`,
+	// 	abi: diamondCutFacetAbi.abi,
+	// 	// client: {wallet: wallet[0]},
+	// });
+
+	//  Create contracts instances
+const diamondCutFacet = getContract({
+	address: diamondAddress,
+	abi: diamondCutFacetAbi,
+	
+	walletClient:  walletClient 
+  })
+
+  const diamondLoupeFacet = getContract({
+	address: diamondAddress,
+	abi: diamondCutFacetAbi,
+	
+	walletClient:  walletClient 
+  })
+
+  const ownershipFacet = getContract({
+	address: diamondAddress,
+	abi: diamondCutFacetAbi,
+	
+	walletClient:  walletClient 
+  })
 	// const diamondCutFacet = await hre.viem.deployContract("DiamondCutFacet", []);
 	// const diamondInit = await hre.viem.deployContract("DiamondInit", []);
 
-	// const diamondCutFacet = getContract({
-	//     address: diamondAddress as `0x${string}`,
-	//     abi: diamondCutFacetAbi.abi,
-	//     // client: publicClient,
 
-	// });
-	// const diamondLoupeFacet = getContract({
-	// 	address: diamondAddress as `0x${string}`,
-	// 	abi: diamondLoupeFacetAbi.abi,
-	// });
-
-	// const ownershipFacet = getContract({
-	// 	address: diamondAddress as `0x${string}`,
-	// 	abi: ownershipFacetAbi.abi,
-	// });
 
 	return {
 		diamondInstance,
+		diamondCutFacet,
+		diamondLoupeFacet,
+		ownershipFacet,
 		erc3643Facet,
 	};
 };
 
 describe("DiamondTest", function () {
 	let diamondInstance: any;
-	// let diamondCutFacet: any;
-	// let diamondLoupeFacet: any;
-	// let ownershipFacet: any;
+	let diamondCutFacet: any;
+	let diamondLoupeFacet: any;
+	let ownershipFacet: any;
 	let erc3643Facet: any;
 
 	beforeEach(async function () {
-		// diamondCutFacet: diamondCutFacetValue,
-		// diamondLoupeFacet: diamondLoupeFacetValue,
-		// ownershipFacet: ownershipFacetValue,
+		
 		const {
 			diamondInstance: diamondInstanceValue,
+			diamondCutFacet: diamondCutFacetValue,
+			diamondLoupeFacet: diamondLoupeFacetValue,
+			ownershipFacet: ownershipFacetValue,
 			erc3643Facet: erc3643FacetValue,
 		} = await loadFixture(deploy);
 
 		diamondInstance = diamondInstanceValue;
+		diamondCutFacet = diamondCutFacetValue;
+		diamondLoupeFacet: diamondLoupeFacetValue;
+		ownershipFacet: ownershipFacetValue;
 		erc3643Facet = erc3643FacetValue;
+		
+
 	});
 
 	// it("should deploy the diamond contract successfully", async function () {
@@ -133,49 +152,11 @@ describe("DiamondTest", function () {
 	// 	expect(diamondCutFacet.address).to.not.be.empty;
 	// });
 
-	// it.only("should deploy the diamond contract successfully", async function () {
-	// 	// Define the facet cuts for the diamond
-	// 	const cut = [
-	// 		{
-	// 			facetAddress: "0x1234567890123456789012345678901234567890", // Example facet address
-	// 			action: "Add",
-	// 			functionSelectors: ["0x12345678"], // Example function selector
-	// 		},
-	// 		// Add more facet cuts as needed
-	// 	];
+	
 
-	// 	// Deploy the diamond contract
-	// 	const diamondAddress = await deployDiamond(contractOwner, []);
+	it("should add a new facet successfully", async function () {
+		const {diamondCutFacet} = await loadFixture(deploy);
 
-	// 	// Assert that the diamond contract was deployed successfully
-	// 	expect(diamondAddress).to.be.a("string");
-	// 	expect(diamondAddress).to.have.length.greaterThan(0);
-	// });
-
-	// it("should deploy a diamond with multiple facets successfully", async function () {
-	// 	// Test setup for multiple facet cuts
-	// 	const cut = [
-	// 		{
-	// 			facetAddress: "0x1234567890123456789012345678901234567890", // Example facet address
-	// 			action: "Add",
-	// 			functionSelectors: ["0x12345678"], // Example function selector
-	// 		},
-	// 		{
-	// 			facetAddress: "0x2345678901234567890123456789012345678901", // Another example facet address
-	// 			action: "Add",
-	// 			functionSelectors: ["0x23456789"], // Another example function selector
-	// 		},
-	// 	];
-
-	// 	// Deploy the diamond contract
-	// 	const diamondAddress = await deployDiamond([]);
-
-	// 	// Assert that the diamond contract was deployed successfully
-	// 	expect(diamondAddress).to.be.a("string");
-	// 	expect(diamondAddress).to.have.length.greaterThan(0);
-	// });
-
-	it.only("should add a new facet successfully", async function () {
 		// Deploy the new facet
 		const facet = await hre.viem.deployContract("ERC3643Facet", []);
 		// console.log("facet: ", facet);
@@ -201,26 +182,9 @@ describe("DiamondTest", function () {
 			functionSelectors: selectors,
 		};
 
-		// console.log("diamondCutFacet: ", diamondInstance);
-
-		const diamondCutFacetAbi = JSON.parse(
-			readFileSync(
-				join(
-					__dirname,
-					"../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json",
-				),
-				"utf8",
-			),
-		);
-
 		// Add the new facet
-		await diamondInstance.abi.write.diamondCut([facetCut], 0, "0x");
+		await diamondCutFacet.abi.write.diamondCut([facetCut], 0, "0x");
 
-		console.log("---->", facetCut);
-		// Verify the new facet was added
-		// const facets = await diamondLoupeFacet.abi.read.facets();
-		// const facetAddresses = facets.map((facet: any) => facet.facetAddress);
-		// expect(facetAddresses).to.include(newFacetAddress);
 	});
 
 	it("should remove a facet successfully", async function () {
@@ -256,19 +220,19 @@ describe("DiamondTest", function () {
 		// This part depends on how you can check if a facet is removed. You might need to implement a method in your contract to check this.
 	});
 
-	it("should check if a facet exists", async function () {
-		const {diamondLoupeFacet} = await loadFixture(deploy);
+	// it("should check if a facet exists", async function () {
+	// 	const {diamondLoupeFacet} = await loadFixture(deploy);
 
-		const facetAddressToCheck = "0x5fbdb2315678afecb367f032d93f642f64180aa3"; // Replace with actual facet address to check
+	// 	const facetAddressToCheck = "0x5fbdb2315678afecb367f032d93f642f64180aa3"; // Replace with actual facet address to check
 
-		// Check if the facet exists
-		const facets = await diamondLoupeFacet.abi.read.facetAddresses();
-		const facetExists = facets.some(
-			(facet: any) => facet.facetAddress === facetAddressToCheck,
-		);
+	// 	// Check if the facet exists
+	// 	const facets = await diamondLoupeFacet.abi.read.facetAddresses();
+	// 	const facetExists = facets.some(
+	// 		(facet: any) => facet.facetAddress === facetAddressToCheck,
+	// 	);
 
-		expect(facetExists).to.be.true;
-	});
+	// 	expect(facetExists).to.be.true;
+	// });
 
 	it("should verify the functionality of the ERC3643Facet", async function () {
 		// Assuming the erc3643Facet object is correctly initialized
