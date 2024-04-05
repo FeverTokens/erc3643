@@ -10,19 +10,19 @@ import {prepareDiamondLoupeFacet} from "../scripts/prepareFacets/prepareDiamondL
 import {prepareOwnershipFacet} from "../scripts/prepareFacets/prepareOwnershipFacet";
 import {prepareERC3643Facet} from "../scripts/prepareFacets/prepareERC3643Facet";
 import {createWalletClient, http} from "viem";
-import mainnet from 'viem';
 import { publicClient, walletClient } from "../clients/client";
+import { mainnet } from 'viem/chains';
 
 // Assuming the deploy function correctly initializes the facets
 const deploy = async () => {
 	const wallet = await hre.viem.getWalletClients();
 	const contractOwner = wallet[0].account.address;
 
-	// const walletClient = createWalletClient({
-	// 	// wallet[0].account,
-	// 	// chain: mainnet,
-	// 	transport: http(),
-	// });
+	const walletClient = createWalletClient({
+		chain: mainnet ,
+		transport: http('https://cloudflare-eth.com'), // Use a direct RPC URL
+	 });
+	
 
 	const erc3643FacetAbi = JSON.parse(
 		readFileSync(
@@ -90,7 +90,7 @@ const deploy = async () => {
 const diamondCutFacet = getContract({
 	address: diamondAddress,
 	abi: diamondCutFacetAbi,
-	
+
 	walletClient:  walletClient 
   })
 
@@ -110,6 +110,7 @@ const diamondCutFacet = getContract({
 	// const diamondCutFacet = await hre.viem.deployContract("DiamondCutFacet", []);
 	// const diamondInit = await hre.viem.deployContract("DiamondInit", []);
 
+    // console.log('walletClient in deploy:', walletClient);
 
 
 	return {
@@ -118,6 +119,7 @@ const diamondCutFacet = getContract({
 		diamondLoupeFacet,
 		ownershipFacet,
 		erc3643Facet,
+		walletClient
 	};
 };
 
@@ -127,6 +129,7 @@ describe("DiamondTest", function () {
 	let diamondLoupeFacet: any;
 	let ownershipFacet: any;
 	let erc3643Facet: any;
+	let walletClient:any
 
 	beforeEach(async function () {
 		
@@ -136,27 +139,31 @@ describe("DiamondTest", function () {
 			diamondLoupeFacet: diamondLoupeFacetValue,
 			ownershipFacet: ownershipFacetValue,
 			erc3643Facet: erc3643FacetValue,
+			walletClient: walletClientValue,
 		} = await loadFixture(deploy);
 
 		diamondInstance = diamondInstanceValue;
 		diamondCutFacet = diamondCutFacetValue;
-		diamondLoupeFacet: diamondLoupeFacetValue;
-		ownershipFacet: ownershipFacetValue;
+		diamondLoupeFacet = diamondLoupeFacetValue;
+		ownershipFacet = ownershipFacetValue;
 		erc3643Facet = erc3643FacetValue;
+		walletClient = walletClientValue;
+
 		
 
 	});
 
-	// it("should deploy the diamond contract successfully", async function () {
-	// 	expect(diamondCutFacet).to.not.be.undefined;
-	// 	expect(diamondCutFacet.address).to.not.be.empty;
-	// });
+	it("should deploy the diamond contract successfully", async function () {
+		expect(diamondCutFacet).to.not.be.undefined;
+		expect(diamondCutFacet.address).to.not.be.empty;
+	});
 
 	
 
 	it("should add a new facet successfully", async function () {
 		const {diamondCutFacet} = await loadFixture(deploy);
 
+		
 		// Deploy the new facet
 		const facet = await hre.viem.deployContract("ERC3643Facet", []);
 		// console.log("facet: ", facet);
@@ -182,9 +189,34 @@ describe("DiamondTest", function () {
 			functionSelectors: selectors,
 		};
 
+		const diamondCutFacetAbi = JSON.parse(
+			readFileSync(
+				join(
+					__dirname,
+					"../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json",
+				),
+				"utf8",
+			),
+		).abi;
+		const accountAddress = '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2'; // Replace with your actual account address
+		console.log('Account Address:', accountAddress);
+		console.log('Diamond Instance Address:', diamondInstance.address);
+		console.log('Args:', [[facetCut], "0x", "0x"]);
 		// Add the new facet
-		await diamondCutFacet.abi.write.diamondCut([facetCut], 0, "0x");
+		const request = {
+			address: diamondInstance.address, // The address of the contract you're interacting with
+			abi: diamondCutFacetAbi, // The ABI of the contract
+			functionName: 'diamondCut', // The name of the function you want to call
+			args: [[facetCut], "0x", "0x"], // The arguments for the function, wrapped in an array
+			account: accountAddress, // The account from which you're sending the transaction
+		   };
+		   
+		//    console.log('walletClient:', walletClient);
 
+		   await walletClient.writeContract(request);
+		// await diamondCutFacet.abi.write.diamondCut([facetCut], 0, "0x");
+
+		
 	});
 
 	it("should remove a facet successfully", async function () {

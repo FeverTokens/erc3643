@@ -13,6 +13,12 @@ let walletClientWC;
 
 const rpcUrl = 'http://localhost:8545'; // Your RPC URL
 
+if (ethereum) {
+   console.log('Ethereum object found:', ethereum);
+   // Initialization code...
+} else {
+   console.log('Ethereum object not found. This script is intended to run in a browser environment.');
+}
 // Use the ethereum variable in your code
 if (ethereum) {
  // Your code that uses ethereum goes here
@@ -23,7 +29,7 @@ if (ethereum) {
 
  walletClient = createWalletClient({
     chain: mainnet,
-    transport: custom(ethereum),
+    transport: http('https://cloudflare-eth.com'), // Use a direct RPC URL
  });
 
  walletClientWC = (async () => {
@@ -41,6 +47,7 @@ if (ethereum) {
 } else {
  console.log('Ethereum object not found. This script is intended to run in a browser environment.');
 }
+
 
 // Export the variables outside the if block
 export { publicClient, walletClient, walletClientWC };
