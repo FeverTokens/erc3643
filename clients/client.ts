@@ -3,51 +3,52 @@ const ethereum = typeof window !== 'undefined' ? window.ethereum : undefined;
 
 // Import necessary modules
 import { createPublicClient, createWalletClient, http, custom } from 'viem';
-import { mainnet } from 'viem/chains';
+import { arbitrumSepolia, mainnet, sepolia } from 'viem/chains';
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Declare variables outside the if block
 let publicClient;
 let walletClient;
 let walletClientWC;
 
-const rpcUrl = 'http://localhost:8545'; // Your RPC URL
+// Replace 'http://localhost:8545' with your actual RPC URL if different
+const rpcUrl = 'https://eth.llamarpc.com	'; // Your RPC URL
 
 if (ethereum) {
    console.log('Ethereum object found:', ethereum);
-   // Initialization code...
+
+   // Initialize publicClient
+   publicClient = createPublicClient({
+      chain: mainnet,
+      transport: http(rpcUrl), // Include the RPC URL here
+   });
+
+   // Initialize walletClient with a direct RPC URL
+   walletClient = createWalletClient({
+      chain: sepolia,
+      transport: http(process.env.API_URL), // Use a direct RPC URL
+   });
+
+   // Initialize walletClientWC with WalletConnect
+   walletClientWC = (async () => {
+      // Replace 'yourProjectId' with your actual WalletConnect project ID
+      const provider = await EthereumProvider.init({
+         projectId: "0x1", // WalletConnect project ID
+         showQrModal: true,
+         chains: [1], // Chain ID for Ethereum Mainnet
+      });
+
+      return createWalletClient({
+         chain: mainnet,
+         transport: custom(provider),
+      });
+   })();
 } else {
    console.log('Ethereum object not found. This script is intended to run in a browser environment.');
 }
-// Use the ethereum variable in your code
-if (ethereum) {
- // Your code that uses ethereum goes here
- publicClient = createPublicClient({
-    chain: mainnet,
-    transport: http(rpcUrl), // Include the RPC URL here
- });
-
- walletClient = createWalletClient({
-    chain: mainnet,
-    transport: http('https://cloudflare-eth.com'), // Use a direct RPC URL
- });
-
- walletClientWC = (async () => {
-    const provider = await EthereumProvider.init({
-      projectId: "abcd1234",
-      showQrModal: true,
-      chains: [1],
-    });
-
-    return createWalletClient({
-      chain: mainnet,
-      transport: custom(provider),
-    });
- })();
-} else {
- console.log('Ethereum object not found. This script is intended to run in a browser environment.');
-}
-
 
 // Export the variables outside the if block
 export { publicClient, walletClient, walletClientWC };
