@@ -25,7 +25,7 @@ async function main(): Promise<void> {
     ];
 
     // Deploy the Diamond contract with the combined facet cuts
-    await deployDiamond(cut);
+    await deployDiamond(contractOwner,cut);
 
   
 }
