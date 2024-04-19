@@ -1,10 +1,10 @@
+import hre from "hardhat";
 import { prepareDiamondLoupeFacet } from "../scripts/prepareFacets/prepareDiamondLoupeFacet";
 import { prepareOwnershipFacet } from "../scripts/prepareFacets/prepareOwnershipFacet";
 import { prepareERC3643Facet } from "../scripts/prepareFacets/prepareERC3643Facet";
 import { deployDiamond } from "../scripts/deployDiamond";
 import { expect } from "chai";
 import { getSelectors, FacetCutAction } from "../scripts/libraries/diamond";
-import hre from "hardhat";
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Hex,createWalletClient, http, publicActions } from "viem";
@@ -56,7 +56,7 @@ describe("Deployment Scripts Test", function () {
     transport: http(process.env.API_URL),
  }).extend(publicActions);
     // Assuming the Diamond contract has been deployed and the ERC3643Facet has been added
-    const agentAddress = "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4"; // Example agent address
+    const agentAddress = "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4"; 
     const addAgentResult = await testClient.writeContract({
         address: diamond.address,
         abi: erc3643FacetAbi,
@@ -135,7 +135,7 @@ describe("Deployment Scripts Test", function () {
          diamondInit.address,
          "0x", 
        ];
-       const x = await testClient.writeContract({
+       await testClient.writeContract({
          address: diamond.address,
          abi: diamondCutFacetAbi,
          functionName: "diamondCut",
@@ -143,9 +143,47 @@ describe("Deployment Scripts Test", function () {
         //  account: accountAddress,
         account,
        });
-       console.log("----------diamondCut tx---",x);
    
    });
+
+   it("should add and remove multiple agents", async function () {
+    const privateKey = process.env.PRIVATE_KEY;
+    const account = privateKeyToAccount(privateKey as Hex);
+    const testClient = createWalletClient({
+        account,
+        chain: arbitrumSepolia,
+        transport: http(process.env.API_URL),
+    }).extend(publicActions);
+
+    // Example agent addresses
+    const agentAddresses = ["0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4", "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", "0xaE2E7B3E299f033a522115b649cE7DAF1b36e80F"];
+
+    // Add agents
+    for (const agentAddress of agentAddresses) {
+        const addAgentResult = await testClient.writeContract({
+            address: diamond.address,
+            abi: erc3643FacetAbi,
+            functionName: "addAgent",
+            args: [agentAddress],
+            account,
+        });
+        expect(addAgentResult).to.not.be.null;
+    }
+
+    // Remove agents
+    for (const agentAddress of agentAddresses) {
+        const removeAgentResult = await testClient.writeContract({
+            address: diamond.address,
+            abi: erc3643FacetAbi,
+            functionName: "removeAgent",
+            args: [agentAddress],
+            account,
+        });
+        expect(removeAgentResult).to.not.be.null;
+    }
+});
+
+
 });
 
 
