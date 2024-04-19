@@ -207,7 +207,7 @@ describe("Deployment Scripts Test", function () {
     const transferAmount = 100n;
 
     // Transfer tokens
-    await testClient.writeContract({
+    const transferTokenResult =  await testClient.writeContract({
       address: diamond.address,
       abi: erc3643FacetAbi,
       functionName: "transferERC3643Token",
@@ -215,6 +215,7 @@ describe("Deployment Scripts Test", function () {
       account,
     });
 
-   
+    expect(transferTokenResult).to.not.be.null;
+
   });
 });
