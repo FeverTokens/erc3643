@@ -19,6 +19,6 @@ const config: HardhatUserConfig = {
 };
 
 export default config;
-export const plugins = [
- "@nomicfoundation/hardhat-toolbox-viem",
-];
+// export const plugins = [
+//  "@nomicfoundation/hardhat-toolbox-viem",
+// ];
