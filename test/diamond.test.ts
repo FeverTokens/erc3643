@@ -161,13 +161,16 @@ describe("Deployment Scripts Test", function () {
       diamondInit.address,
       "0x",
     ];
-    await testClient.writeContract({
+    const result = await testClient.writeContract({
       address: diamond.address,
       abi: diamondCutFacetAbi,
       functionName: "diamondCut",
       args,
       account,
     });
+
+    expect(result).to.not.be.null; 
+
 
   });
 
@@ -214,13 +217,16 @@ describe("Deployment Scripts Test", function () {
       diamondInit.address,
       "0x",
     ];
-    await testClient.writeContract({
+    const result = await testClient.writeContract({
       address: diamond.address,
       abi: diamondCutFacetAbi,
       functionName: "diamondCut",
       args,
       account,
     });
+
+    expect(result).to.not.be.null; 
+
   });
 
 
@@ -266,7 +272,7 @@ describe("Deployment Scripts Test", function () {
       diamondInit.address,
       "0x",
     ];
-    await testClient.writeContract({
+    const result = await testClient.writeContract({
       address: diamond.address,
       abi: diamondCutFacetAbi,
       functionName: "diamondCut",
@@ -274,6 +280,9 @@ describe("Deployment Scripts Test", function () {
       //  account: accountAddress,
       account,
     });
+    
+    expect(result).to.not.be.null; 
+
   });
 
   it("should add and remove multiple agents", async function () {
