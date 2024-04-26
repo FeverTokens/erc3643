@@ -15,20 +15,26 @@ export async function deployDiamond(
 	const diamondInit = await hre.viem.deployContract("DiamondInit", []);
 	console.log("DiamondInit deployed:", diamondInit.address);
 
+	// Deploy ERC3643Facet
+	const erc3643Facet = await hre.viem.deployContract("ERC3643Facet", []);
+	console.log("ERC3643Facet deployed:", erc3643Facet.address);
+
 	// Check if cut array is not empty and the first element has a facetAddress
 	if (cut.length === 0 || !cut[0].facetAddress) {
 		console.error(
 			"The cut array is empty or the first element does not have a facetAddress property.",
 		);
-		// Return early if the condition is not met
+		return
 	}
+
 
 	// Deploy Diamond
 	const Diamond = await hre.viem.deployContract("Diamond", [
 		contractOwner as any,
 		diamondCutFacet.address,
 		diamondInit.address,
-		"0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4", // Replaced placeholder with actual value
+		erc3643Facet.address
+		// "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4", 
 	]);
 	console.log("Diamond deployed:", Diamond.address);
 
