@@ -11,6 +11,7 @@ import { Hex, createWalletClient, http, publicActions } from "viem";
 import { arbitrumSepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { config } from "dotenv";
+// import { ftganacheConfig } from "../ftganacheConfig";
 config();
 
 describe("Deployment Scripts Test", function () {
@@ -60,13 +61,21 @@ describe("Deployment Scripts Test", function () {
 
     const account = privateKeyToAccount(privateKey as Hex);
 
+    
     const testClient = createWalletClient({
       account,
       chain: arbitrumSepolia,
       transport: http(process.env.API_URL),
     }).extend(publicActions);
+
+    async function checkBalance() {
+      const balance = await testClient.getBalance({ address: account.address });
+      console.log(`Account balance: ${balance} ETH`);
+     }
+     
+     checkBalance();
     // Assuming the Diamond contract has been deployed and the ERC3643Facet has been added
-    const agentAddress = "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4";
+    const agentAddress = "0x801C06e7027D5e03E1cFD9f55c70edd5837C5767";
     const addAgentResult = await testClient.writeContract({
       address: diamond.address,
       abi: erc3643FacetAbi,
@@ -124,6 +133,16 @@ describe("Deployment Scripts Test", function () {
       )
     ).abi;
 
+    const diamondLoupeFacetAbi = JSON.parse(
+      readFileSync(
+        join(
+          __dirname,
+          "../artifacts/contracts/facets/DiamondLoupeFacet.sol/DiamondLoupeFacet.json"
+        ),
+        "utf8"
+      )
+    ).abi;
+
     //  const wallet = await hre.viem.getWalletClients();
     //  const contractOwner = wallet[0].account.address;
     //  const accountAddress = contractOwner;
@@ -136,6 +155,111 @@ describe("Deployment Scripts Test", function () {
         {
           facetAddress: newFacetAddress,
           action: FacetCutAction.Add,
+          functionSelectors: selectors,
+        },
+      ],
+      diamondInit.address,
+      "0x",
+    ];
+    await testClient.writeContract({
+      address: diamond.address,
+      abi: diamondCutFacetAbi,
+      functionName: "diamondCut",
+      args,
+      account,
+    });
+
+  });
+
+
+  it("should Replace a facet successfully", async function () {
+    const privateKey = process.env.PRIVATE_KEY;
+
+    const account = privateKeyToAccount(privateKey as Hex);
+
+    const testClient = createWalletClient({
+      account,
+      chain: arbitrumSepolia,
+      transport: http(process.env.API_URL),
+    }).extend(publicActions);
+    // Deploy the new facet
+    const facet = await hre.viem.deployContract("ERC3643Facet", []);
+    const newFacetAddress = facet.address;
+
+    const diamondCutFacetAbi = JSON.parse(
+      readFileSync(
+        join(
+          __dirname,
+          "../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json"
+        ),
+        "utf8"
+      )
+    ).abi;
+
+    //  const wallet = await hre.viem.getWalletClients();
+    //  const contractOwner = wallet[0].account.address;
+    //  const accountAddress = contractOwner;
+    const selectors = getSelectors({ abi: diamondCutFacetAbi });
+
+    const diamondInit = await hre.viem.deployContract("DiamondInit", []);
+
+    const args = [
+      [
+        {
+          facetAddress: newFacetAddress,
+          action: FacetCutAction.Replace,
+          functionSelectors: selectors,
+        },
+      ],
+      diamondInit.address,
+      "0x",
+    ];
+    await testClient.writeContract({
+      address: diamond.address,
+      abi: diamondCutFacetAbi,
+      functionName: "diamondCut",
+      args,
+      account,
+    });
+  });
+
+
+  it("should remove a facet successfully", async function () {
+    const privateKey = process.env.PRIVATE_KEY;
+
+    const account = privateKeyToAccount(privateKey as Hex);
+
+    const testClient = createWalletClient({
+      account,
+      chain: arbitrumSepolia,
+      transport: http(process.env.API_URL),
+    }).extend(publicActions);
+    // Deploy the new facet
+    const facet = await hre.viem.deployContract("ERC3643Facet", []);
+    const newFacetAddress = facet.address;
+
+    const diamondCutFacetAbi = JSON.parse(
+      readFileSync(
+        join(
+          __dirname,
+          "../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json"
+        ),
+        "utf8"
+      )
+    ).abi;
+
+    //  const wallet = await hre.viem.getWalletClients();
+    //  const contractOwner = wallet[0].account.address;
+    //  const accountAddress = contractOwner;
+    const selectors = getSelectors({ abi: diamondCutFacetAbi });
+
+    const diamondInit = await hre.viem.deployContract("DiamondInit", []);
+
+    const args = [
+      [
+        {
+          facetAddress: newFacetAddress,
+          action: FacetCutAction.Remove,
           functionSelectors: selectors,
         },
       ],

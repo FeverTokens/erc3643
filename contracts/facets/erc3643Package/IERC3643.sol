@@ -40,7 +40,7 @@ interface IERC3643 is IERC3643Internal {
 
     // Additional Functions
     function batchTransfer(address[] calldata recipients, uint256[] calldata amounts) external; // Batch transfers tokens to multiple recipients
-    function setRecoveryAddress(address _newRecoveryAddress) external; // Sets the recovery address for an agent
+    // function setRecoveryAddress(address _newRecoveryAddress) external; // Sets the recovery address for an agent
     function updateOnchainID(address _newOnchainID) external; // Updates the on-chain ID of the token
     function setComplianceContract(address _compliance) external; // Sets the compliance contract for the token
     function isTransferCompliant(address _from, address _to) external view returns (bool); // Checks if a transfer is compliant
