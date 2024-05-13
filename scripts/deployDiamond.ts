@@ -30,7 +30,7 @@ export async function deployDiamond(
 
 	// Deploy Diamond
 	const Diamond = await hre.viem.deployContract("Diamond", [
-		contractOwner as any,
+		contractOwner,
 		diamondCutFacet.address,
 		diamondInit.address,
 		erc3643Facet.address
