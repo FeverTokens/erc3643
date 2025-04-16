@@ -1,82 +1,111 @@
-import hre from 'hardhat';
-import { expect } from 'expect';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { prepareERC3643Facet } from '../scripts/prepareFacets/prepareERC3643Facet'; // Adjust the path as necessary
-import { createPublicClient, http } from 'viem';
-import { mainnet } from 'viem/chains';
-import { FacetCutAction } from '../scripts/libraries/diamond'; 
-import { ERC3643Facet } from '../typechain-types';
+import hre from "hardhat";
+import {assert, expect} from "chai";
+import {loadFixture} from "@nomicfoundation/hardhat-toolbox-viem/network-helpers";
 
-describe("ERC3643Facet Preparation Tests", function () {
-    let ERC3643Facet: ERC3643Facet;
+// A deployment function to set up the initial state
+const deploy = async () => {
+	const erc3643Facet = await hre.viem.deployContract("ERC3643Facet", []);
 
-    this.beforeEach(async function () {
-        const erc3643FacetAbi = JSON.parse(readFileSync(join(__dirname, '../artifacts/contracts/facets/erc3643Package/ERC3643Facet.sol/ERC3643Facet.json'), 'utf8')).abi;    
+	return {erc3643Facet};
+};
 
-         // Create a viem client
-        
-         const accounts = await hre.viem.getWalletClients();
-         const contractOwner = accounts[0].account.address;
+describe("ERC3643Facet Contract Tests", function () {
+	it("should add an address as an agent", async function () {
+		// Load the contract instance using the deployment function
+		const {erc3643Facet} = await loadFixture(deploy);
 
-        ERC3643Facet = await prepareERC3643Facet(contractOwner,erc3643FacetAbi);
+		// Define an agent address
+		const agentAddress = "0x1234567890123456789012345678901234567890";
 
-    })
-    it("should prepare the ERC3643Facet correctly", async function () {
-        try {
+		// Add the agent
+		await erc3643Facet.write.addAgent([agentAddress]);
 
-            const erc3643FacetAbi = JSON.parse(readFileSync(join(__dirname, '../artifacts/contracts/facets/erc3643Package/ERC3643Facet.sol/ERC3643Facet.json'), 'utf8')).abi;    
+		// Check if the address is an agent
+		const isAgent = await erc3643Facet.read.isAgent([agentAddress]);
 
-            // // Create a viem client
-            // const client = createPublicClient({
-            //     chain: mainnet,
-            //     transport: http()
-            // });
+		// Assert that the address is now an agent
+		assert.isTrue(isAgent);
+	});
 
-            // Get the first account from the client
-          
-            const accounts = await hre.viem.getWalletClients();
-            const contractOwner = accounts[0].account.address;
+	it("should remove an address as an agent", async function () {
+		// Load the contract instance using the deployment function
+		const {erc3643Facet} = await loadFixture(deploy);
 
-            
+		// Define an agent address
+		const agentAddress = "0x1234567890123456789012345678901234567890";
 
-            // Prepare the ERC3643Facet
-            const facetCut = await prepareERC3643Facet(contractOwner,erc3643FacetAbi);
+		// Add the agent first
+		await erc3643Facet.write.addAgent([agentAddress]);
 
-            // Check if the facet cut is correctly prepared
-            expect(facetCut).toBeDefined();
-            expect(facetCut.action).toEqual(FacetCutAction.Add);
-            expect(facetCut.facetAddress).toBeDefined();
-            expect(facetCut.functionSelectors).toBeDefined();
-            expect(facetCut.functionSelectors.length).toBeGreaterThan(0);
-        } catch (error) {
-            console.error('Error during ERC3643Facet preparation test:', error);
-            throw error; // Rethrow the error to fail the test
-        }
-    });
+		// Remove the agent
+		await erc3643Facet.write.removeAgent([agentAddress]);
 
-    it("should handle contract deployment failure", async function () {
-        try {
-            // Attempt to deploy the contract with invalid parameters
-            // await prepareERC3643Facet('invalidContractOwner',erc3643FacetAbi);
-        } catch (error) {
-            // Expect an error to be thrown
-            expect(error).toBeDefined();
-            // Optionally, check for a specific error message
-            expect((error as Error).message).toMatch(/expected error message/);
-        }
-    });
+		// Check if the address is no longer an agent
+		const isAgent = await erc3643Facet.read.isAgent([agentAddress]);
 
-    // it("should add an agent and check if it's an agent", async function () {
-    //     const agentAddress = "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4"; // Replace with a valid address
-       
-    //     // Add an agent
-    //     await ERC3643Facet.addAgent(agentAddress);
-       
-    //     // Check if the agent is added
-    //     const isAgent = await ERC3643Facet.isAgent(agentAddress);
-    //     expect(isAgent).toBe(true);
-    //    });
+		// Assert that the address is no longer an agent
+		assert.isFalse(isAgent);
+	});
+
+	it("should verify an agent correctly", async function () {
+		const {erc3643Facet} = await loadFixture(deploy);
+		const agentAddress = "0x1234567890123456789012345678901234567890";
+
+		// Assuming _verifyIdentity is implemented to return true for agents
+		await erc3643Facet.write.addAgent([agentAddress]);
+		const isVerified = await erc3643Facet.read.isVerified([agentAddress]);
+
+		assert.isTrue(isVerified);
+	});
+
+	it("should check if a transfer is possible", async function () {
+		const {erc3643Facet} = await loadFixture(deploy);
+		const fromAddress = "0x1234567890123456789012345678901234567890";
+		const toAddress = "0x9876543210987654321098765432109876543210";
+		const amount = 100n;
+
+		// Assuming _canTransfer is implemented to return true for valid transfers
+		const canTransfer = await erc3643Facet.read.canTransfer([
+			fromAddress,
+			toAddress,
+			amount,
+		]);
+
+		assert.isFalse(canTransfer);
+	});
+
+	it("should mint tokens correctly", async function () {
+		const {erc3643Facet} = await loadFixture(deploy);
+		const toAddress = "0x9876543210987654321098765432109876543210";
+		const amount = 100n;
+
+		// Mint tokens
+		await erc3643Facet.write.mintERC3643([toAddress, amount]);
+
+		// Assuming there's a method to get the balance of an address
+		const balance = await erc3643Facet.read.getBalance([toAddress]);
+
+		assert.equal(balance, amount);
+	});
+
+	it("should burn tokens correctly", async function () {
+		const {erc3643Facet} = await loadFixture(deploy);
+		const userAddress = "0x1234567890123456789012345678901234567890";
+		const mintAmount = 100n;
+		const burnAmount = 50n;
+
+		// Mint tokens to the user address
+		await erc3643Facet.write.mintERC3643([userAddress, mintAmount]);
+
+		// Burn tokens from the user address
+		await erc3643Facet.write.burnERC3643([userAddress, burnAmount]);
+
+		// Get the balance of the user address after burning
+		const balance = await erc3643Facet.read.getBalance([userAddress]);
+
+		// Assert that the balance is now the initial minted amount minus the burned amount
+		// assert.equal(balance, mintAmount - burnAmount);
+		expect(balance).to.equal(mintAmount - burnAmount);
+		// await expect(deployerInstance.revokeRole(PAUSER_ROLE, publicWallet1.address)).to.be.reverted;
+	});
 });
-
-

@@ -1,5 +1,8 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox-viem"; 
+
+
+
 import "@typechain/hardhat";
 const config: HardhatUserConfig = {
  solidity: "0.8.24",
@@ -16,6 +19,6 @@ const config: HardhatUserConfig = {
 };
 
 export default config;
-export const plugins = [
- "@nomicfoundation/hardhat-toolbox-viem",
-];
+// export const plugins = [
+//  "@nomicfoundation/hardhat-toolbox-viem",
+// ];

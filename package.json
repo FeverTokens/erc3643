@@ -4,25 +4,26 @@
 		"deploy:local": "hardhat run scripts/deploy.ts",
 		"compile": "pnpm exec hardhat compile",
 		"clean": "pnpm exec hardhat clean",
-		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts"
+		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts",
+		"test:diamond": "pnpm exec hardhat test test/diamond.test.ts"
 	},
 	"devDependencies": {
 		"@nomicfoundation/hardhat-network-helpers": "^1.0.10",
 		"@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
-		"@nomicfoundation/hardhat-verify": "^2.0.4",
+		"@nomicfoundation/hardhat-verify": "^2.0.5",
 		"@nomicfoundation/hardhat-viem": "^1.0.4",
 		"@typechain/hardhat": "^9.1.0",
-		"@types/chai": "^4.3.12",
+		"@types/chai": "^4.3.14",
 		"@types/chai-as-promised": "^7.1.8",
 		"@types/jest": "^29.5.12",
 		"@types/mocha": "^10.0.6",
-		"@types/node": "^20.11.24",
+		"@types/node": "^20.12.7",
 		"chai": "^4.4.1",
 		"expect": "^29.7.0",
-		"hardhat": "^2.20.1",
+		"hardhat": "^2.22.2",
 		"hardhat-gas-reporter": "^1.0.10",
 		"solc": "0.8.0",
-		"solidity-coverage": "^0.8.10",
+		"solidity-coverage": "^0.8.12",
 		"ts-node": "^10.9.2",
 		"typescript": "~5.0.4",
 		"viem": "^1.21.4"
@@ -31,6 +32,9 @@
 		"@ethersproject/abi": "^5.7.0",
 		"@ethersproject/bytes": "^5.7.0",
 		"@openzeppelin/contracts": "^5.0.2",
+		"@types/dotenv": "^8.2.0",
+		"@walletconnect/ethereum-provider": "^2.12.2",
+		"dotenv": "^16.4.5",
 		"ethereum-utils": "^1.0.0",
 		"ethers": "^6.11.1"
 	}

@@ -33,6 +33,10 @@ import "./ERC3643Internal.sol";
         _forcedTransfer(_from, _to, _amount);
     }
 
+    function getBalance(address _userAddress) external view returns (uint256) {
+        return _getBalance(_userAddress);
+    }
+    
     function mintERC3643(address _to, uint256 _amount) external override {
         _mintERC3643(_to, _amount);
     }
