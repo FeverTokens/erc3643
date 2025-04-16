@@ -166,4 +166,66 @@ abstract contract ERC3643Internal is IERC3643Internal {
         // This could involve transferring tokens from the user to the contract
         _forcedTransfer(msg.sender, token, amount);
     }
+
+    // Additional Functions
+    function _batchMintTokens(address[] calldata _toList, uint256[] calldata _amounts) internal {
+        require(_toList.length == _amounts.length, "Mismatched recipients and amounts");
+        for (uint256 i = 0; i < _toList.length; i++) {
+            _mintERC3643(_toList[i], _amounts[i]);
+        }
+    }
+
+    function _batchBurnTokens(address[] calldata _fromList, uint256[] calldata _amounts) internal {
+        require(_fromList.length == _amounts.length, "Mismatched senders and amounts");
+        for (uint256 i = 0; i < _fromList.length; i++) {
+            _burnERC3643(_fromList[i], _amounts[i]);
+        }
+    }
+
+    function _setTokenPaused(bool _paused) internal {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        l.tokenPaused = _paused;
+        emit TokenPaused(_paused);
+    }
+
+    function _batchUpdateFrozenStatus(address[] calldata _addresses, bool[] calldata _statuses) internal {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        require(_addresses.length == _statuses.length, "Mismatched addresses and statuses");
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            l.walletFrozen[_addresses[i]] = _statuses[i];
+            emit WalletFrozenStatusUpdated(_addresses[i], _statuses[i]);
+        }
+    }
+
+    function _batchUpdateIdentityVerification(address[] calldata _addresses, bool[] calldata _verificationStatuses) internal {
+       ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        require(_addresses.length == _verificationStatuses.length, "Mismatched addresses and verification statuses");
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            l.agents[_addresses[i]] = _verificationStatuses[i];
+            emit IdentityVerificationUpdated(_addresses[i], _verificationStatuses[i]);
+        }
+    }
+
+    function _setComplianceContract(address _compliance) internal {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        l.complianceContract = _compliance;
+        emit ComplianceContractSet(_compliance);
+    }
+
+    function _isTransferCompliant(address _from, address _to) internal view returns (bool) {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        
+        // Check if both the sender and receiver are verified identities
+        bool fromIsVerified = l.verifiedIdentities[_from];
+        bool toIsVerified = l.verifiedIdentities[_to];
+        
+        // A transfer is compliant if both the sender and receiver are verified
+        return fromIsVerified && toIsVerified;
+    }
+
+    function _updateOnchainID(address _newOnchainID) internal {
+        ERC3643Storage.Layout storage l = ERC3643Storage.layout();
+        l.onchainID = _newOnchainID;
+        emit OnchainIDUpdated(_newOnchainID);
+    }
 }

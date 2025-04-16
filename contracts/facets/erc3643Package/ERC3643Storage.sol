@@ -10,6 +10,7 @@ library ERC3643Storage {
         mapping(address => uint256) frozenTokens;
         mapping(address => uint256) balances;
         bool paused;
+        bool tokenPaused;
         // Recovery System
         mapping(address => address) recoveryAddresses;
         // Token Management
@@ -18,6 +19,10 @@ library ERC3643Storage {
         
         // Wallet Frozen Status
         mapping(address => bool) walletFrozen;
+        // Compliance System
+        address complianceContract;
+        // Onchain ID
+        address onchainID;
     }
 
     bytes32 constant STORAGE_SLOT = keccak256(abi.encode(uint256(keccak256("ft.storage.erc3643")) - 1)) & ~bytes32(uint256(0xff));

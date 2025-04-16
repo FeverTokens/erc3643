@@ -14,4 +14,6 @@ export async function prepareERC3643Facet(
 		facetAddress: facet.address,
 		functionSelectors: selectors,
 	};
+
+	return facet.address;
 }
