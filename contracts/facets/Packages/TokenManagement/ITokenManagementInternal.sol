@@ -2,10 +2,13 @@
 pragma solidity >=0.7.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
-interface ITokenManagementInternal{
-
+interface ITokenManagementInternal {
     //Events
-    event TransferERC3643(address indexed from, address indexed to, uint256 value);
+    event TransferERC3643(
+        address indexed from,
+        address indexed to,
+        uint256 value
+    );
 
     event TokensFrozen(address indexed user, uint256 amount);
 
@@ -14,5 +17,4 @@ interface ITokenManagementInternal{
     event WalletFrozen(address indexed user);
 
     event WalletUnfrozen(address indexed user);
-
 }

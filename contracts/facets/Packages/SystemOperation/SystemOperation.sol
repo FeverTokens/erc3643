@@ -4,13 +4,18 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./ISystemOperation.sol";
 import "./SystemOperationInternal.sol";
 
-contract SystemOperation is ISystemOperation , SystemOperationInternal{
-
-    function batchUpdateFrozenStatus(address[] calldata _addresses, bool[] calldata _statuses) external override {
+contract SystemOperation is ISystemOperation, SystemOperationInternal {
+    function batchUpdateFrozenStatus(
+        address[] calldata _addresses,
+        bool[] calldata _statuses
+    ) external override {
         _batchUpdateFrozenStatus(_addresses, _statuses);
     }
 
-    function batchUpdateIdentityVerification(address[] calldata _addresses, bool[] calldata _verificationStatuses) external override {
+    function batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) external override {
         _batchUpdateIdentityVerification(_addresses, _verificationStatuses);
     }
 
@@ -23,12 +28,14 @@ contract SystemOperation is ISystemOperation , SystemOperationInternal{
         _setComplianceContract(_compliance);
     }
 
-    function isTransferCompliant(address _from, address _to) external view override returns (bool) {
+    function isTransferCompliant(
+        address _from,
+        address _to
+    ) external view override returns (bool) {
         return _isTransferCompliant(_from, _to);
     }
 
     function setTokenPaused(bool _paused) external override {
         _setTokenPaused(_paused);
     }
-
 }

@@ -5,7 +5,9 @@
 		"compile": "pnpm exec hardhat compile",
 		"clean": "pnpm exec hardhat clean",
 		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts",
-		"test:diamond": "pnpm exec hardhat test test/diamond.test.ts"
+		"test:diamond": "pnpm exec hardhat test test/diamond.test.ts",
+		"lint": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --check",
+        "lint:fix": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --write"
 	},
 	"devDependencies": {
 		"@nomicfoundation/hardhat-network-helpers": "^1.0.10",
@@ -22,6 +24,8 @@
 		"expect": "^29.7.0",
 		"hardhat": "^2.22.2",
 		"hardhat-gas-reporter": "^1.0.10",
+		"prettier": "^3.5.3",
+		"prettier-plugin-solidity": "^1.4.2",
 		"solc": "0.8.0",
 		"solidity-coverage": "^0.8.12",
 		"ts-node": "^10.9.2",

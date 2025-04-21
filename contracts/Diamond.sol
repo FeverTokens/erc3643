@@ -5,7 +5,6 @@ import {LibDiamond} from "./libraries/LibDiamond.sol";
 import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
 
 contract Diamond {
-
     constructor(
         address _contractOwner,
         address _diamondCutFacet,
@@ -18,13 +17,14 @@ contract Diamond {
         IDiamondCut.FacetCut[] memory cut = new IDiamondCut.FacetCut[](1);
         bytes4[] memory functionSelectors = new bytes4[](1);
         functionSelectors[0] = IDiamondCut.diamondCut.selector;
-        cut[0] = IDiamondCut.FacetCut({facetAddress: _diamondCutFacet, action: IDiamondCut.FacetCutAction.Add, functionSelectors: functionSelectors});
+        cut[0] = IDiamondCut.FacetCut({
+            facetAddress: _diamondCutFacet,
+            action: IDiamondCut.FacetCutAction.Add,
+            functionSelectors: functionSelectors
+        });
         LibDiamond.diamondCut(cut, facetAddress, constructData);
     }
 
-    
-
-    
     // Find facet for function that is called and execute the
     // function if a facet is found and return any value.
     fallback() external payable {
