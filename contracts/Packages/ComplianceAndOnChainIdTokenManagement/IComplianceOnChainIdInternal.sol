@@ -19,4 +19,6 @@ interface IComplianceOnChainIdInternal {
         uint256 value,
         ComplianceCheck complianceCheck
     );
+
+    event IdentityVerificationUpdated(address indexed user, bool isVerified);
 }

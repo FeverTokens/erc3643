@@ -15,4 +15,12 @@ interface IComplianceOnChainId is IComplianceOnChainIdInternal {
         address _from,
         address _to
     ) external view returns (bool);
+
+    // Checks if a user's identity is verified
+    function isVerified(address _userAddress) external view returns (bool);
+
+    function batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) external;
 }

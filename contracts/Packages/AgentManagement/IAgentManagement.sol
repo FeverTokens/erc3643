@@ -12,12 +12,4 @@ interface IAgentManagement is IAgentManagementInternal {
 
     // Checks if an address is an agent
     function isAgent(address _agent) external view returns (bool);
-
-    // Checks if a user's identity is verified
-    function isVerified(address _userAddress) external view returns (bool);
-
-    function batchUpdateIdentityVerification(
-        address[] calldata _addresses,
-        bool[] calldata _verificationStatuses
-    ) external;
 }

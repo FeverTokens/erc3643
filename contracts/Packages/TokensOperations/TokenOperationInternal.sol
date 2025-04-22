@@ -3,8 +3,14 @@ pragma solidity ^0.8.26;
 
 import "./ITokenOperationInternal.sol";
 import "./TokenOperationStorage.sol";
+import "../AgentManagement/AgentManagementInternal.sol";
+import "../ComplianceAndOnChainIdTokenManagement/ComplianceOnChainIdInternal.sol";
 
-abstract contract TokenOperationInternal is ITokenOperationInternal {
+abstract contract TokenOperationInternal is
+    ITokenOperationInternal,
+    AgentManagementInternal,
+    ComplianceOnChainIdInternal
+{
     function _canTransfer(
         address _from,
         address _to,
@@ -25,18 +31,43 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         return true;
     }
 
-    function _transferERC3643(
+    function transfer(
         address _from,
         address _to,
         uint256 _amount
     ) internal returns (bool) {
-        // This could involve transferring tokens from one address to another
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         require(l.balances[_from] >= _amount, "Insufficient balance");
         l.balances[_from] -= _amount;
         l.balances[_to] += _amount;
         emit TransferERC3643(_from, _to, _amount);
         return true;
+    }
+
+    // transfer tokens after checking
+    function _transferERC3643(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) internal returns (bool) {
+        //check if the transfer is possible
+        _canTransfer(_from, _to, _amount);
+
+        //check if the transfer compliant
+        _isTransferCompliant(_from, _to);
+
+        //proceed the transfer
+        transfer(_from, _to, _amount);
+    }
+
+    //force transfer without checking by agents only
+    function _forcedTransfer(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) internal onlyAgent returns (bool) {
+        //proceed the transfer without checking
+        transfer(_from, _to, _amount);
     }
 
     function _batchTransfer(
@@ -51,20 +82,6 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         for (uint256 i = 0; i < recipients.length; i++) {
             _forcedTransfer(msg.sender, recipients[i], amounts[i]);
         }
-    }
-
-    function _forcedTransfer(
-        address _from,
-        address _to,
-        uint256 _amount
-    ) internal returns (bool) {
-        // This could involve transferring tokens from one address to another without checks
-        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
-        require(l.balances[_from] >= _amount, "Insufficient balance");
-        l.balances[_from] -= _amount;
-        l.balances[_to] += _amount;
-        emit TransferERC3643(_from, _to, _amount);
-        return true;
     }
 
     function _mintERC3643(address _to, uint256 _amount) internal {
@@ -115,6 +132,7 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         return l.balances[_userAddress];
     }
 
+    //by agent only
     function _recoverTokens(
         address lostWallet,
         address newWallet,
@@ -125,6 +143,7 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         _forcedTransfer(lostWallet, newWallet, amount);
     }
 
+    //by agent only
     function _recoverTokensFromContract(
         address token,
         uint256 amount
@@ -184,13 +203,13 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         }
     }
 
-    function _freezeWallet(address user) internal {
+    function _freezeWallet(address user) internal onlyAgent {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         l.walletFrozen[user] = true;
         emit WalletFrozen(user);
     }
 
-    function _unfreezeWallet(address user) internal {
+    function _unfreezeWallet(address user) internal onlyAgent {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         l.walletFrozen[user] = false;
         emit WalletUnfrozen(user);

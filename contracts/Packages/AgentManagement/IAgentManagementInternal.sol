@@ -17,6 +17,4 @@ interface IAgentManagementInternal {
     event AgentAdded(address indexed _agent, AgentRole indexed);
 
     event AgentRemoved(address indexed _agent, AgentRole indexed _role);
-
-    event IdentityVerificationUpdated(address indexed user, bool isVerified);
 }

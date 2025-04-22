@@ -13,7 +13,7 @@ contract TokenManagement is ITokenManagement, TokenManagementInternal {
         _unfreezeTokens(user, amount);
     }
 
-    function setTokenPaused(bool _paused) external override {
+    function setTokenPaused(bool _paused) external {
         _setTokenPaused(_paused);
     }
 }

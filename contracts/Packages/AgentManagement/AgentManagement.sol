@@ -16,17 +16,4 @@ contract AgentManagement is IAgentManagement, AgentManagementInternal {
     function isAgent(address _agent) external view override returns (bool) {
         return _isAgent(_agent);
     }
-
-    function isVerified(
-        address _userAddress
-    ) external view override returns (bool) {
-        return _verifyIdentity(_userAddress);
-    }
-
-    function batchUpdateIdentityVerification(
-        address[] calldata _addresses,
-        bool[] calldata _verificationStatuses
-    ) external override {
-        _batchUpdateIdentityVerification(_addresses, _verificationStatuses);
-    }
 }

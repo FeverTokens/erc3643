@@ -7,6 +7,14 @@ import "./AgentManagementStorage.sol";
 abstract contract AgentManagementInternal is IAgentManagementInternal {
     using AgentManagementStorage for AgentManagementStorage.Layout;
 
+    modifier onlyAgent() {
+        require(
+            _isAgent(msg.sender),
+            "AgentRole: caller does not have the Agent role"
+        );
+        _;
+    }
+
     function _addAgent(address _agent) internal {
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
@@ -25,33 +33,5 @@ abstract contract AgentManagementInternal is IAgentManagementInternal {
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
         return l.agents[_agent];
-    }
-
-    function _verifyIdentity(
-        address _userAddress
-    ) internal view returns (bool) {
-        AgentManagementStorage.Layout storage l = AgentManagementStorage
-            .layout();
-
-        return l.agents[_userAddress];
-    }
-
-    function _batchUpdateIdentityVerification(
-        address[] calldata _addresses,
-        bool[] calldata _verificationStatuses
-    ) internal {
-        AgentManagementStorage.Layout storage l = AgentManagementStorage
-            .layout();
-        require(
-            _addresses.length == _verificationStatuses.length,
-            "Mismatched addresses and verification statuses"
-        );
-        for (uint256 i = 0; i < _addresses.length; i++) {
-            l.agents[_addresses[i]] = _verificationStatuses[i];
-            emit IdentityVerificationUpdated(
-                _addresses[i],
-                _verificationStatuses[i]
-            );
-        }
     }
 }

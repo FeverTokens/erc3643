@@ -3,9 +3,13 @@ pragma solidity ^0.8.26;
 
 import "./ITokenManagementInternal.sol";
 import "./TokenManagementStorage.sol";
+import "../AgentManagement/AgentManagementInternal.sol";
 
-abstract contract TokenManagementInternal is ITokenManagementInternal {
-    function _freezeTokens(address user, uint256 amount) internal {
+abstract contract TokenManagementInternal is
+    ITokenManagementInternal,
+    AgentManagementInternal
+{
+    function _freezeTokens(address user, uint256 amount) internal onlyAgent {
         TokenManagementStorage.Layout storage l = TokenManagementStorage
             .layout();
         // that maps an address to a uint256 representing the amount of frozen tokens.
@@ -13,7 +17,7 @@ abstract contract TokenManagementInternal is ITokenManagementInternal {
         emit TokensFrozen(user, amount);
     }
 
-    function _unfreezeTokens(address user, uint256 amount) internal {
+    function _unfreezeTokens(address user, uint256 amount) internal onlyAgent {
         TokenManagementStorage.Layout storage l = TokenManagementStorage
             .layout();
         // that maps an address to a uint256 representing the amount of frozen tokens.

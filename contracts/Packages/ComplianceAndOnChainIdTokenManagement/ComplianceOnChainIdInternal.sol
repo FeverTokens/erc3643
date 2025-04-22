@@ -35,4 +35,32 @@ abstract contract ComplianceOnChainIdInternal is IComplianceOnChainIdInternal {
         l.onchainID = _newOnchainID;
         emit OnchainIDUpdated(_newOnchainID);
     }
+
+    function _verifyIdentity(
+        address _userAddress
+    ) internal view returns (bool) {
+        ComplianceOnChainIdStorage.Layout storage l = ComplianceOnChainIdStorage
+            .layout();
+
+        return l.verifiedIdentities[_userAddress];
+    }
+
+    function _batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) internal {
+        ComplianceOnChainIdStorage.Layout storage l = ComplianceOnChainIdStorage
+            .layout();
+        require(
+            _addresses.length == _verificationStatuses.length,
+            "Mismatched addresses and verification statuses"
+        );
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            l.verifiedIdentities[_addresses[i]] = _verificationStatuses[i];
+            emit IdentityVerificationUpdated(
+                _addresses[i],
+                _verificationStatuses[i]
+            );
+        }
+    }
 }

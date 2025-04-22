@@ -23,4 +23,15 @@ contract ComplianceOnChainId is
     ) external view override returns (bool) {
         return _isTransferCompliant(_from, _to);
     }
+
+    function isVerified(address _userAddress) external view returns (bool) {
+        return _verifyIdentity(_userAddress);
+    }
+
+    function batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) external {
+        _batchUpdateIdentityVerification(_addresses, _verificationStatuses);
+    }
 }
