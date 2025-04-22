@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./ITokenOperationInternal.sol";
 
@@ -15,6 +15,24 @@ interface ITokenOperation is ITokenOperationInternal {
     function batchTransfer(
         address[] calldata recipients,
         uint256[] calldata amounts
+    ) external;
+
+    // Mints new tokens and assigns them to an address
+    function mintERC3643(address _to, uint256 _amount) external;
+
+    // Burns tokens from an address
+    function burnERC3643(address _userAddress, uint256 _amount) external;
+
+    // Batch mints tokens to multiple addresses
+    function batchMintTokens(
+        address[] calldata _toList,
+        uint256[] calldata _amounts
+    ) external;
+
+    // Batch burns tokens from multiple addresses
+    function batchBurnTokens(
+        address[] calldata _fromList,
+        uint256[] calldata _amounts
     ) external;
 
     // Recovers a specific amount of tokens from a lost wallet to a new wallet
@@ -38,4 +56,16 @@ interface ITokenOperation is ITokenOperationInternal {
 
     // Swaps tokens with another contract
     function swapTokens(address token, uint256 amount) external;
+
+    // Freezes the wallet of a user, preventing transfers
+    function freezeWallet(address user) external;
+
+    // Unfreezes the wallet of a user, allowing transfers
+    function unfreezeWallet(address user) external;
+
+    // Batch updates the frozen status of multiple addresses
+    function batchUpdateFrozenStatus(
+        address[] calldata _addresses,
+        bool[] calldata _statuses
+    ) external;
 }

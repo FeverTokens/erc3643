@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./IAgentManagementInternal.sol";
 
@@ -15,4 +15,9 @@ interface IAgentManagement is IAgentManagementInternal {
 
     // Checks if a user's identity is verified
     function isVerified(address _userAddress) external view returns (bool);
+
+    function batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) external;
 }

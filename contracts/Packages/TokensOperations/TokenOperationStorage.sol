@@ -1,17 +1,20 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
-library TokenManagementStorage {
+library TokenOperationStorage {
     struct Layout {
+        uint256 totalStaked;
         uint256 totalSupply;
-        mapping(address => uint256) frozenTokens;
-        mapping(address => bool) walletFrozen;
         mapping(address => uint256) balances;
+        mapping(address => uint256) stakedBalances;
+        mapping(address => bool) walletFrozen;
     }
 
     bytes32 constant STORAGE_SLOT =
         keccak256(
-            abi.encode(uint256(keccak256("ft.storage.TokenManagement")) - 1)
+            abi.encode(
+                uint256(keccak256("fevertokens.storage.TokenOperation")) - 1
+            )
         ) & ~bytes32(uint256(0xff));
 
     function layout() internal pure returns (Layout storage l) {

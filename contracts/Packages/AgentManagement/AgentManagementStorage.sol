@@ -1,15 +1,15 @@
-pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
 
 library AgentManagementStorage {
     struct Layout {
         mapping(address => bool) agents;
-        mapping(address => bool) verifiedIdentities;
     }
 
     bytes32 constant STORAGE_SLOT =
         keccak256(
             abi.encode(
-                uint256(keccak256("ft.storage.AgentManagementStorage")) - 1
+                uint256(keccak256("fevertokens.storage.AgentManagement")) - 1
             )
         ) & ~bytes32(uint256(0xff));
 

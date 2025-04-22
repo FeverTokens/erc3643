@@ -1,23 +1,24 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
-library SystemOperationStorage {
+library ComplianceOnChainIdStorage {
     struct Layout {
         // Recovery System
         mapping(address => address) recoveryAddresses;
-        mapping(address => bool) walletFrozen;
-        mapping(address => bool) agents;
         mapping(address => bool) verifiedIdentities;
-        // Compliance System
-        address complianceContract;
-        // Onchain ID
+        address complianceContract; // Compliance System
         address onchainID;
-        bool tokenPaused;
     }
 
     bytes32 constant STORAGE_SLOT =
         keccak256(
-            abi.encode(uint256(keccak256("ft.storage.SystemOperation")) - 1)
+            abi.encode(
+                uint256(
+                    keccak256(
+                        "fevertokens.storage.ComplianceAndOnChainIdTokenManagement"
+                    )
+                ) - 1
+            )
         ) & ~bytes32(uint256(0xff));
 
     function layout() internal pure returns (Layout storage l) {

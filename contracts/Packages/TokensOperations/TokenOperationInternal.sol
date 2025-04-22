@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./ITokenOperationInternal.sol";
 import "./TokenOperationStorage.sol";
@@ -39,6 +39,20 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         return true;
     }
 
+    function _batchTransfer(
+        address[] calldata recipients,
+        uint256[] calldata amounts
+    ) internal {
+        // This could involve looping through recipients and amounts and calling _transfer
+        require(
+            recipients.length == amounts.length,
+            "Mismatched recipients and amounts"
+        );
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _forcedTransfer(msg.sender, recipients[i], amounts[i]);
+        }
+    }
+
     function _forcedTransfer(
         address _from,
         address _to,
@@ -53,23 +67,52 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         return true;
     }
 
+    function _mintERC3643(address _to, uint256 _amount) internal {
+        // This could involve updating the total supply and the balance of the recipient
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        l.totalSupply += _amount;
+        l.balances[_to] += _amount;
+        emit TransferERC3643(address(0), _to, _amount);
+    }
+
+    function _burnERC3643(address _userAddress, uint256 _amount) internal {
+        // This could involve updating the total supply and the balance of the user
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        require(l.balances[_userAddress] >= _amount, "Insufficient balance");
+        l.totalSupply -= _amount;
+        l.balances[_userAddress] -= _amount;
+        emit TransferERC3643(_userAddress, address(0), _amount);
+    }
+
+    function _batchMintTokens(
+        address[] calldata _toList,
+        uint256[] calldata _amounts
+    ) internal {
+        require(
+            _toList.length == _amounts.length,
+            "Mismatched recipients and amounts"
+        );
+        for (uint256 i = 0; i < _toList.length; i++) {
+            _mintERC3643(_toList[i], _amounts[i]);
+        }
+    }
+
+    function _batchBurnTokens(
+        address[] calldata _fromList,
+        uint256[] calldata _amounts
+    ) internal {
+        require(
+            _fromList.length == _amounts.length,
+            "Mismatched senders and amounts"
+        );
+        for (uint256 i = 0; i < _fromList.length; i++) {
+            _burnERC3643(_fromList[i], _amounts[i]);
+        }
+    }
+
     function _getBalance(address _userAddress) internal view returns (uint256) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         return l.balances[_userAddress];
-    }
-
-    function _batchTransfer(
-        address[] calldata recipients,
-        uint256[] calldata amounts
-    ) internal {
-        // This could involve looping through recipients and amounts and calling _transfer
-        require(
-            recipients.length == amounts.length,
-            "Mismatched recipients and amounts"
-        );
-        for (uint256 i = 0; i < recipients.length; i++) {
-            _forcedTransfer(msg.sender, recipients[i], amounts[i]);
-        }
     }
 
     function _recoverTokens(
@@ -124,5 +167,32 @@ abstract contract TokenOperationInternal is ITokenOperationInternal {
         // Implement logic for swapping tokens
         // This could involve transferring tokens from the user to the contract
         _forcedTransfer(msg.sender, token, amount);
+    }
+
+    function _batchUpdateFrozenStatus(
+        address[] calldata _addresses,
+        bool[] calldata _statuses
+    ) internal {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        require(
+            _addresses.length == _statuses.length,
+            "Mismatched addresses and statuses"
+        );
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            l.walletFrozen[_addresses[i]] = _statuses[i];
+            emit WalletFrozenStatusUpdated(_addresses[i], _statuses[i]);
+        }
+    }
+
+    function _freezeWallet(address user) internal {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        l.walletFrozen[user] = true;
+        emit WalletFrozen(user);
+    }
+
+    function _unfreezeWallet(address user) internal {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        l.walletFrozen[user] = false;
+        emit WalletUnfrozen(user);
     }
 }

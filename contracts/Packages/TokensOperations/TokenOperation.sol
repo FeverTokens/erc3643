@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./ITokenOperation.sol";
 import "./TokenOperationInternal.sol";
@@ -71,5 +71,45 @@ contract TokenOperation is ITokenOperation, TokenOperationInternal {
 
     function swapTokens(address token, uint256 amount) external override {
         _swapTokens(token, amount);
+    }
+
+    function batchUpdateFrozenStatus(
+        address[] calldata _addresses,
+        bool[] calldata _statuses
+    ) external override {
+        _batchUpdateFrozenStatus(_addresses, _statuses);
+    }
+
+    function freezeWallet(address user) external override {
+        _freezeWallet(user);
+    }
+
+    function unfreezeWallet(address user) external override {
+        _unfreezeWallet(user);
+    }
+
+    function mintERC3643(address _to, uint256 _amount) external override {
+        _mintERC3643(_to, _amount);
+    }
+
+    function burnERC3643(
+        address _userAddress,
+        uint256 _amount
+    ) external override {
+        _burnERC3643(_userAddress, _amount);
+    }
+
+    function batchMintTokens(
+        address[] calldata _toList,
+        uint256[] calldata _amounts
+    ) external override {
+        _batchMintTokens(_toList, _amounts);
+    }
+
+    function batchBurnTokens(
+        address[] calldata _fromList,
+        uint256[] calldata _amounts
+    ) external override {
+        _batchBurnTokens(_fromList, _amounts);
     }
 }

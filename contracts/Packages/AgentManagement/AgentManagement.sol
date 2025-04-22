@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./IAgentManagement.sol";
 import "./AgentManagementInternal.sol";
@@ -21,5 +21,12 @@ contract AgentManagement is IAgentManagement, AgentManagementInternal {
         address _userAddress
     ) external view override returns (bool) {
         return _verifyIdentity(_userAddress);
+    }
+
+    function batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) external override {
+        _batchUpdateIdentityVerification(_addresses, _verificationStatuses);
     }
 }

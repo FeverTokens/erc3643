@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.26;
 
 import "./IAgentManagementInternal.sol";
 import "./AgentManagementStorage.sol";
@@ -34,5 +34,24 @@ abstract contract AgentManagementInternal is IAgentManagementInternal {
             .layout();
 
         return l.agents[_userAddress];
+    }
+
+    function _batchUpdateIdentityVerification(
+        address[] calldata _addresses,
+        bool[] calldata _verificationStatuses
+    ) internal {
+        AgentManagementStorage.Layout storage l = AgentManagementStorage
+            .layout();
+        require(
+            _addresses.length == _verificationStatuses.length,
+            "Mismatched addresses and verification statuses"
+        );
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            l.agents[_addresses[i]] = _verificationStatuses[i];
+            emit IdentityVerificationUpdated(
+                _addresses[i],
+                _verificationStatuses[i]
+            );
+        }
     }
 }
