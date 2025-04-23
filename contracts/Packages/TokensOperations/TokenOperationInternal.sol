@@ -31,7 +31,7 @@ abstract contract TokenOperationInternal is
         return true;
     }
 
-    function transfer(
+    function _transfer(
         address _from,
         address _to,
         uint256 _amount
@@ -57,7 +57,7 @@ abstract contract TokenOperationInternal is
         _isTransferCompliant(_from, _to);
 
         //proceed the transfer
-        transfer(_from, _to, _amount);
+        _transfer(_from, _to, _amount);
     }
 
     //force transfer without checking by agents only
@@ -67,7 +67,7 @@ abstract contract TokenOperationInternal is
         uint256 _amount
     ) internal onlyAgent returns (bool) {
         //proceed the transfer without checking
-        transfer(_from, _to, _amount);
+        _transfer(_from, _to, _amount);
     }
 
     function _batchTransfer(

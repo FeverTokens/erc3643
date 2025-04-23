@@ -9,7 +9,7 @@ const ftganacheConfig = {
   // You might need to add more configuration options here based on your requirements
  };
 const config: HardhatUserConfig = {
-  solidity: "0.8.24",
+  solidity: "0.8.26",
   networks: {
    
     ftganache: {
