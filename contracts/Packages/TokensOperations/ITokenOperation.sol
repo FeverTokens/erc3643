@@ -6,6 +6,20 @@ import "./ITokenOperationInternal.sol";
 interface ITokenOperation is ITokenOperationInternal {
     function transferERC3643Token(address _to, uint256 _amount) external;
 
+    function name() external view returns (string memory);
+
+    function symbol() external view returns (string memory);
+
+    function decimals() external view returns (uint8);
+
+    function totalSupply() external view returns (uint256);
+
+    function totalStaked() external view returns (uint256);
+
+    function balanceOf(address account) external view returns (uint256);
+
+    function stakedBalance(address account) external view returns (uint256);
+
     function forcedTransfer(
         address _from,
         address _to,

@@ -5,6 +5,40 @@ import "./ITokenOperation.sol";
 import "./TokenOperationInternal.sol";
 
 contract TokenOperation is ITokenOperation, TokenOperationInternal {
+    constructor(
+        string memory __name,
+        string memory __symbol,
+        uint8 __decimals
+    ) TokenOperationInternal(__name, __symbol, __decimals) {}
+
+    function name() external view returns (string memory) {
+        return _name();
+    }
+
+    function symbol() external view returns (string memory) {
+        return _symbol();
+    }
+
+    function decimals() external view returns (uint8) {
+        return _decimals();
+    }
+
+    function totalSupply() external view returns (uint256) {
+        return _totalSupply();
+    }
+
+    function totalStaked() external view returns (uint256) {
+        return _totalStaked();
+    }
+
+    function balanceOf(address account) external view returns (uint256) {
+        return _balanceOf(account);
+    }
+
+    function stakedBalance(address account) external view returns (uint256) {
+        return _stakedBalance(account);
+    }
+
     function canTransfer(
         address _from,
         address _to,

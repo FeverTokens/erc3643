@@ -3,6 +3,9 @@ pragma solidity ^0.8.26;
 
 library TokenOperationStorage {
     struct Layout {
+        string name;
+        string symbol;
+        uint8 decimals;
         uint256 totalStaked;
         uint256 totalSupply;
         mapping(address => uint256) balances;

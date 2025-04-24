@@ -19,14 +19,14 @@ abstract contract AgentManagementInternal is IAgentManagementInternal {
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
         l.agents[_agent] = true;
-        emit AgentAdded(_agent, AgentRole.Agent);
+        emit AgentAdded(_agent);
     }
 
     function _removeAgent(address _agent) internal {
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
         l.agents[_agent] = false;
-        emit AgentRemoved(_agent, AgentRole.Agent);
+        emit AgentRemoved(_agent);
     }
 
     function _isAgent(address _agent) internal view returns (bool) {

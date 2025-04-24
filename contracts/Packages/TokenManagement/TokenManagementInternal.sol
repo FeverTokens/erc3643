@@ -9,6 +9,11 @@ abstract contract TokenManagementInternal is
     ITokenManagementInternal,
     AgentManagementInternal
 {
+    modifier whenNotPaused() {
+        require(!TokenManagementStorage.layout().tokenPaused, "paused");
+        _;
+    }
+
     function _freezeTokens(address user, uint256 amount) internal onlyAgent {
         TokenManagementStorage.Layout storage l = TokenManagementStorage
             .layout();
@@ -26,7 +31,7 @@ abstract contract TokenManagementInternal is
         emit TokensUnfrozen(user, amount);
     }
 
-    function _setTokenPaused(bool _paused) internal {
+    function _setTokenPaused(bool _paused) internal onlyAgent {
         TokenManagementStorage.Layout storage l = TokenManagementStorage
             .layout();
         l.tokenPaused = _paused;

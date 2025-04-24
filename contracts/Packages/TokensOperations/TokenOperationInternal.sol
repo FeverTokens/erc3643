@@ -5,12 +5,60 @@ import "./ITokenOperationInternal.sol";
 import "./TokenOperationStorage.sol";
 import "../AgentManagement/AgentManagementInternal.sol";
 import "../ComplianceAndOnChainIdTokenManagement/ComplianceOnChainIdInternal.sol";
+import "../TokenManagement/TokenManagementInternal.sol";
 
 abstract contract TokenOperationInternal is
     ITokenOperationInternal,
     AgentManagementInternal,
-    ComplianceOnChainIdInternal
+    ComplianceOnChainIdInternal,
+    TokenManagementInternal
 {
+    constructor(
+        string memory __name,
+        string memory __symbol,
+        uint8 __decimals
+    ) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        l.name = __name;
+        l.symbol = __symbol;
+        l.decimals = __decimals;
+    }
+
+    function _name() internal view returns (string memory) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.name;
+    }
+
+    function _symbol() internal view returns (string memory) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.symbol;
+    }
+
+    function _decimals() internal view returns (uint8) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.decimals;
+    }
+
+    function _totalSupply() internal view returns (uint256) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.totalSupply;
+    }
+
+    function _totalStaked() internal view returns (uint256) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.totalStaked;
+    }
+
+    function _balanceOf(address account) internal view returns (uint256) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.balances[account];
+    }
+
+    function _stakedBalance(address account) internal view returns (uint256) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
+        return l.stakedBalances[account];
+    }
+
     function _canTransfer(
         address _from,
         address _to,
@@ -49,15 +97,15 @@ abstract contract TokenOperationInternal is
         address _from,
         address _to,
         uint256 _amount
-    ) internal returns (bool) {
+    ) internal whenNotPaused returns (bool status) {
         //check if the transfer is possible
-        _canTransfer(_from, _to, _amount);
+        require(_canTransfer(_from, _to, _amount), "we can't transfer");
 
         //check if the transfer compliant
-        _isTransferCompliant(_from, _to);
+        require(_isTransferCompliant(_from, _to), "Transfer is not Comliant");
 
         //proceed the transfer
-        _transfer(_from, _to, _amount);
+        return _transfer(_from, _to, _amount);
     }
 
     //force transfer without checking by agents only
@@ -65,9 +113,9 @@ abstract contract TokenOperationInternal is
         address _from,
         address _to,
         uint256 _amount
-    ) internal onlyAgent returns (bool) {
+    ) internal onlyAgent returns (bool status) {
         //proceed the transfer without checking
-        _transfer(_from, _to, _amount);
+        return _transfer(_from, _to, _amount);
     }
 
     function _batchTransfer(
