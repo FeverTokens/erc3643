@@ -102,7 +102,7 @@ abstract contract TokenOperationInternal is
         require(_canTransfer(_from, _to, _amount), "we can't transfer");
 
         //check if the transfer compliant
-        require(_isTransferCompliant(_from, _to), "Transfer is not Comliant");
+        require(_isTransferCompliant(_from, _to), "Transfer is not Compliant");
 
         //proceed the transfer
         return _transfer(_from, _to, _amount);
