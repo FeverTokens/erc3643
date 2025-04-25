@@ -4,7 +4,16 @@ pragma solidity ^0.8.26;
 import "./ITokenOperationInternal.sol";
 
 interface ITokenOperation is ITokenOperationInternal {
-    function transferERC3643Token(address _to, uint256 _amount) external;
+    function initialize(
+        string memory __name,
+        string memory __symbol,
+        uint8 __decimals
+    ) external;
+
+    function transferERC3643Token(
+        address _to,
+        uint256 _amount
+    ) external returns (bool status);
 
     function name() external view returns (string memory);
 
@@ -29,7 +38,7 @@ interface ITokenOperation is ITokenOperationInternal {
     function batchTransfer(
         address[] calldata recipients,
         uint256[] calldata amounts
-    ) external;
+    ) external returns (bool);
 
     // Mints new tokens and assigns them to an address
     function mintERC3643(address _to, uint256 _amount) external;
@@ -60,10 +69,10 @@ interface ITokenOperation is ITokenOperationInternal {
     function recoverTokensFromContract(address token, uint256 amount) external;
 
     // Stakes a specified amount of tokens
-    function stake(uint256 amount) external;
+    function stake(uint256 amount) external returns (uint256);
 
     // Unstakes a specified amount of tokens
-    function unstake(uint256 amount) external;
+    function unstake(uint256 amount) external returns (uint256);
 
     // Sells a specified amount of tokens
     function sellTokens(uint256 amount) external;

@@ -13,15 +13,23 @@ abstract contract TokenOperationInternal is
     ComplianceOnChainIdInternal,
     TokenManagementInternal
 {
-    constructor(
+    bool private _initialized;
+
+    modifier notInitialized() {
+        require(!_initialized, "already initialized");
+        _;
+    }
+
+    function _initializeInternal(
         string memory __name,
         string memory __symbol,
         uint8 __decimals
-    ) {
+    ) internal notInitialized {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         l.name = __name;
         l.symbol = __symbol;
         l.decimals = __decimals;
+        _initialized = true;
     }
 
     function _name() internal view returns (string memory) {
@@ -121,15 +129,21 @@ abstract contract TokenOperationInternal is
     function _batchTransfer(
         address[] calldata recipients,
         uint256[] calldata amounts
-    ) internal {
+    ) internal returns (bool) {
         // This could involve looping through recipients and amounts and calling _transfer
         require(
             recipients.length == amounts.length,
             "Mismatched recipients and amounts"
         );
         for (uint256 i = 0; i < recipients.length; i++) {
-            _forcedTransfer(msg.sender, recipients[i], amounts[i]);
+            bool success = _forcedTransfer(
+                msg.sender,
+                recipients[i],
+                amounts[i]
+            );
+            require(success, "individual transfer failed");
         }
+        return true;
     }
 
     function _mintERC3643(address _to, uint256 _amount) internal {
@@ -201,7 +215,7 @@ abstract contract TokenOperationInternal is
         _forcedTransfer(token, msg.sender, amount);
     }
 
-    function _stake(uint256 amount) internal {
+    function _stake(uint256 amount) internal returns (uint256) {
         // Implement logic for staking tokens
         // This could involve updating the staked balance and total staked
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
@@ -209,9 +223,11 @@ abstract contract TokenOperationInternal is
         l.balances[msg.sender] -= amount;
         l.stakedBalances[msg.sender] += amount;
         l.totalStaked += amount;
+
+        return l.stakedBalances[msg.sender];
     }
 
-    function _unstake(uint256 amount) internal {
+    function _unstake(uint256 amount) internal returns (uint256) {
         // Implement logic for unstaking tokens
         // This could involve updating the staked balance and total staked
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
@@ -222,6 +238,8 @@ abstract contract TokenOperationInternal is
         l.stakedBalances[msg.sender] -= amount;
         l.balances[msg.sender] += amount;
         l.totalStaked -= amount;
+
+        return l.stakedBalances[msg.sender];
     }
 
     function _sellTokens(uint256 amount) internal {
