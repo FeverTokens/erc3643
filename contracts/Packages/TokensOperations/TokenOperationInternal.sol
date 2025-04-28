@@ -13,23 +13,43 @@ abstract contract TokenOperationInternal is
     ComplianceOnChainIdInternal,
     TokenManagementInternal
 {
-    bool private _initialized;
+    
+    modifier initializer(bytes32 storageSlot_) {
+        TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
 
-    modifier notInitialized() {
-        require(!_initialized, "already initialized");
+        if (
+            l.initialization[storageSlot_] != InitializationStatus.UnInitialized
+        ) {
+            revert InitializableInvalidInitialization();
+        }
+
+        l.initialization[storageSlot_] = InitializationStatus.Initializing;
+
         _;
+
+        l.initialization[storageSlot_] = InitializationStatus.Initialized;
+
+        emit Initialized(storageSlot_);
     }
 
-    function _initializeInternal(
-        string memory __name,
-        string memory __symbol,
-        uint8 __decimals
-    ) internal notInitialized {
+    function _init_ERC20Metadata(
+        string calldata name_,
+        string calldata symbol_,
+        uint8 decimals_
+    ) internal {
+        _init_ERC20MetadataInternal(name_, symbol_, decimals_);
+    }
+
+    function _init_ERC20MetadataInternal(
+        string calldata name_,
+        string calldata symbol_,
+        uint8 decimals_
+    ) internal initializer(TokenOperationStorage.STORAGE_SLOT) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
-        l.name = __name;
-        l.symbol = __symbol;
-        l.decimals = __decimals;
-        _initialized = true;
+
+        l.name = name_;
+        l.symbol = symbol_;
+        l.decimals = decimals_;
     }
 
     function _name() internal view returns (string memory) {

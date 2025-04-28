@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
+import {InitializationStatus} from "./ITokenOperationInternal.sol";
+
 library TokenOperationStorage {
     struct Layout {
         string name;
@@ -11,6 +13,7 @@ library TokenOperationStorage {
         mapping(address => uint256) balances;
         mapping(address => uint256) stakedBalances;
         mapping(address => bool) walletFrozen;
+        mapping(bytes32 => InitializationStatus) initialization;
     }
 
     bytes32 constant STORAGE_SLOT =

@@ -5,12 +5,12 @@ import "./ITokenOperation.sol";
 import "./TokenOperationInternal.sol";
 
 contract TokenOperation is ITokenOperation, TokenOperationInternal {
-    function initialize(
-        string memory __name,
-        string memory __symbol,
+    function init__ERC20Metadata(
+        string calldata __name,
+        string calldata __symbol,
         uint8 __decimals
     ) external {
-        _initializeInternal(__name, __symbol, __decimals);
+        _init_ERC20Metadata(__name, __symbol, __decimals);
     }
 
     function name() external view returns (string memory) {

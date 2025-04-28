@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import "./ITokenOperationInternal.sol";
 
 interface ITokenOperation is ITokenOperationInternal {
-    function initialize(
+    function init__ERC20Metadata(
         string memory __name,
         string memory __symbol,
         uint8 __decimals
