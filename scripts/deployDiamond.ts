@@ -15,9 +15,9 @@ export async function deployDiamond(
 	const diamondInit = await hre.viem.deployContract("DiamondInit", []);
 	console.log("DiamondInit deployed:", diamondInit.address);
 
-	// Deploy ERC3643Facet
-	const erc3643Facet = await hre.viem.deployContract("ERC3643Facet", []);
-	console.log("ERC3643Facet deployed:", erc3643Facet.address);
+	// Deploy AgentManagement
+	const AgentManagement = await hre.viem.deployContract("AgentManagement", []);
+	
 
 	// Check if cut array is not empty and the first element has a facetAddress
 	if (cut.length === 0 || !cut[0].facetAddress) {
@@ -33,7 +33,7 @@ export async function deployDiamond(
 		contractOwner,
 		diamondCutFacet.address,
 		diamondInit.address,
-		erc3643Facet.address
+		AgentManagement.address
 		// "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4", 
 	]);
 	console.log("Diamond deployed:", Diamond.address);

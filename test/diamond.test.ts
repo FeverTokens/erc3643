@@ -1,7 +1,6 @@
 import hre from "hardhat";
 import { prepareDiamondLoupeFacet } from "../scripts/prepareFacets/prepareDiamondLoupeFacet";
 import { prepareOwnershipFacet } from "../scripts/prepareFacets/prepareOwnershipFacet";
-import { prepareERC3643Facet } from "../scripts/prepareFacets/prepareERC3643Facet";
 import { deployDiamond } from "../scripts/deployDiamond";
 import { expect } from "chai";
 import { getSelectors, FacetCutAction } from "../scripts/libraries/diamond";
@@ -11,6 +10,10 @@ import { Hex, createWalletClient, http, publicActions } from "viem";
 import { arbitrumSepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { config } from "dotenv";
+import { prepareAgentManagementFacet } from "../scripts/prepareFacets/prepareAgentManagementFacet";
+import { prepareComplianceAndOnChainIdTokenManagementFacet } from "../scripts/prepareFacets/prepareComplianceAndOnChainIdTokenManagementFacet";
+import { prepareTokenManagementFacet } from "../scripts/prepareFacets/prepareTokenManagementFacet";
+import { prepareTokenOperationsFacet } from "../scripts/prepareFacets/prepareTokenOperationsFacet";
 // import { ftganacheConfig } from "../ftganacheConfig";
 config();
 
@@ -18,40 +21,44 @@ describe("Deployment Scripts Test", function () {
   // Initial test setup
   let diamond: any;
   let contractOwner: string;
-  let erc3643FacetAbi: any;
   let testClient: any;
   let account: any;
+
+  const AgentManagementFacetAbi = JSON.parse(readFileSync(join(__dirname,"../artifacts/contracts/Packages/AgentManagement/AgentManagement.sol/AgentManagement.json",),"utf8",),
+      ).abi;
+    
+  const ComplianceAndOnChainIdTokenManagementFacetAbi = JSON.parse(readFileSync(join(__dirname,"../artifacts/contracts/Packages/ComplianceAndOnChainIdTokenManagement/ComplianceOnChainId.sol/ComplianceOnChainId.json",),"utf8",),
+      ).abi;
+    
+  const TokenManagementFacetAbi = JSON.parse(readFileSync(join(__dirname,"../artifacts/contracts/Packages/TokenManagement/TokenManagement.sol/TokenManagement.json",),"utf8",),
+     ).abi;
+    
+  const TokenOperationsFacetAbi = JSON.parse(readFileSync(join(__dirname,	"../artifacts/contracts/Packages/TokensOperations/TokenOperation.sol/TokenOperation.json",),"utf8",),
+      ).abi;
 
   before(async function () {
     const accounts = await hre.viem.getWalletClients();
     contractOwner = accounts[0].account.address;
 
-    erc3643FacetAbi = JSON.parse(
-      readFileSync(
-        join(
-          __dirname,
-          "../artifacts/contracts/facets/erc3643Package/ERC3643Facet.sol/ERC3643Facet.json"
-        ),
-        "utf8"
-      )
-    ).abi;
-
     const diamondLoupeFacetCut = await prepareDiamondLoupeFacet(contractOwner);
     const ownershipFacetCut = await prepareOwnershipFacet(contractOwner);
-    const erc3643FacetCut = await prepareERC3643Facet(
-      contractOwner,
-      erc3643FacetAbi
-    );
+    const agentManagementCut = await prepareAgentManagementFacet(contractOwner,AgentManagementFacetAbi);
+    const complianceCut = await prepareComplianceAndOnChainIdTokenManagementFacet(contractOwner,ComplianceAndOnChainIdTokenManagementFacetAbi);
+    const tokenManagementCut = await prepareTokenManagementFacet(contractOwner,TokenManagementFacetAbi);
+    const tokenOperationsCut = await prepareTokenOperationsFacet(contractOwner,TokenOperationsFacetAbi);
 
-    const cut = [diamondLoupeFacetCut, ownershipFacetCut, erc3643FacetCut];
+    // Combine all facet cuts into a single array
+    const cut = [diamondLoupeFacetCut, ownershipFacetCut, agentManagementCut,];
+
     diamond = await deployDiamond(contractOwner, cut);
 
     const privateKey = process.env.PRIVATE_KEY;
     account = privateKeyToAccount(privateKey as Hex);
+
     testClient = createWalletClient({
-      account,
-      chain: arbitrumSepolia,
-      transport: http(process.env.API_URL),
+    account,
+    chain: arbitrumSepolia,
+    transport: http(process.env.API_URL),
     }).extend(publicActions);
  });
 
@@ -61,19 +68,17 @@ describe("Deployment Scripts Test", function () {
   });
 
   it("should add an address as an agent", async function () {
-   
-
     async function checkBalance() {
       const balance = await testClient.getBalance({ address: account.address });
       console.log(`Account balance: ${balance} ETH`);
      }
      
      checkBalance();
-    // Assuming the Diamond contract has been deployed and the ERC3643Facet has been added
+    // Assuming the Diamond contract has been deployed and the Facet has been added
     const agentAddress = "0x801C06e7027D5e03E1cFD9f55c70edd5837C5767";
     const addAgentResult = await testClient.writeContract({
       address: diamond.address,
-      abi: erc3643FacetAbi,
+      abi: AgentManagementFacetAbi,
       functionName: "addAgent",
       args: [agentAddress],
       account
@@ -82,29 +87,29 @@ describe("Deployment Scripts Test", function () {
   });
 
   it("should remove an address as an agent", async function () {
-  
     const agentAddress = "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4"; // Example agent address
+
     const removeAgentResult = await testClient.writeContract({
       address: diamond.address,
-      abi: erc3643FacetAbi,
+      abi: AgentManagementFacetAbi,
       functionName: "removeAgent",
       args: [agentAddress],
-      account
+      account,
     });
     expect(removeAgentResult).to.not.be.null;
   });
 
-  it("should add a new facet successfully", async function () {
+   it("should add a new facet successfully", async function () {
  
     // Deploy the new facet
-    const facet = await hre.viem.deployContract("ERC3643Facet", []);
+    const facet = await hre.viem.deployContract("TokenManagement", []);
     const newFacetAddress = facet.address;
 
     const diamondCutFacetAbi = JSON.parse(
       readFileSync(
         join(
           __dirname,
-          "../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json"
+          "../artifacts/contracts/DiamondCutFacet.sol/DiamondCutFacet.json"
         ),
         "utf8"
       )
@@ -114,7 +119,7 @@ describe("Deployment Scripts Test", function () {
       readFileSync(
         join(
           __dirname,
-          "../artifacts/contracts/facets/DiamondLoupeFacet.sol/DiamondLoupeFacet.json"
+          "../artifacts/contracts/DiamondLoupeFacet.sol/DiamondLoupeFacet.json"
         ),
         "utf8"
       )
@@ -152,14 +157,14 @@ describe("Deployment Scripts Test", function () {
   it("should Replace a facet successfully", async function () {
   
     // Deploy the new facet
-    const facet = await hre.viem.deployContract("ERC3643Facet", []);
+    const facet = await hre.viem.deployContract("TokenOperation", []);
     const newFacetAddress = facet.address;
 
     const diamondCutFacetAbi = JSON.parse(
       readFileSync(
         join(
           __dirname,
-          "../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json"
+          "../artifacts/contracts/DiamondCutFacet.sol/DiamondCutFacet.json"
         ),
         "utf8"
       )
@@ -193,17 +198,17 @@ describe("Deployment Scripts Test", function () {
   });
 
 
-  it("should remove a facet successfully", async function () {
+   it("should remove a facet successfully", async function () {
 
     // Deploy the new facet
-    const facet = await hre.viem.deployContract("ERC3643Facet", []);
+    const facet = await hre.viem.deployContract("AgentManagement", []);
     const newFacetAddress = facet.address;
 
     const diamondCutFacetAbi = JSON.parse(
       readFileSync(
         join(
           __dirname,
-          "../artifacts/contracts/facets/DiamondCutFacet.sol/DiamondCutFacet.json"
+          "../artifacts/contracts/DiamondCutFacet.sol/DiamondCutFacet.json"
         ),
         "utf8"
       )
@@ -236,8 +241,7 @@ describe("Deployment Scripts Test", function () {
 
   });
 
-  it("should add and remove multiple agents", async function () {
-
+   it("should add and remove multiple agents", async function () {
     // Example agent addresses
     const agentAddresses = [
       "0xe4476Ca098Fa209ea457c390BB24A8cfe90FCac4",
@@ -249,7 +253,7 @@ describe("Deployment Scripts Test", function () {
     for (const agentAddress of agentAddresses) {
       const addAgentResult = await testClient.writeContract({
         address: diamond.address,
-        abi: erc3643FacetAbi,
+        abi: AgentManagementFacetAbi,
         functionName: "addAgent",
         args: [agentAddress],
         account,
@@ -261,7 +265,7 @@ describe("Deployment Scripts Test", function () {
     for (const agentAddress of agentAddresses) {
       const removeAgentResult = await testClient.writeContract({
         address: diamond.address,
-        abi: erc3643FacetAbi,
+        abi: AgentManagementFacetAbi,
         functionName: "removeAgent",
         args: [agentAddress],
         account,
@@ -279,7 +283,7 @@ describe("Deployment Scripts Test", function () {
     // Transfer tokens
     const transferTokenResult =  await testClient.writeContract({
       address: diamond.address,
-      abi: erc3643FacetAbi,
+      abi: TokenOperationsFacetAbi,
       functionName: "transferERC3643Token",
       args: [recipientAddress, transferAmount],
       account,
@@ -288,4 +292,4 @@ describe("Deployment Scripts Test", function () {
     expect(transferTokenResult).to.not.be.null;
 
   });
-});
+}); 

@@ -13,7 +13,6 @@ abstract contract TokenOperationInternal is
     ComplianceOnChainIdInternal,
     TokenManagementInternal
 {
-    
     modifier initializer(bytes32 storageSlot_) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
 
