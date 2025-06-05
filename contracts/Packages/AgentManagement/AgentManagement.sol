@@ -3,8 +3,21 @@ pragma solidity ^0.8.26;
 
 import "./IAgentManagement.sol";
 import "./AgentManagementInternal.sol";
+import "../../access/rbac/AccessControlStorage.sol";
+import "../../data/EnumerableSet.sol";
 
 contract AgentManagement is IAgentManagement, AgentManagementInternal {
+
+    using EnumerableSet for EnumerableSet.AddressSet;
+
+    function init() external{
+         AgentManagementStorage.Layout storage l = AgentManagementStorage
+            .layout();
+        l.agents[msg.sender] = true;
+
+        AccessControlStorage.layout().roles[AGENT_ROLE].roleMembers.add(msg.sender);
+    }
+
     function addAgent(address _agent) external override {
         _addAgent(_agent);
     }

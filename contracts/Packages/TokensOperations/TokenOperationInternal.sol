@@ -6,14 +6,17 @@ import "./TokenOperationStorage.sol";
 import "../AgentManagement/AgentManagementInternal.sol";
 import "../ComplianceAndOnChainIdTokenManagement/ComplianceOnChainIdInternal.sol";
 import "../TokenManagement/TokenManagementInternal.sol";
+import "../../access/rbac/AccessControlInternal.sol";
+
 
 abstract contract TokenOperationInternal is
     ITokenOperationInternal,
+    AccessControlInternal,
     AgentManagementInternal,
     ComplianceOnChainIdInternal,
     TokenManagementInternal
 {
-    modifier initializer(bytes32 storageSlot_) {
+    modifier customInitializer(bytes32 storageSlot_) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
 
         if (
@@ -43,7 +46,7 @@ abstract contract TokenOperationInternal is
         string calldata name_,
         string calldata symbol_,
         uint8 decimals_
-    ) internal initializer(TokenOperationStorage.STORAGE_SLOT) {
+    ) internal customInitializer(TokenOperationStorage.STORAGE_SLOT) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
 
         l.name = name_;
@@ -140,7 +143,7 @@ abstract contract TokenOperationInternal is
         address _from,
         address _to,
         uint256 _amount
-    ) internal onlyAgent returns (bool status) {
+    ) internal onlyRole(AGENT_ROLE) returns (bool status) {    
         //proceed the transfer without checking
         return _transfer(_from, _to, _amount);
     }
@@ -288,13 +291,13 @@ abstract contract TokenOperationInternal is
         }
     }
 
-    function _freezeWallet(address user) internal onlyAgent {
+    function _freezeWallet(address user) internal onlyRole(AGENT_ROLE) {   
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         l.walletFrozen[user] = true;
         emit WalletFrozen(user);
     }
 
-    function _unfreezeWallet(address user) internal onlyAgent {
+    function _unfreezeWallet(address user) internal onlyRole(AGENT_ROLE)  {    
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         l.walletFrozen[user] = false;
         emit WalletUnfrozen(user);
