@@ -14,23 +14,24 @@ abstract contract AgentManagementInternal is IAgentManagementInternal, AccessCon
     using EnumerableSet for EnumerableSet.AddressSet;
 
     bytes32 internal constant AGENT_ROLE = keccak256("AGENT_ROLE");
+    bytes32 internal constant OWNER_ROLE = keccak256("OWNER_ROLE");
 
-    function _addAgent(address _agent) internal onlyRole(AGENT_ROLE){
+    function _addAgent(address _agent) internal onlyRole(OWNER_ROLE){
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
         l.agents[_agent] = true;
 
-        AccessControlStorage.layout().roles[AGENT_ROLE].roleMembers.add(_agent);
+        _grantRole(AGENT_ROLE,_agent);
 
         emit AgentAdded(_agent);
     }
 
-    function _removeAgent(address _agent) internal onlyRole(AGENT_ROLE) {
+    function _removeAgent(address _agent) internal onlyRole(OWNER_ROLE) {
         AgentManagementStorage.Layout storage l = AgentManagementStorage
             .layout();
         l.agents[_agent] = false;
 
-        AccessControlStorage.layout().roles[AGENT_ROLE].roleMembers.remove(_agent);
+       _revokeRole(AGENT_ROLE,_agent);
 
         emit AgentRemoved(_agent);
     }

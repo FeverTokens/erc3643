@@ -221,7 +221,7 @@ abstract contract TokenOperationInternal is
         address lostWallet,
         address newWallet,
         uint256 amount
-    ) internal {
+    ) internal onlyRole(AGENT_ROLE) {
         // Implement logic for token recovery
         // This could involve transferring tokens from a lost wallet to a new wallet
         _forcedTransfer(lostWallet, newWallet, amount);
@@ -231,7 +231,7 @@ abstract contract TokenOperationInternal is
     function _recoverTokensFromContract(
         address token,
         uint256 amount
-    ) internal {
+    ) internal onlyRole(AGENT_ROLE) {
         // Implement logic for token recovery
         // This could involve transferring tokens from a contract to the owner
         _forcedTransfer(token, msg.sender, amount);
@@ -279,7 +279,7 @@ abstract contract TokenOperationInternal is
     function _batchUpdateFrozenStatus(
         address[] calldata _addresses,
         bool[] calldata _statuses
-    ) internal {
+    ) internal onlyRole(AGENT_ROLE) {
         TokenOperationStorage.Layout storage l = TokenOperationStorage.layout();
         require(
             _addresses.length == _statuses.length,

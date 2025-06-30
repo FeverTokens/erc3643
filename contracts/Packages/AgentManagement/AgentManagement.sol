@@ -16,6 +16,7 @@ contract AgentManagement is IAgentManagement, AgentManagementInternal {
         l.agents[msg.sender] = true;
 
         AccessControlStorage.layout().roles[AGENT_ROLE].roleMembers.add(msg.sender);
+        AccessControlStorage.layout().roles[OWNER_ROLE].roleMembers.add(msg.sender);   
     }
 
     function addAgent(address _agent) external override {
