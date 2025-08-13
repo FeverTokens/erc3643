@@ -12,3 +12,16 @@ node_modules
 # solidity-coverage files
 /coverage
 /coverage.json
+
+
+# Editor settings
+.vscode/
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+

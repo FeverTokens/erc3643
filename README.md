@@ -1,78 +1,158 @@
-# Diamond Standard Implementation for Ethereum Smart Contracts
+# ERC-3643 Package-Oriented Implementation
 
 ## Overview
 
-This project provides a framework for creating upgradeable smart contracts on the Ethereum blockchain using the Diamond Standard. It allows developers to create modular and upgradeable smart contracts by separating the logic into facets that can be added or removed without changing the main contract.
+This project provides a modular implementation of the **ERC-3643 T-REX Token Standard** using the **FeverTokens Package-Oriented Framework**. ERC-3643 is an institutional-grade security token standard that enables compliant transfer of permissioned tokens through automated on-chain validation systems and identity management.
+
+The implementation follows a modular architecture, allowing for upgradeable and composable smart contracts that maintain compliance with securities regulations while providing flexibility for various institutional use cases.
 
 ## Why This Project Exists
 
-The project exists to solve the problem of upgradability in Ethereum smart contracts. By implementing the Diamond Standard, developers can easily upgrade their smart contracts without disrupting the existing functionality or losing state data.
+This project addresses the critical need for compliant security token infrastructure in the blockchain space. By implementing ERC-3643 using a modular package-oriented approach, it provides:
+
+- **Regulatory Compliance**: Automated enforcement of securities laws and transfer restrictions
+- **Identity Management**: On-chain identity verification with trusted claim issuers
+- **Institutional Features**: Token freezing, pausing, forced transfers, and recovery mechanisms
+- **Modularity**: Clean separation of concerns through the FeverTokens Package-Oriented Framework
+- **Upgradability**: Diamond Standard compatibility for future enhancements
 
 ## Main Technologies and Frameworks
 
-- **Solidity**: The smart contracts are written in Solidity, the programming language for Ethereum smart contracts.
-- **Hardhat**: The project uses Hardhat as the development environment for Ethereum smart contracts.
-- **TypeScript**: Some of the scripts and configurations are written in TypeScript.
-- **pnpm**: The project uses pnpm as the package manager.
-- **Ethereum**: The project is built for the Ethereum blockchain.
+- **ERC-3643 T-REX Standard**: Implements the complete T-REX token standard for regulated securities
+- **FeverTokens Package-Oriented Framework**: Modular architecture following Diamond Standard principles
+- **Diamond Standard (EIP-2535)**: Upgradeable smart contract architecture with facet-based modularity
+- **Solidity ^0.8.26**: Smart contracts written in the latest Solidity version
+- **Hardhat**: Development environment for Ethereum smart contracts
+- **TypeScript**: Strongly-typed deployment and test scripts
+- **pnpm**: Fast, disk-space efficient package manager
 
-## Codebase Organization
+## ERC-3643 Package Architecture
 
-- **contracts**: Contains the main smart contracts, including facets for different functionalities like DiamondCut, DiamondLoupe, ERC20, ERC3643, Ownership, and test contracts.
-- **interfaces**: Contains the interfaces used in the smart contracts.
-- **libraries**: Contains the libraries used in the project.
-- **upgradeInitializers**: Contains the initialization logic for the Diamond contract.
-- **scripts**: Contains deployment scripts for the smart contracts.
-- **test**: Contains test scripts for testing the smart contracts.
-- **hardhat.config.ts**: Contains the configuration for the Hardhat development environment.
-- **package.json**: Contains the project dependencies.
-- **pnpm-lock.yaml**: Contains the lock file for pnpm.
-- **README.md**: This file.
-- **tsconfig.json**: Contains the TypeScript configuration for the project.
+This implementation follows the **FeverTokens Package-Oriented Framework**, where each component is structured as a self-contained package with five distinct files:
+
+### Core ERC-3643 Packages
+
+- **`contracts/erc3643/Token/`**: Main ERC-3643 token implementation with compliant transfers
+- **`contracts/erc3643/IdentityRegistry/`**: On-chain identity management and verification system
+- **`contracts/erc3643/Compliance/`**: Transfer compliance rules and restrictions engine
+- **`contracts/erc3643/TrustedIssuersRegistry/`**: Management of trusted claim issuers
+- **`contracts/erc3643/ClaimTopicsRegistry/`**: Required claim topics for token holders
+- **`contracts/erc3643/AgentManagement/`**: Agent role management for administrative functions
+
+### Package Structure
+
+Each package follows the standard 5-component structure:
+
+- `IPackageInternal.sol` - Internal interface (events, structs, enums)
+- `IPackage.sol` - External interface (public functions)
+- `PackageStorage.sol` - Diamond storage pattern with ERC-7201 slots
+- `PackageInternal.sol` - Internal logic implementation
+- `Package.sol` - External contract entry point
+
+### Additional Directories
+
+- **`scripts/`**: Deployment and management scripts
+- **`test/`**: Comprehensive test suites for all packages
+- **`hardhat.config.ts`**: Hardhat development environment configuration
+- **`package-guidelines.md`**: FeverTokens Package-Oriented Framework specification
+- **`erc3643-guidelines.md`**: Complete ERC-3643 standard specification
+
+## ERC-3643 Features
+
+This implementation provides all required ERC-3643 functionality:
+
+### Core Features
+
+- **✅ ERC-20 Compatibility**: Full backward compatibility with ERC-20 standard
+- **✅ Permissioned Transfers**: All transfers validated through compliance and identity systems
+- **✅ On-chain Identity Management**: Integration with on-chain identity verification
+- **✅ Compliance Rules Engine**: Configurable transfer restrictions and investor limits
+- **✅ Token Recovery System**: Secure recovery mechanism for lost private keys
+
+### Administrative Features
+
+- **✅ Agent Role Management**: Multi-level access control with owner and agent roles
+- **✅ Token Pausing**: Emergency pause functionality for the entire token
+- **✅ Address Freezing**: Individual wallet freeze/unfreeze capabilities
+- **✅ Partial Token Freezing**: Freeze specific amounts within wallets
+- **✅ Forced Transfers**: Agent-initiated transfers for compliance purposes
+
+### Batch Operations
+
+- **✅ Batch Transfers**: Gas-efficient multiple transfers in single transaction
+- **✅ Batch Minting/Burning**: Bulk token issuance and destruction
+- **✅ Batch Freezing**: Multiple address freeze operations
+- **✅ Batch Identity Management**: Bulk identity registration and updates
+
+### Compliance Integration
+
+- **✅ Identity Verification**: Automatic verification of transfer participants
+- **✅ Claim Validation**: Verification against trusted issuers and required topics
+- **✅ Transfer Pre-validation**: `canTransfer()` function for pre-checking compliance
+- **✅ Modular Compliance**: Extensible compliance rule system
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js
-- pnpm
-- Hardhat
+- Node.js (v16 or higher)
+- pnpm package manager
+- Hardhat development environment
+- Basic understanding of ERC-3643 standard and security tokens
 
 ### Installation
 
-1. Clone the repository
-
-2. Navigate to the project directory:
+1. Clone the repository:
 
 ```bash
-cd yourrepository
+git clone https://github.com/FeverTokens/erc3643.git
+cd ft-erc3643-package
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 
-```
+```bash
 pnpm install
 ```
 
-### Running the Project
+3. Compile the smart contracts:
 
-- To compile the smart contracts:
-
-```
+```bash
 pnpm compile
 ```
 
-- To deploy the smart contracts:
+### Development Commands
 
-```
+```bash
+# Compile all contracts
+pnpm compile
+
+# Run comprehensive test suite
+pnpm test
+
+# Deploy to local network
 pnpm deploy:local
+
+# Deploy to specific network
+pnpm deploy:sepolia
+pnpm deploy:mainnet
+
+# Generate contract documentation
+pnpm docs
+
+# Run linting and formatting
+pnpm lint
+pnpm format
 ```
 
-- To test the smart contracts:
+### Package Guidelines
 
-```
-pnpm hardhat test
-```
+This project strictly follows the **FeverTokens Package-Oriented Framework**. Before contributing:
+
+1. Read `package-guidelines.md` for architecture principles
+2. Review `erc3643-guidelines.md` for ERC-3643 compliance requirements
+3. Follow the 5-component package structure for any new packages
+4. Ensure proper Diamond storage patterns and access control
 
 ## Contributing
 
