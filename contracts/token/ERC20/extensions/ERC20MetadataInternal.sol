@@ -1,24 +1,16 @@
 // SPDX-License-Identifier: MIT
 // FeverTokens Contracts v1.0.0
 
-pragma solidity ^0.8.20;
+pragma solidity 0.8.26;
 
-import { IERC20MetadataInternal } from "./IERC20MetadataInternal.sol";
-import { ERC20MetadataStorage } from "./ERC20MetadataStorage.sol";
-import { Initializable } from "../../../initializable/Initializable.sol";
+import {IERC20MetadataInternal} from "./IERC20MetadataInternal.sol";
+import {ERC20MetadataStorage} from "./ERC20MetadataStorage.sol";
 
 /**
  * @title ERC20Metadata internal functions
  */
-abstract contract ERC20MetadataInternal is
-    IERC20MetadataInternal,
-    Initializable
-{
-    function __init__ERC20MetadataInternal(
-        string calldata name_,
-        string calldata symbol_,
-        uint8 decimals_
-    ) internal initializer {
+abstract contract ERC20MetadataInternal is IERC20MetadataInternal {
+    function __init__ERC20MetadataInternal(string calldata name_, string calldata symbol_, uint8 decimals_) internal {
         __init_ERC20MetadataInternal_unchained(name_, symbol_, decimals_);
     }
 
@@ -26,7 +18,7 @@ abstract contract ERC20MetadataInternal is
         string calldata name_,
         string calldata symbol_,
         uint8 decimals_
-    ) internal initializer {
+    ) internal {
         ERC20MetadataStorage.Layout storage l = ERC20MetadataStorage.layout();
 
         l.name = name_;

@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
 // FeverTokens Contracts v1.0.0
 
-pragma solidity ^0.8.20;
+pragma solidity 0.8.26;
 
-import { IOwnableInternal } from "./IOwnableInternal.sol";
-import { OwnableStorage } from "./OwnableStorage.sol";
-import { ContextInternal } from "../../metatx/ContextInternal.sol";
+import {IOwnableInternal} from "./IOwnableInternal.sol";
+import {OwnableStorage} from "./OwnableStorage.sol";
 
-abstract contract OwnableInternal is IOwnableInternal, ContextInternal {
+abstract contract OwnableInternal is IOwnableInternal {
     modifier onlyOwner() {
-        require(_msgSender() == _owner(), "ERC173: sender must be owner");
+        require(msg.sender == _owner(), "ERC173: sender must be owner");
         _;
     }
 

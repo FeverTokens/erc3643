@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // FeverTokens Contracts v1.0.0
 
-pragma solidity ^0.8.20;
+pragma solidity 0.8.26;
 
 /**
  * @title EIP-712 typed structured data hashing and signing
@@ -9,9 +9,7 @@ pragma solidity ^0.8.20;
  */
 library EIP712 {
     bytes32 internal constant EIP712_TYPE_HASH =
-        keccak256(
-            "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
-        );
+        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
 
     /**
      * @notice calculate unique EIP-712 domain separator
