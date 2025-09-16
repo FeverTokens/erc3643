@@ -8,7 +8,9 @@ import {ERC165Internal} from "./ERC165Internal.sol";
 
 contract ERC165 is IERC165, ERC165Internal {
     // @inheritdoc IERC165
-    function supportsInterface(bytes4 interfaceId) external view returns (bool) {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) external view returns (bool) {
         return _supportedInterface(interfaceId);
     }
 }

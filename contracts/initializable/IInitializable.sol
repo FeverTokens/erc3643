@@ -14,5 +14,7 @@ interface IInitializable is IInitializableInternal {
      * @param storageSlot_ The storage slot to check.
      * @return The {InitializationStatus} of the storage slot.
      */
-    function getInitializing(bytes32 storageSlot_) external view returns (InitializationStatus);
+    function getInitializing(
+        bytes32 storageSlot_
+    ) external view returns (InitializationStatus);
 }
