@@ -4,7 +4,7 @@
 		"deploy:local": "hardhat run scripts/deploy.ts",
 		"compile": "pnpm exec hardhat compile",
 		"clean": "pnpm exec hardhat clean",
-		"test:erc3643": "pnpm exec hardhat test test/erc3643Facet.test.ts",
+		"test:packages": "pnpm exec hardhat test test/packages.test.ts",
 		"test:diamond": "pnpm exec hardhat test test/diamond.test.ts",
 		"lint": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --check",
         "lint:fix": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --write"
