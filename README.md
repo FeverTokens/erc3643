@@ -106,7 +106,7 @@ This implementation provides all required ERC-3643 functionality:
 
 ```bash
 git clone https://github.com/FeverTokens/erc3643.git
-cd ft-erc3643-package
+cd erc3643
 ```
 
 2. Install dependencies:
