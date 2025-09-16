@@ -52,33 +52,39 @@ library SafeCast {
     }
 
     function toInt128(int256 value) internal pure returns (int128) {
-        if (value < type(int128).min || value > type(int128).max) revert("SafeCast: Value Does Not Fit");
+        if (value < type(int128).min || value > type(int128).max)
+            revert("SafeCast: Value Does Not Fit");
 
         return int128(value);
     }
 
     function toInt64(int256 value) internal pure returns (int64) {
-        if (value < type(int64).min || value > type(int64).max) revert("SafeCast: Value Does Not Fit");
+        if (value < type(int64).min || value > type(int64).max)
+            revert("SafeCast: Value Does Not Fit");
         return int64(value);
     }
 
     function toInt32(int256 value) internal pure returns (int32) {
-        if (value < type(int32).min || value > type(int32).max) revert("SafeCast: Value Does Not Fit");
+        if (value < type(int32).min || value > type(int32).max)
+            revert("SafeCast: Value Does Not Fit");
         return int32(value);
     }
 
     function toInt16(int256 value) internal pure returns (int16) {
-        if (value < type(int16).min || value > type(int16).max) revert("SafeCast: Value Does Not Fit");
+        if (value < type(int16).min || value > type(int16).max)
+            revert("SafeCast: Value Does Not Fit");
         return int16(value);
     }
 
     function toInt8(int256 value) internal pure returns (int8) {
-        if (value < type(int8).min || value > type(int8).max) revert("SafeCast: Value Does Not Fit");
+        if (value < type(int8).min || value > type(int8).max)
+            revert("SafeCast: Value Does Not Fit");
         return int8(value);
     }
 
     function toInt256(uint256 value) internal pure returns (int256) {
-        if (value > uint256(type(int256).max)) revert("SafeCast: Value Does Not Fit");
+        if (value > uint256(type(int256).max))
+            revert("SafeCast: Value Does Not Fit");
         return int256(value);
     }
 }

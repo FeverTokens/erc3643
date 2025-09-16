@@ -20,11 +20,19 @@ abstract contract Proxy is IProxy {
     fallback() external payable virtual {
         address implementation = _getImplementation();
 
-        if (!implementation.isContract()) revert("Proxy: Implementation Is Not Contract");
+        if (!implementation.isContract())
+            revert("Proxy: Implementation Is Not Contract");
 
         assembly {
             calldatacopy(0, 0, calldatasize())
-            let result := delegatecall(gas(), implementation, 0, calldatasize(), 0, 0)
+            let result := delegatecall(
+                gas(),
+                implementation,
+                0,
+                calldatasize(),
+                0,
+                0
+            )
             returndatacopy(0, 0, returndatasize())
 
             switch result

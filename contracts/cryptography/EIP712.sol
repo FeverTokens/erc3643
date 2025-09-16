@@ -9,7 +9,9 @@ pragma solidity 0.8.26;
  */
 library EIP712 {
     bytes32 internal constant EIP712_TYPE_HASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256(
+            "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+        );
 
     /**
      * @notice calculate unique EIP-712 domain separator

@@ -25,7 +25,9 @@ abstract contract InitializableInternal is IInitializableInternal {
     modifier initializer(bytes32 storageSlot_) {
         InitializableStorage.Layout storage $ = InitializableStorage.layout();
 
-        if ($.initialization[storageSlot_] != InitializationStatus.UnInitialized) {
+        if (
+            $.initialization[storageSlot_] != InitializationStatus.UnInitialized
+        ) {
             revert InitializableInvalidInitialization();
         }
 
@@ -69,7 +71,9 @@ abstract contract InitializableInternal is IInitializableInternal {
     function _disableInitializers(bytes32 storageSlot_) internal {
         InitializableStorage.Layout storage $ = InitializableStorage.layout();
 
-        if ($.initialization[storageSlot_] != InitializationStatus.UnInitialized) {
+        if (
+            $.initialization[storageSlot_] != InitializationStatus.UnInitialized
+        ) {
             revert InitializableInvalidInitialization();
         }
 
@@ -82,7 +86,9 @@ abstract contract InitializableInternal is IInitializableInternal {
      * @dev Internal function that returns the initialization status for the specified storage slot.
      * @param storageSlot_ The storage slot to check.
      */
-    function _getInitializing(bytes32 storageSlot_) internal view returns (InitializationStatus) {
+    function _getInitializing(
+        bytes32 storageSlot_
+    ) internal view returns (InitializationStatus) {
         InitializableStorage.Layout storage $ = InitializableStorage.layout();
 
         return $.initialization[storageSlot_];
@@ -91,9 +97,12 @@ abstract contract InitializableInternal is IInitializableInternal {
     /**
      * @dev Returns `true` if the contract is currently initializing. See {onlyInitializing}.
      */
-    function _isInitializing(bytes32 storageSlot_) internal view returns (bool) {
+    function _isInitializing(
+        bytes32 storageSlot_
+    ) internal view returns (bool) {
         InitializableStorage.Layout storage $ = InitializableStorage.layout();
 
-        return $.initialization[storageSlot_] == InitializationStatus.Initializing;
+        return
+            $.initialization[storageSlot_] == InitializationStatus.Initializing;
     }
 }

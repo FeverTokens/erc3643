@@ -15,7 +15,9 @@ import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
  */
 abstract contract EIP712Internal is IEIP712Internal, InitializableInternal {
     bytes32 private constant TYPE_HASH =
-        keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        keccak256(
+            "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"
+        );
 
     /**
      * @dev Initializes the domain separator and parameter caches.
@@ -64,9 +66,18 @@ abstract contract EIP712Internal is IEIP712Internal, InitializableInternal {
 
         // If the hashed name and version in storage are non-zero, the contract hasn't been properly initialized
         // and the EIP712 domain is not reliable, as it will be missing name and version.
-        if ($._hashedName != 0 || $._hashedVersion != 0) revert EIP712Uninitialized();
+        if ($._hashedName != 0 || $._hashedVersion != 0)
+            revert EIP712Uninitialized();
 
-        return (hex"0f", _EIP712Name(), _EIP712Version(), block.chainid, address(this), bytes32(0), new uint256[](0));
+        return (
+            hex"0f",
+            _EIP712Name(),
+            _EIP712Version(),
+            block.chainid,
+            address(this),
+            bytes32(0),
+            new uint256[](0)
+        );
     }
 
     /**
@@ -80,15 +91,27 @@ abstract contract EIP712Internal is IEIP712Internal, InitializableInternal {
      * @dev Builds the domain separator for the current chain.
      */
     function _buildDomainSeparator() private view returns (bytes32) {
-        return keccak256(abi.encode(TYPE_HASH, _EIP712NameHash(), _EIP712VersionHash(), block.chainid, address(this)));
+        return
+            keccak256(
+                abi.encode(
+                    TYPE_HASH,
+                    _EIP712NameHash(),
+                    _EIP712VersionHash(),
+                    block.chainid,
+                    address(this)
+                )
+            );
     }
 
     /**
      * @dev Given an already hashed struct, this function returns the hash of the fully encoded EIP712 message for this domain.
      * This hash can be used together with {ECDSA-recover} to obtain the signer of a message.
      */
-    function _hashTypedDataV4(bytes32 structHash) internal view returns (bytes32) {
-        return MessageHashUtils.toTypedDataHash(_domainSeparatorV4(), structHash);
+    function _hashTypedDataV4(
+        bytes32 structHash
+    ) internal view returns (bytes32) {
+        return
+            MessageHashUtils.toTypedDataHash(_domainSeparatorV4(), structHash);
     }
 
     /**
