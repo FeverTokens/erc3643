@@ -128,21 +128,15 @@ pnpm compile
 pnpm compile
 
 # Run comprehensive test suite
-pnpm test
+pnpm test:diamond
+pnpm test:packages
 
 # Deploy to local network
 pnpm deploy:local
 
-# Deploy to specific network
-pnpm deploy:sepolia
-pnpm deploy:mainnet
-
-# Generate contract documentation
-pnpm docs
-
 # Run linting and formatting
 pnpm lint
-pnpm format
+pnpm lint:fix
 ```
 
 ### Package Guidelines
