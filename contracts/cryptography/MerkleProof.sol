@@ -15,7 +15,11 @@ library MerkleProof {
      * @param leaf element whose presence in Merkle tree to prove
      * @return whether leaf is proven to be contained within Merkle tree defined by root
      */
-    function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
+    function verify(
+        bytes32[] memory proof,
+        bytes32 root,
+        bytes32 leaf
+    ) internal pure returns (bool) {
         unchecked {
             bytes32 computedHash = leaf;
 
@@ -23,9 +27,13 @@ library MerkleProof {
                 bytes32 proofElement = proof[i];
 
                 if (computedHash <= proofElement) {
-                    computedHash = keccak256(abi.encodePacked(computedHash, proofElement));
+                    computedHash = keccak256(
+                        abi.encodePacked(computedHash, proofElement)
+                    );
                 } else {
-                    computedHash = keccak256(abi.encodePacked(proofElement, computedHash));
+                    computedHash = keccak256(
+                        abi.encodePacked(proofElement, computedHash)
+                    );
                 }
             }
 

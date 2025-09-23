@@ -15,7 +15,9 @@ contract InitializablePackage is IInitializable, InitializableInternal {
     /**
      * @inheritdoc IInitializable
      */
-    function getInitializing(bytes32 storageSlot_) external view returns (InitializationStatus) {
+    function getInitializing(
+        bytes32 storageSlot_
+    ) external view returns (InitializationStatus) {
         return _getInitializing(storageSlot_);
     }
 }

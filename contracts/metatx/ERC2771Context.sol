@@ -21,7 +21,9 @@ contract ERC2771Context is IERC2771Context, ERC2771ContextInternal {
     /**
      * @inheritdoc IERC2771Context
      */
-    function isTrustedForwarder(address forwarder) public view virtual returns (bool) {
+    function isTrustedForwarder(
+        address forwarder
+    ) public view virtual returns (bool) {
         return _isTrustedForwarder(forwarder);
     }
 }

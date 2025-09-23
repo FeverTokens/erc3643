@@ -19,7 +19,10 @@ library ECDSA {
      * @param signature signed data payload
      * @return recovered message signer
      */
-    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {
+    function recover(
+        bytes32 hash,
+        bytes memory signature
+    ) internal pure returns (address) {
         if (signature.length != 65) revert("ECDSA: Invalid Signature Length");
 
         bytes32 r;
@@ -43,7 +46,12 @@ library ECDSA {
      * @param s signature "s" value
      * @return recovered message signer
      */
-    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {
+    function recover(
+        bytes32 hash,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) internal pure returns (address) {
         // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature
         // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines
         // the valid range for s in (281): 0 < s < secp256k1n ÷ 2 + 1, and for v in (282): v ∈ {27, 28}. Most
@@ -53,7 +61,10 @@ library ECDSA {
         // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or
         // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept
         // these malleable signatures as well.
-        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) revert("ECDSA: Invalid S");
+        if (
+            uint256(s) >
+            0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0
+        ) revert("ECDSA: Invalid S");
         if (v != 27 && v != 28) revert("ECDSA: Invalid V");
 
         // If the signature is valid (and not malleable), return the signer address
@@ -68,7 +79,12 @@ library ECDSA {
      * @param hash hashed data payload
      * @return signed message hash
      */
-    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+    function toEthSignedMessageHash(
+        bytes32 hash
+    ) internal pure returns (bytes32) {
+        return
+            keccak256(
+                abi.encodePacked("\x19Ethereum Signed Message:\n32", hash)
+            );
     }
 }

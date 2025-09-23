@@ -22,4 +22,7 @@ import {ReentrancyGuardInternal} from "./ReentrancyGuardInternal.sol";
  * to protect against it, check out our blog post
  * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
  */
-abstract contract ReentrancyGuard is IReentrancyGuard, ReentrancyGuardInternal {}
+abstract contract ReentrancyGuard is
+    IReentrancyGuard,
+    ReentrancyGuardInternal
+{}
