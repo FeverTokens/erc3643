@@ -24,7 +24,7 @@ This project addresses the critical need for compliant security token infrastruc
 - **Solidity ^0.8.26**: Smart contracts written in the latest Solidity version
 - **Hardhat**: Development environment for Ethereum smart contracts
 - **TypeScript**: Strongly-typed deployment and test scripts
-- **pnpm**: Fast, disk-space efficient package manager
+- **npm**: Common package manager
 
 ## ERC-3643 Package Architecture
 
@@ -96,7 +96,6 @@ This implementation provides all required ERC-3643 functionality:
 ### Prerequisites
 
 - Node.js (v16 or higher)
-- pnpm package manager
 - Hardhat development environment
 - Basic understanding of ERC-3643 standard and security tokens
 
@@ -112,31 +111,31 @@ cd erc3643
 2. Install dependencies:
 
 ```bash
-pnpm install
+npm ci
 ```
 
 3. Compile the smart contracts:
 
 ```bash
-pnpm compile
+npm run compile
 ```
 
 ### Development Commands
 
 ```bash
 # Compile all contracts
-pnpm compile
+npm run compile
 
 # Run comprehensive test suite
-pnpm test:diamond
-pnpm test:packages
+npm run test:diamond
+npm run test:packages
 
 # Deploy to local network
-pnpm deploy:local
+npm run deploy:local
 
 # Run linting and formatting
-pnpm lint
-pnpm lint:fix
+npm run lint
+npm run lint:fix
 ```
 
 ### Package Guidelines
