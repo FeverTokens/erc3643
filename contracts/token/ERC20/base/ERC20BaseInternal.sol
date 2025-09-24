@@ -11,12 +11,12 @@ import {ReentrancyGuard} from "../../../security/ReentrancyGuard.sol";
  * @title Base ERC20 internal functions, excluding optional extensions
  */
 abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
-    function __init_ERC20BaseInternal() internal {
-        __init_ERC20BaseInternal_unchained();
+    function __ERC20BaseInternal_init() internal {
+        __ERC20BaseInternal_init_unchained();
         __ReentrancyGuard_init();
     }
 
-    function __init_ERC20BaseInternal_unchained() internal {}
+    function __ERC20BaseInternal_init_unchained() internal {}
 
     /**
      * @notice query the total minted token supply
@@ -31,7 +31,9 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param account address to query
      * @return token balance
      */
-    function _balanceOf(address account) internal view virtual returns (uint256) {
+    function _balanceOf(
+        address account
+    ) internal view virtual returns (uint256) {
         return ERC20BaseStorage.layout().balances[account];
     }
 
@@ -41,7 +43,10 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param spender recipient of allowance
      * @return token allowance
      */
-    function _allowance(address holder, address spender) internal view virtual returns (uint256) {
+    function _allowance(
+        address holder,
+        address spender
+    ) internal view virtual returns (uint256) {
         return ERC20BaseStorage.layout().allowances[holder][spender];
     }
 
@@ -52,8 +57,13 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param amount quantity of tokens approved for spending
      * @return success status (always true; otherwise function should revert)
      */
-    function _approve(address holder, address spender, uint256 amount) internal virtual returns (bool) {
-        if (holder == address(0)) revert("ERC20Base: Approve From Zero Address");
+    function _approve(
+        address holder,
+        address spender,
+        uint256 amount
+    ) internal virtual returns (bool) {
+        if (holder == address(0))
+            revert("ERC20Base: Approve From Zero Address");
         if (spender == address(0)) revert("ERC20Base: Approve To Zero Address");
 
         ERC20BaseStorage.layout().allowances[holder][spender] = amount;
@@ -75,7 +85,10 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      *
      * - `spender` cannot be the zero address.
      */
-    function _increaseAllowance(address spender, uint256 addedValue) internal virtual returns (bool) {
+    function _increaseAllowance(
+        address spender,
+        uint256 addedValue
+    ) internal virtual returns (bool) {
         address holder = msg.sender;
         uint256 currentAllowance = _allowance(holder, spender);
         if (currentAllowance != type(uint256).max) {
@@ -101,10 +114,14 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * - `spender` must have allowance for the caller of at least
      * `subtractedValue`.
      */
-    function _decreaseAllowance(address spender, uint256 subtractedValue) internal virtual returns (bool) {
+    function _decreaseAllowance(
+        address spender,
+        uint256 subtractedValue
+    ) internal virtual returns (bool) {
         address holder = msg.sender;
         uint256 allowance = _allowance(holder, spender);
-        if (subtractedValue > allowance) revert("ERC20Base: Insufficient Allowance");
+        if (subtractedValue > allowance)
+            revert("ERC20Base: Insufficient Allowance");
 
         unchecked {
             _approve(holder, spender, allowance - subtractedValue);
@@ -158,7 +175,11 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param amount quantity of tokens transferred
      * @return success status (always true; otherwise function should revert)
      */
-    function _transfer(address holder, address recipient, uint256 amount) internal virtual returns (bool) {
+    function _transfer(
+        address holder,
+        address recipient,
+        uint256 amount
+    ) internal virtual returns (bool) {
         if (holder == address(0)) {
             revert("ERC20Base: Transfer From Zero Address");
         }
@@ -194,7 +215,11 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param amount quantity of tokens to transfer
      * @return success status (always true; otherwise function should revert)
      */
-    function _transferFrom(address holder, address recipient, uint256 amount) internal virtual returns (bool) {
+    function _transferFrom(
+        address holder,
+        address recipient,
+        uint256 amount
+    ) internal virtual returns (bool) {
         _decreaseAllowance(msg.sender, amount);
 
         _transfer(holder, recipient, amount);
@@ -209,5 +234,9 @@ abstract contract ERC20BaseInternal is ReentrancyGuard, IERC20BaseInternal {
      * @param to receiver of tokens
      * @param amount quantity of tokens transferred
      */
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual {}
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal virtual {}
 }

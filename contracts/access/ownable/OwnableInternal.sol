@@ -7,6 +7,14 @@ import {IOwnableInternal} from "./IOwnableInternal.sol";
 import {OwnableStorage} from "./OwnableStorage.sol";
 
 abstract contract OwnableInternal is IOwnableInternal {
+    function __OwnableInternal_init(address owner) internal {
+        __OwnableInternal_init_unchained(owner);
+    }
+
+    function __OwnableInternal_init_unchained(address owner) internal {
+        _setOwner(owner);
+    }
+
     modifier onlyOwner() {
         require(msg.sender == _owner(), "ERC173: sender must be owner");
         _;

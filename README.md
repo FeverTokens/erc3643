@@ -138,15 +138,6 @@ npm run lint
 npm run lint:fix
 ```
 
-### Package Guidelines
-
-This project strictly follows the **FeverTokens Package-Oriented Framework**. Before contributing:
-
-1. Read `package-guidelines.md` for architecture principles
-2. Review `erc3643-guidelines.md` for ERC-3643 compliance requirements
-3. Follow the 5-component package structure for any new packages
-4. Ensure proper Diamond storage patterns and access control
-
 ## Contributing
 
 Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
