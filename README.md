@@ -127,25 +127,12 @@ npm run compile
 npm run compile
 
 # Run comprehensive test suite
-npm run test:diamond
-npm run test:packages
-
-# Deploy to local network
-npm run deploy:local
+npm run test
 
 # Run linting and formatting
 npm run lint
 npm run lint:fix
 ```
-
-### Package Guidelines
-
-This project strictly follows the **FeverTokens Package-Oriented Framework**. Before contributing:
-
-1. Read `package-guidelines.md` for architecture principles
-2. Review `erc3643-guidelines.md` for ERC-3643 compliance requirements
-3. Follow the 5-component package structure for any new packages
-4. Ensure proper Diamond storage patterns and access control
 
 ## Contributing
 

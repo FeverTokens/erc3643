@@ -1,45 +1,40 @@
 {
-	"scripts": {
-		"build": "tsc",
-		"deploy:local": "hardhat run scripts/deploy.ts",
-		"compile": "hardhat compile",
-		"clean": "hardhat clean",
-		"test:packages": "hardhat test test/packages.test.ts",
-		"test:diamond": "hardhat test test/diamond.test.ts",
-		"lint": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --check",
-        "lint:fix": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --write"
-	},
-	"devDependencies": {
-		"@nomicfoundation/hardhat-network-helpers": "^1.0.10",
-		"@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
-		"@nomicfoundation/hardhat-verify": "^2.0.5",
-		"@nomicfoundation/hardhat-viem": "^1.0.4",
-		"@typechain/hardhat": "^9.1.0",
-		"@types/chai": "^4.3.14",
-		"@types/chai-as-promised": "^7.1.8",
-		"@types/jest": "^29.5.12",
-		"@types/mocha": "^10.0.6",
-		"@types/node": "^20.12.7",
-		"chai": "^4.4.1",
-		"expect": "^29.7.0",
-		"hardhat": "^2.22.2",
-		"hardhat-gas-reporter": "^1.0.10",
-		"prettier": "^3.5.3",
-		"prettier-plugin-solidity": "^1.4.2",
-		"solc": "0.8.0",
-		"solidity-coverage": "^0.8.12",
-		"ts-node": "^10.9.2",
-		"typescript": "~5.0.4",
-		"viem": "^1.21.4"
-	},
-	"dependencies": {
-		"@ethersproject/abi": "^5.7.0",
-		"@ethersproject/bytes": "^5.7.0",
-		"@openzeppelin/contracts": "^5.4.0",
-		"@types/dotenv": "^8.2.0",
-		"@walletconnect/ethereum-provider": "^2.12.2",
-		"dotenv": "^16.4.5",
-		"ethereum-utils": "^1.0.0",
-		"ethers": "^6.11.1"
-	}
+  "scripts": {
+    "compile": "TYPECHAIN_DONT_OVERRIDE_COMPILE=true hardhat compile && ts-node scripts/generate-metadata.ts",
+    "clean": "npx hardhat clean",
+    "test": "npx hardhat test",
+    "lint": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --check",
+    "lint:fix": "prettier --log-level warn --ignore-path .gitignore contracts/**/*.sol --write"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
+    "@nomicfoundation/hardhat-toolbox-viem": "^2.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.5",
+    "@nomicfoundation/hardhat-viem": "^1.0.4",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.14",
+    "@types/chai-as-promised": "^7.1.8",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.12.7",
+    "chai": "^4.4.1",
+    "expect": "^29.7.0",
+    "hardhat": "^2.22.2",
+    "hardhat-contract-sizer": "^2.10.1",
+    "hardhat-gas-reporter": "^1.0.10",
+    "prettier": "^3.5.3",
+    "prettier-plugin-solidity": "^1.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.0.4"
+  },
+  "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@types/dotenv": "^8.2.0",
+    "@walletconnect/ethereum-provider": "^2.12.2",
+    "dotenv": "^16.4.5",
+    "ethereum-utils": "^1.0.0",
+    "ethers": "^6.11.1"
+  }
 }

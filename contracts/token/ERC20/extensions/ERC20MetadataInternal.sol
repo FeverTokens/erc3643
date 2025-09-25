@@ -10,17 +10,20 @@ import {ERC20MetadataStorage} from "./ERC20MetadataStorage.sol";
  * @title ERC20Metadata internal functions
  */
 abstract contract ERC20MetadataInternal is IERC20MetadataInternal {
-    function __init__ERC20MetadataInternal(string calldata name_, string calldata symbol_, uint8 decimals_) internal {
-        __init_ERC20MetadataInternal_unchained(name_, symbol_, decimals_);
+    function __ERC20MetadataInternal_init(
+        string calldata name_,
+        string calldata symbol_,
+        uint8 decimals_
+    ) internal {
+        __ERC20MetadataInternal_init_unchained(name_, symbol_, decimals_);
     }
 
-    function __init_ERC20MetadataInternal_unchained(
+    function __ERC20MetadataInternal_init_unchained(
         string calldata name_,
         string calldata symbol_,
         uint8 decimals_
     ) internal {
         ERC20MetadataStorage.Layout storage l = ERC20MetadataStorage.layout();
-
         l.name = name_;
         l.symbol = symbol_;
         l.decimals = decimals_;
