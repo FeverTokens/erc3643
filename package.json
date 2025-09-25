@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "deploy:local": "hardhat run scripts/deploy.ts",
     "compile": "TYPECHAIN_DONT_OVERRIDE_COMPILE=true hardhat compile && ts-node scripts/generate-metadata.ts",
     "clean": "npx hardhat clean",
     "test": "npx hardhat test",

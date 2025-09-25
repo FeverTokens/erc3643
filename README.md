@@ -127,11 +127,7 @@ npm run compile
 npm run compile
 
 # Run comprehensive test suite
-npm run test:diamond
-npm run test:packages
-
-# Deploy to local network
-npm run deploy:local
+npm run test
 
 # Run linting and formatting
 npm run lint
