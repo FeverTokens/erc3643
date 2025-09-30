@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
+import "../IIdentity.sol";
+
 /**
  * @title Identity Registry Internal Interface
  * @notice Internal interface defining events, errors, and data structures for identity registry operations
@@ -39,31 +41,31 @@ interface IIdentityRegistryInternal {
     /**
      * @notice Emitted when a new identity is registered for an investor
      * @param investorAddress The wallet address of the investor
-     * @param identity The identity contract address that was registered
+     * @param identity The identity contract that was registered
      */
     event IdentityRegistered(
         address indexed investorAddress,
-        address indexed identity
+        IIdentity indexed identity
     );
 
     /**
      * @notice Emitted when an identity registration is removed
      * @param investorAddress The wallet address of the investor
-     * @param identity The identity contract address that was removed
+     * @param identity The identity contract that was removed
      */
     event IdentityRemoved(
         address indexed investorAddress,
-        address indexed identity
+        IIdentity indexed identity
     );
 
     /**
-     * @notice Emitted when an identity contract address is updated
-     * @param oldIdentity The previous identity contract address
-     * @param newIdentity The new identity contract address
+     * @notice Emitted when an identity contract is updated
+     * @param oldIdentity The previous identity contract
+     * @param newIdentity The new identity contract
      */
     event IdentityUpdated(
-        address indexed oldIdentity,
-        address indexed newIdentity
+        IIdentity indexed oldIdentity,
+        IIdentity indexed newIdentity
     );
 
     /**
@@ -80,31 +82,31 @@ interface IIdentityRegistryInternal {
     /**
      * @notice Emitted when an identity is stored (storage-level event)
      * @param investorAddress The wallet address of the investor
-     * @param identity The identity contract address that was stored
+     * @param identity The identity contract that was stored
      */
     event IdentityStored(
         address indexed investorAddress,
-        address indexed identity
+        IIdentity indexed identity
     );
 
     /**
      * @notice Emitted when an identity is removed from storage (storage-level event)
      * @param investorAddress The wallet address of the investor
-     * @param identity The identity contract address that was removed from storage
+     * @param identity The identity contract that was removed from storage
      */
     event IdentityUnstored(
         address indexed investorAddress,
-        address indexed identity
+        IIdentity indexed identity
     );
 
     /**
      * @notice Emitted when an identity is modified (storage-level event)
-     * @param oldIdentity The previous identity contract address
-     * @param newIdentity The new identity contract address
+     * @param oldIdentity The previous identity contract
+     * @param newIdentity The new identity contract
      */
     event IdentityModified(
-        address indexed oldIdentity,
-        address indexed newIdentity
+        IIdentity indexed oldIdentity,
+        IIdentity indexed newIdentity
     );
 
     /**

@@ -12,28 +12,28 @@ abstract contract TrustedIssuersRegistryInternal is
     using TrustedIssuersRegistryStorage for TrustedIssuersRegistryStorage.Layout;
 
     function _addTrustedIssuer(
-        address _trustedIssuer,
+        IClaimIssuer _trustedIssuer,
         uint256[] calldata _claimTopics
     ) internal onlyOwner {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
 
-        if (_trustedIssuer == address(0)) {
-            revert InvalidIssuerAddress(_trustedIssuer);
+        if (address(_trustedIssuer) == address(0)) {
+            revert InvalidIssuerAddress(address(_trustedIssuer));
         }
         if (_claimTopics.length == 0) {
             revert EmptyClaimTopics();
         }
-        if (l.trustedIssuers[_trustedIssuer].exists) {
-            revert IssuerAlreadyTrusted(_trustedIssuer);
+        if (l.trustedIssuers[address(_trustedIssuer)].exists) {
+            revert IssuerAlreadyTrusted(address(_trustedIssuer));
         }
 
         // Add issuer to the list
-        l.issuerIndex[_trustedIssuer] = l.issuersList.length;
+        l.issuerIndex[address(_trustedIssuer)] = l.issuersList.length;
         l.issuersList.push(_trustedIssuer);
 
         // Store issuer data
-        l.trustedIssuers[_trustedIssuer] = TrustedIssuer({
+        l.trustedIssuers[address(_trustedIssuer)] = TrustedIssuer({
             exists: true,
             claimTopics: _claimTopics
         });
@@ -41,68 +41,74 @@ abstract contract TrustedIssuersRegistryInternal is
         // Update claim topic mappings
         for (uint256 i = 0; i < _claimTopics.length; i++) {
             uint256 topic = _claimTopics[i];
-            l.issuerTopicIndex[topic][_trustedIssuer] = l
+            l.issuerTopicIndex[topic][address(_trustedIssuer)] = l
                 .issuersForClaimTopic[topic]
                 .length;
             l.issuersForClaimTopic[topic].push(_trustedIssuer);
         }
 
-        emit TrustedIssuerAdded(_trustedIssuer, _claimTopics);
+        emit TrustedIssuerAdded(IClaimIssuer(_trustedIssuer), _claimTopics);
     }
 
-    function _removeTrustedIssuer(address _trustedIssuer) internal onlyOwner {
+    function _removeTrustedIssuer(
+        IClaimIssuer _trustedIssuer
+    ) internal onlyOwner {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
 
-        if (!l.trustedIssuers[_trustedIssuer].exists) {
-            revert IssuerNotTrusted(_trustedIssuer);
+        if (!l.trustedIssuers[address(_trustedIssuer)].exists) {
+            revert IssuerNotTrusted(address(_trustedIssuer));
         }
 
         // Remove from claim topic mappings
-        uint256[] memory topics = l.trustedIssuers[_trustedIssuer].claimTopics;
+        uint256[] memory topics = l
+            .trustedIssuers[address(_trustedIssuer)]
+            .claimTopics;
         for (uint256 i = 0; i < topics.length; i++) {
             uint256 topic = topics[i];
-            uint256 topicIndex = l.issuerTopicIndex[topic][_trustedIssuer];
+            uint256 topicIndex = l.issuerTopicIndex[topic][
+                address(_trustedIssuer)
+            ];
             uint256 topicLastIndex = l.issuersForClaimTopic[topic].length - 1;
 
             if (topicIndex != topicLastIndex) {
-                address lastIssuer = l.issuersForClaimTopic[topic][
+                IClaimIssuer lastIssuer = l.issuersForClaimTopic[topic][
                     topicLastIndex
                 ];
                 l.issuersForClaimTopic[topic][topicIndex] = lastIssuer;
-                l.issuerTopicIndex[topic][lastIssuer] = topicIndex;
+                l.issuerTopicIndex[topic][address(lastIssuer)] = topicIndex;
             }
 
             l.issuersForClaimTopic[topic].pop();
-            delete l.issuerTopicIndex[topic][_trustedIssuer];
+            delete l.issuerTopicIndex[topic][address(_trustedIssuer)];
         }
 
         // Remove from issuers list
-        uint256 index = l.issuerIndex[_trustedIssuer];
+        uint256 index = l.issuerIndex[address(_trustedIssuer)];
         uint256 lastIndex = l.issuersList.length - 1;
 
         if (index != lastIndex) {
-            address lastIssuer = l.issuersList[lastIndex];
+            IClaimIssuer lastIssuer = l.issuersList[lastIndex];
             l.issuersList[index] = lastIssuer;
-            l.issuerIndex[lastIssuer] = index;
+            l.issuerIndex[address(lastIssuer)] = index;
         }
 
         l.issuersList.pop();
-        delete l.issuerIndex[_trustedIssuer];
-        delete l.trustedIssuers[_trustedIssuer];
+        delete l.issuerIndex[address(_trustedIssuer)];
+        delete l.trustedIssuers[address(_trustedIssuer)];
 
-        emit TrustedIssuerRemoved(_trustedIssuer);
+        emit TrustedIssuerRemoved(IClaimIssuer(_trustedIssuer));
     }
 
     function _updateIssuerClaimTopics(
-        address _trustedIssuer,
+        IClaimIssuer _trustedIssuer,
         uint256[] calldata _claimTopics
     ) internal onlyOwner {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
 
-        if (!l.trustedIssuers[_trustedIssuer].exists) {
-            revert IssuerNotTrusted(_trustedIssuer);
+        if (!l.trustedIssuers[address(_trustedIssuer)].exists) {
+            revert IssuerNotTrusted(address(_trustedIssuer));
         }
         if (_claimTopics.length == 0) {
             revert EmptyClaimTopics();
@@ -110,39 +116,47 @@ abstract contract TrustedIssuersRegistryInternal is
 
         // Remove old claim topic mappings
         uint256[] memory oldTopics = l
-            .trustedIssuers[_trustedIssuer]
+            .trustedIssuers[address(_trustedIssuer)]
             .claimTopics;
         for (uint256 i = 0; i < oldTopics.length; i++) {
             uint256 topic = oldTopics[i];
-            uint256 topicIndex = l.issuerTopicIndex[topic][_trustedIssuer];
+            uint256 topicIndex = l.issuerTopicIndex[topic][
+                address(_trustedIssuer)
+            ];
             uint256 lastIndex = l.issuersForClaimTopic[topic].length - 1;
 
             if (topicIndex != lastIndex) {
-                address lastIssuer = l.issuersForClaimTopic[topic][lastIndex];
+                IClaimIssuer lastIssuer = l.issuersForClaimTopic[topic][
+                    lastIndex
+                ];
                 l.issuersForClaimTopic[topic][topicIndex] = lastIssuer;
-                l.issuerTopicIndex[topic][lastIssuer] = topicIndex;
+                l.issuerTopicIndex[topic][address(lastIssuer)] = topicIndex;
             }
 
             l.issuersForClaimTopic[topic].pop();
-            delete l.issuerTopicIndex[topic][_trustedIssuer];
+            delete l.issuerTopicIndex[topic][address(_trustedIssuer)];
         }
 
         // Update with new claim topics
-        l.trustedIssuers[_trustedIssuer].claimTopics = _claimTopics;
+        l.trustedIssuers[address(_trustedIssuer)].claimTopics = _claimTopics;
 
         // Add new claim topic mappings
         for (uint256 i = 0; i < _claimTopics.length; i++) {
             uint256 topic = _claimTopics[i];
-            l.issuerTopicIndex[topic][_trustedIssuer] = l
+            l.issuerTopicIndex[topic][address(_trustedIssuer)] = l
                 .issuersForClaimTopic[topic]
                 .length;
             l.issuersForClaimTopic[topic].push(_trustedIssuer);
         }
 
-        emit ClaimTopicsUpdated(_trustedIssuer, _claimTopics);
+        emit ClaimTopicsUpdated(IClaimIssuer(_trustedIssuer), _claimTopics);
     }
 
-    function _getTrustedIssuers() internal view returns (address[] memory) {
+    function _getTrustedIssuers()
+        internal
+        view
+        returns (IClaimIssuer[] memory)
+    {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
         return l.issuersList;
@@ -155,16 +169,16 @@ abstract contract TrustedIssuersRegistryInternal is
     }
 
     function _getTrustedIssuerClaimTopics(
-        address _trustedIssuer
+        IClaimIssuer _trustedIssuer
     ) internal view returns (uint256[] memory) {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
-        return l.trustedIssuers[_trustedIssuer].claimTopics;
+        return l.trustedIssuers[address(_trustedIssuer)].claimTopics;
     }
 
     function _getTrustedIssuersForClaimTopic(
         uint256 claimTopic
-    ) internal view returns (address[] memory) {
+    ) internal view returns (IClaimIssuer[] memory) {
         TrustedIssuersRegistryStorage.Layout
             storage l = TrustedIssuersRegistryStorage.layout();
         return l.issuersForClaimTopic[claimTopic];

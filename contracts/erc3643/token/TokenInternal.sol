@@ -5,14 +5,16 @@ import "./ITokenInternal.sol";
 import "./TokenStorage.sol";
 import "../../token/ERC20/base/IERC20BaseInternal.sol";
 import "../agent/AgentRoleInternal.sol";
+import "../compliance/ICompliance.sol";
 import "../compliance/ComplianceInternal.sol";
-import "../identity/IdentityRegistry.sol";
+import "../identity/IIdentityRegistry.sol";
+import "../identity/IdentityRegistryInternal.sol";
 
 abstract contract TokenInternal is
     ITokenInternal,
     IERC20BaseInternal,
     AgentRoleInternal,
-    IdentityRegistry,
+    IdentityRegistryInternal,
     ComplianceInternal
 {
     using TokenStorage for TokenStorage.Layout;
@@ -310,12 +312,12 @@ abstract contract TokenInternal is
         return TokenStorage.layout().frozenTokens[_userAddress];
     }
 
-    function _identityRegistry() internal view returns (address) {
-        return TokenStorage.layout().identityRegistry;
+    function _identityRegistry() internal view returns (IIdentityRegistry) {
+        return IIdentityRegistry(TokenStorage.layout().identityRegistry);
     }
 
-    function _compliance() internal view returns (address) {
-        return TokenStorage.layout().compliance;
+    function _compliance() internal view returns (ICompliance) {
+        return ICompliance(TokenStorage.layout().compliance);
     }
 
     function _onchainID() internal view returns (address) {

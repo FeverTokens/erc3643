@@ -1,5 +1,4 @@
 import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox-viem";
 import "@typechain/hardhat";
 import "hardhat-contract-sizer";
 

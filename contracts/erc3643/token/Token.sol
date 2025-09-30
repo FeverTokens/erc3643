@@ -60,11 +60,11 @@ contract Token is TokenInternal, IToken {
         return _version();
     }
 
-    function identityRegistry() external view returns (address) {
+    function identityRegistry() external view returns (IIdentityRegistry) {
         return _identityRegistry();
     }
 
-    function compliance() external view returns (address) {
+    function compliance() external view returns (ICompliance) {
         return _compliance();
     }
 
