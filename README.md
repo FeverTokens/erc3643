@@ -138,7 +138,13 @@ fever compile --all
 fever artifacts sync
 ```
 
-6. Deploy the Diamond configuration:
+7. Define environment variables for blockchain configuration:
+
+```bash
+cp .env.anvil .env
+```
+
+8. Deploy the Diamond configuration:
 
 ```bash
 fever compose -f f9s/erc3643-diamond-config.yaml
