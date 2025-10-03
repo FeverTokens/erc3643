@@ -16,5 +16,5 @@ spec:
       value: "${PRIVATE_KEY}" # Environment variable reference
 
   network:
-    chainId: "${CHAIN_ID}" # Blockchainchain ID
-    rpcUrl: "${RPC_URL}" # BlockchainRPC
+    chainId: "${CHAIN_ID}" # Blockchain chain ID
+    rpcUrl: "${RPC_URL}" # Blockchain RPC
