@@ -9,7 +9,7 @@ spec:
   deployer:
     wallet:
       type: privateKey
-      value: "${DEPLOYER_PRIVATE_KEY}"
+      value: "${PRIVATE_KEY}"
 
   diamond:
     name: ERC3643Diamond
@@ -116,5 +116,5 @@ spec:
       address: "0x4E9292446992bbb4FfE0db206895A83e64D90Fd0" # BondManagement contract address
 
   network:
-    chainId: "11155111"
-    rpcUrl: "https://sepolia.drpc.org"
+    chainId: "${CHAIN_ID}" # Blockchain chain ID
+    rpcUrl: "${RPC_URL}" # Blockchain RPC
