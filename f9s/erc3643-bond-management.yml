@@ -1,0 +1,20 @@
+apiVersion: beta/v1
+kind: Deployment
+
+metadata:
+  name: erc3643-bond-management-deployment
+  version: 1.0.0
+  description: "BondManagement package deployment for ERC3643 bond issuance and redemption"
+
+spec:
+  package:
+    name: BondManagement
+
+  deployer:
+    wallet:
+      type: "privateKey" # Options: privateKey, mnemonic, keystore
+      value: "${PRIVATE_KEY}" # Environment variable reference
+
+  network:
+    chainId: "${CHAIN_ID}" # Blockchainchain ID
+    rpcUrl: "${RPC_URL}" # BlockchainRPC

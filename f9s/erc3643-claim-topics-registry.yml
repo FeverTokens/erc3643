@@ -1,0 +1,20 @@
+apiVersion: beta/v1
+kind: Deployment
+
+metadata:
+  name: erc3643-claim-topics-registry-deployment
+  version: 1.0.0
+  description: "ERC3643 ClaimTopicsRegistry package deployment"
+
+spec:
+  package:
+    name: ClaimTopicsRegistry
+
+  deployer:
+    wallet:
+      type: "privateKey" # Options: privateKey, mnemonic, keystore
+      value: "${PRIVATE_KEY}" # Environment variable reference
+
+  network:
+    chainId: "${CHAIN_ID}" # Blockchainchain ID
+    rpcUrl: "${RPC_URL}" # BlockchainRPC
