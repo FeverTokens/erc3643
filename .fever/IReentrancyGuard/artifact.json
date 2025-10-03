@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/security/IReentrancyGuard.sol": {
+      "IReentrancyGuard": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

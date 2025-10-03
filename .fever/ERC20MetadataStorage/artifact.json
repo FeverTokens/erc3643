@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "contracts/token/ERC20/extensions/ERC20MetadataStorage.sol": {
+      "ERC20MetadataStorage": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220da9405f8109da25b849907051dab6cb1a182549695cc8b84fe747d1a8e0529c564736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220da9405f8109da25b849907051dab6cb1a182549695cc8b84fe747d1a8e0529c564736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "layout()": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

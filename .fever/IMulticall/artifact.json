@@ -1,0 +1,41 @@
+{
+  "contracts": {
+    "contracts/utils/IMulticall.sol": {
+      "IMulticall": {
+        "abi": [
+          {
+            "inputs": [
+              {
+                "internalType": "bytes[]",
+                "name": "data",
+                "type": "bytes[]"
+              }
+            ],
+            "name": "multicall",
+            "outputs": [
+              {
+                "internalType": "bytes[]",
+                "name": "results",
+                "type": "bytes[]"
+              }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {
+            "multicall(bytes[])": "ac9650d8"
+          }
+        }
+      }
+    }
+  }
+}

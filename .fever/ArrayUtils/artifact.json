@@ -1,0 +1,33 @@
+{
+  "contracts": {
+    "contracts/utils/ArrayUtils.sol": {
+      "ArrayUtils": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220d44c5f16ca5efce389e06429e51cdfdb6c02e4fc6c0d7eb447e1992c274da4f964736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220d44c5f16ca5efce389e06429e51cdfdb6c02e4fc6c0d7eb447e1992c274da4f964736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "max(address[] memory)": "infinite",
+              "max(bytes32[] memory)": "infinite",
+              "max(uint256[] memory)": "infinite",
+              "min(address[] memory)": "infinite",
+              "min(bytes32[] memory)": "infinite",
+              "min(uint256[] memory)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

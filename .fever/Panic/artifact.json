@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "@openzeppelin/contracts/utils/Panic.sol": {
+      "Panic": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220ea081db8002d0b9b14bad303c9565d43fac81d74c3bf63e99cb4cd45108224fc64736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220ea081db8002d0b9b14bad303c9565d43fac81d74c3bf63e99cb4cd45108224fc64736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "panic(uint256)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

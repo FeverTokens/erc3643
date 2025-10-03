@@ -1,0 +1,63 @@
+{
+  "contracts": {
+    "contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "IERC20Metadata": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "decimals",
+            "outputs": [
+              {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "name",
+            "outputs": [
+              {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "symbol",
+            "outputs": [
+              {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {
+            "decimals()": "313ce567",
+            "name()": "06fdde03",
+            "symbol()": "95d89b41"
+          }
+        }
+      }
+    }
+  }
+}

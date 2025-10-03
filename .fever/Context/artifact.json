@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/metatx/Context.sol": {
+      "Context": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

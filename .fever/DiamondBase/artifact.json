@@ -1,0 +1,29 @@
+{
+  "contracts": {
+    "contracts/proxy/diamond/base/DiamondBase.sol": {
+      "DiamondBase": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "Proxy__ImplementationIsNotContract",
+            "type": "error"
+          },
+          {
+            "stateMutability": "payable",
+            "type": "fallback"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

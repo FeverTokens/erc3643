@@ -1,0 +1,84 @@
+{
+  "contracts": {
+    "contracts/data/DoublyLinkedList.sol": {
+      "DoublyLinkedList": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "DoublyLinkedList__InvalidInput",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "DoublyLinkedList__NonExistentEntry",
+            "type": "error"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220aa86c25d968a5209063990d7378c6ce5fbdde519b553d6f8f6b8f2ab73250d5564736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220aa86c25d968a5209063990d7378c6ce5fbdde519b553d6f8f6b8f2ab73250d5564736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "_contains(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "_insertAfter(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32,bytes32)": "infinite",
+              "_insertBefore(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32,bytes32)": "infinite",
+              "_insertBetween(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32,bytes32,bytes32)": "infinite",
+              "_link(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32,bytes32)": "infinite",
+              "_next(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "_pop(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer)": "infinite",
+              "_prev(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "_push(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "_remove(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "_replace(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32,bytes32)": "infinite",
+              "_shift(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer)": "infinite",
+              "_unshift(struct DoublyLinkedList.DoublyLinkedListInternal storage pointer,bytes32)": "infinite",
+              "contains(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "contains(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "contains(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite",
+              "insertAfter(struct DoublyLinkedList.AddressList storage pointer,address,address)": "infinite",
+              "insertAfter(struct DoublyLinkedList.Bytes32List storage pointer,bytes32,bytes32)": "infinite",
+              "insertAfter(struct DoublyLinkedList.Uint256List storage pointer,uint256,uint256)": "infinite",
+              "insertBefore(struct DoublyLinkedList.AddressList storage pointer,address,address)": "infinite",
+              "insertBefore(struct DoublyLinkedList.Bytes32List storage pointer,bytes32,bytes32)": "infinite",
+              "insertBefore(struct DoublyLinkedList.Uint256List storage pointer,uint256,uint256)": "infinite",
+              "next(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "next(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "next(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite",
+              "pop(struct DoublyLinkedList.AddressList storage pointer)": "infinite",
+              "pop(struct DoublyLinkedList.Bytes32List storage pointer)": "infinite",
+              "pop(struct DoublyLinkedList.Uint256List storage pointer)": "infinite",
+              "prev(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "prev(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "prev(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite",
+              "push(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "push(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "push(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite",
+              "remove(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "remove(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "remove(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite",
+              "replace(struct DoublyLinkedList.AddressList storage pointer,address,address)": "infinite",
+              "replace(struct DoublyLinkedList.Bytes32List storage pointer,bytes32,bytes32)": "infinite",
+              "replace(struct DoublyLinkedList.Uint256List storage pointer,uint256,uint256)": "infinite",
+              "shift(struct DoublyLinkedList.AddressList storage pointer)": "infinite",
+              "shift(struct DoublyLinkedList.Bytes32List storage pointer)": "infinite",
+              "shift(struct DoublyLinkedList.Uint256List storage pointer)": "infinite",
+              "unshift(struct DoublyLinkedList.AddressList storage pointer,address)": "infinite",
+              "unshift(struct DoublyLinkedList.Bytes32List storage pointer,bytes32)": "infinite",
+              "unshift(struct DoublyLinkedList.Uint256List storage pointer,uint256)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

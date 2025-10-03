@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "contracts/token/ERC721/base/ERC721BaseStorage.sol": {
+      "ERC721BaseStorage": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220d7698548c16f8285a61eec4b2a0a8373dda3214d3f9ce0901eb59cfe7436a61a64736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220d7698548c16f8285a61eec4b2a0a8373dda3214d3f9ce0901eb59cfe7436a61a64736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "layout()": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

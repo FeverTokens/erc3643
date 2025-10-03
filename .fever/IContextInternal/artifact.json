@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/metatx/IContextInternal.sol": {
+      "IContextInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

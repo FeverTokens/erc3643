@@ -1,0 +1,285 @@
+{
+  "contracts": {
+    "contracts/erc3643/claim/ClaimTopicsRegistry.sol": {
+      "ClaimTopicsRegistry": {
+        "abi": [
+          {
+            "inputs": [
+              {
+                "internalType": "uint256",
+                "name": "claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "ClaimTopicAlreadyExists",
+            "type": "error"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "uint256",
+                "name": "claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "ClaimTopicNotFound",
+            "type": "error"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "uint256",
+                "name": "claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "InvalidClaimTopic",
+            "type": "error"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              }
+            ],
+            "name": "NotAnAgent",
+            "type": "error"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              }
+            ],
+            "name": "NotAnOwner",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "Ownable__NotOwner",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "Ownable__NotTransitiveOwner",
+            "type": "error"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "AgentAdded",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "AgentRemoved",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "ClaimTopicAdded",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "ClaimTopicRemoved",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+              }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "previousAdminRole",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "newAdminRole",
+                "type": "bytes32"
+              }
+            ],
+            "name": "RoleAdminChanged",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              }
+            ],
+            "name": "RoleGranted",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              }
+            ],
+            "name": "RoleRevoked",
+            "type": "event"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "uint256",
+                "name": "_claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "addClaimTopic",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "getClaimTopics",
+            "outputs": [
+              {
+                "internalType": "uint256[]",
+                "name": "",
+                "type": "uint256[]"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "uint256",
+                "name": "_claimTopic",
+                "type": "uint256"
+              }
+            ],
+            "name": "removeClaimTopic",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "608080604052346015576106b7908161001a8239f35b5f80fdfe60806040526004361015610011575f80fd5b5f3560e01c806308297846146102e0578063c7b22551146100fb5763df09d6041461003a575f80fd5b346100f7575f7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75761007061061f565b604051806020835491828152019081935f5260205f20905f5b8181106100e1575050508161009f9103826105de565b604051918291602083019060208452518091526040830191905f5b8181106100c8575050500390f35b82518452859450602093840193909201916001016100ba565b8254845260209093019260019283019201610089565b5f80fd5b346100f75760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75760043561016f73ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610537565b61017761061f565b81156102b4576001810190825f528160205260ff60405f205416610288578054835f52600282016020528060405f20556801000000000000000081101561025b576101cc81610202936001879401815561059c565b9091907fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff83549160031b92831b921b1916179055565b815f5260205260405f2060017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff008254161790557f01c928b7f7ade2949e92366aa9454dbef3a416b731cf6ec786ba9595bbd814d65f80a2005b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b827fcbcaecf8000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b507f79ce5af9000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b346100f75760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75760043561035473ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610537565b61035c61061f565b6001810190825f528160205260ff60405f2054161561050b576002810190835f528160205260405f205481547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81019081116104de578082036104ad575b505080548015610480577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01906103f1828261059c565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82549160031b1b1916905555825f526020525f6040812055815f5260205260405f207fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0081541690557f0b1381093c776453c1bbe54fd68be1b235c65db61d099cb50d194b2991e0eec55f80a2005b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603160045260245ffd5b6104b7908361059c565b90549060031b1c6104cc816101cc848661059c565b5f528260205260405f205584806103ba565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b827f3ef1af64000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b1561053e57565b60646040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f4552433137333a2073656e646572206d757374206265206f776e6572000000006044820152fd5b80548210156105b1575f5260205f2001905f90565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603260045260245ffd5b90601f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0910116810190811067ffffffffffffffff82111761025b57604052565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0060405160208101907fcdedc2cea386c55ea278172f178ca9cd54e25955ab62556ef86a16209b17bb6d82526020815261067a6040826105de565b519020169056fea2646970667358221220834054076f50d59a276876439db6c277131c631b3ea3054c2ac94fdbc120974764736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "60806040526004361015610011575f80fd5b5f3560e01c806308297846146102e0578063c7b22551146100fb5763df09d6041461003a575f80fd5b346100f7575f7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75761007061061f565b604051806020835491828152019081935f5260205f20905f5b8181106100e1575050508161009f9103826105de565b604051918291602083019060208452518091526040830191905f5b8181106100c8575050500390f35b82518452859450602093840193909201916001016100ba565b8254845260209093019260019283019201610089565b5f80fd5b346100f75760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75760043561016f73ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610537565b61017761061f565b81156102b4576001810190825f528160205260ff60405f205416610288578054835f52600282016020528060405f20556801000000000000000081101561025b576101cc81610202936001879401815561059c565b9091907fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff83549160031b92831b921b1916179055565b815f5260205260405f2060017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff008254161790557f01c928b7f7ade2949e92366aa9454dbef3a416b731cf6ec786ba9595bbd814d65f80a2005b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b827fcbcaecf8000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b507f79ce5af9000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b346100f75760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126100f75760043561035473ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610537565b61035c61061f565b6001810190825f528160205260ff60405f2054161561050b576002810190835f528160205260405f205481547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff81019081116104de578082036104ad575b505080548015610480577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01906103f1828261059c565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82549160031b1b1916905555825f526020525f6040812055815f5260205260405f207fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0081541690557f0b1381093c776453c1bbe54fd68be1b235c65db61d099cb50d194b2991e0eec55f80a2005b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603160045260245ffd5b6104b7908361059c565b90549060031b1c6104cc816101cc848661059c565b5f528260205260405f205584806103ba565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b827f3ef1af64000000000000000000000000000000000000000000000000000000005f5260045260245ffd5b1561053e57565b60646040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f4552433137333a2073656e646572206d757374206265206f776e6572000000006044820152fd5b80548210156105b1575f5260205f2001905f90565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603260045260245ffd5b90601f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0910116810190811067ffffffffffffffff82111761025b57604052565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0060405160208101907fcdedc2cea386c55ea278172f178ca9cd54e25955ab62556ef86a16209b17bb6d82526020815261067a6040826105de565b519020169056fea2646970667358221220834054076f50d59a276876439db6c277131c631b3ea3054c2ac94fdbc120974764736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "343800",
+              "executionCost": "387",
+              "totalCost": "344187"
+            },
+            "external": {
+              "addClaimTopic(uint256)": "103032",
+              "getClaimTopics()": "infinite",
+              "removeClaimTopic(uint256)": "73068"
+            }
+          },
+          "methodIdentifiers": {
+            "addClaimTopic(uint256)": "c7b22551",
+            "getClaimTopics()": "df09d604",
+            "removeClaimTopic(uint256)": "08297846"
+          }
+        }
+      }
+    }
+  }
+}

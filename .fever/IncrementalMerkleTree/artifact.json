@@ -1,0 +1,35 @@
+{
+  "contracts": {
+    "contracts/data/IncrementalMerkleTree.sol": {
+      "IncrementalMerkleTree": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220d5d0bd3591fb1002677ec8c11dda8d8359039054bc0888226953bca7edb6cbda64736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220d5d0bd3591fb1002677ec8c11dda8d8359039054bc0888226953bca7edb6cbda64736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "_set(bytes32[] storage ref[] storage pointer,uint256,uint256,uint256,bytes32)": "infinite",
+              "at(struct IncrementalMerkleTree.Tree storage pointer,uint256)": "infinite",
+              "height(struct IncrementalMerkleTree.Tree storage pointer)": "infinite",
+              "pop(struct IncrementalMerkleTree.Tree storage pointer)": "infinite",
+              "push(struct IncrementalMerkleTree.Tree storage pointer,bytes32)": "infinite",
+              "root(struct IncrementalMerkleTree.Tree storage pointer)": "infinite",
+              "set(struct IncrementalMerkleTree.Tree storage pointer,uint256,bytes32)": "infinite",
+              "size(struct IncrementalMerkleTree.Tree storage pointer)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}
