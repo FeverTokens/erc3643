@@ -1,6 +1,10 @@
 node_modules
 .env
 
+# Fever files
+/.fever/platform.json
+/.fever/workspace.json
+
 # Hardhat files
 /cache
 /artifacts
