@@ -1,0 +1,78 @@
+{
+  "contracts": {
+    "contracts/initializable/Initializable.sol": {
+      "InitializablePackage": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "InitializableFailedInitialization",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "InitializableInvalidInitialization",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "InitializableNotInitializing",
+            "type": "error"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "storageSlot",
+                "type": "bytes32"
+              }
+            ],
+            "name": "Initialized",
+            "type": "event"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "bytes32",
+                "name": "storageSlot_",
+                "type": "bytes32"
+              }
+            ],
+            "name": "getInitializing",
+            "outputs": [
+              {
+                "internalType": "enum InitializationStatus",
+                "name": "",
+                "type": "uint8"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460145760f890816100198239f35b5f80fdfe60808060405260043610156011575f80fd5b5f3560e01c63679f1605146023575f80fd5b3460be5760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc36011260be576004355f527f300dbacb4eae624d21bf53d429940a1e327d6e579697456710cdaa5c67d1f90060205260ff60405f2054169060038210156091576020918152f35b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602160045260245ffd5b5f80fdfea264697066735822122062c1d59ead4cc51fa05f5d219b83a245aa5f00b8a6d3d1584e573e513aa81bd964736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "60808060405260043610156011575f80fd5b5f3560e01c63679f1605146023575f80fd5b3460be5760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc36011260be576004355f527f300dbacb4eae624d21bf53d429940a1e327d6e579697456710cdaa5c67d1f90060205260ff60405f2054169060038210156091576020918152f35b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602160045260245ffd5b5f80fdfea264697066735822122062c1d59ead4cc51fa05f5d219b83a245aa5f00b8a6d3d1584e573e513aa81bd964736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "49600",
+              "executionCost": "105",
+              "totalCost": "49705"
+            },
+            "external": {
+              "getInitializing(bytes32)": "2343"
+            }
+          },
+          "methodIdentifiers": {
+            "getInitializing(bytes32)": "679f1605"
+          }
+        }
+      }
+    }
+  }
+}

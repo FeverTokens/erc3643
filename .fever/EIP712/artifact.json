@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "contracts/cryptography/EIP712.sol": {
+      "EIP712": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea264697066735822122032419cffd0d90b30022b8825de782cc03562751d4b9cd130ec103ea58350279464736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea264697066735822122032419cffd0d90b30022b8825de782cc03562751d4b9cd130ec103ea58350279464736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "calculateDomainSeparator(bytes32,bytes32)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

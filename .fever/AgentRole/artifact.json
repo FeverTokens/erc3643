@@ -1,0 +1,232 @@
+{
+  "contracts": {
+    "contracts/erc3643/agent/AgentRole.sol": {
+      "AgentRole": {
+        "abi": [
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              }
+            ],
+            "name": "NotAnAgent",
+            "type": "error"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              }
+            ],
+            "name": "NotAnOwner",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "Ownable__NotOwner",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "Ownable__NotTransitiveOwner",
+            "type": "error"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "AgentAdded",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "AgentRemoved",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+              }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "previousAdminRole",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "newAdminRole",
+                "type": "bytes32"
+              }
+            ],
+            "name": "RoleAdminChanged",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              }
+            ],
+            "name": "RoleGranted",
+            "type": "event"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "role",
+                "type": "bytes32"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+              },
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              }
+            ],
+            "name": "RoleRevoked",
+            "type": "event"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "addAgent",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "isAgent",
+            "outputs": [
+              {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "_agent",
+                "type": "address"
+              }
+            ],
+            "name": "removeAgent",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "608080604052346015576106e4908161001a8239f35b5f80fdfe60806040526004361015610011575f80fd5b5f3560e01c80631ffbb0641461050e57806384e7984214610314576397a6278e1461003a575f80fd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff8116809103610310576100cc73ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610595565b6100d46105fa565b5f8281526020918252604080822080547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff001690557ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fc928390529020547ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fb90806101c6575b8333817fcab5a0bfe0b79d2c4b1c2e02599fa044d115b7511f9659307cb42769509677097ff6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b5f80a47fed9c8ad8d5a0a66898ea49d2956929c93ae2e8bd50281b2ed897c5d1a6737e0b5f80a2005b6101f37fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8354018361066c565b90549060031b1c8061025f61022a7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff85018661066c565b81939154907fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9060031b92831b921b19161790565b90555f528260205260405f2055805480156102e3577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01906102a1828261066c565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82549160031b1b1916905555815f526020525f604081205560015f80610158565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603160045260245ffd5b5f80fd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff8116809103610310576103a673ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610595565b6103ae6105fa565b5f8281526020918252604080822080547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff001660011790557ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fc928390529020547ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fb90156104a3575b8233817fcab5a0bfe0b79d2c4b1c2e02599fa044d115b7511f9659307cb42769509677097f2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d5f80a47ff68e73cec97f2d70aa641fb26e87a4383686e2efacb648f2165aeb02ac562ec55f80a2005b8054680100000000000000008110156104e1576104ca61022a82600187940185558461066c565b90555490825f5260205260405f2055600182610435565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff811681036103105773ffffffffffffffffffffffffffffffffffffffff61057a6105fa565b91165f52602052602060ff60405f2054166040519015158152f35b1561059c57565b60646040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f4552433137333a2073656e646572206d757374206265206f776e6572000000006044820152fd5b604051602081017f0a5718ba4a9c7d49af7d8560fe1376aa11e103e4fc96efed849e2ddafc197374815260208252604082019180831067ffffffffffffffff8411176104e1577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00926040525190201690565b8054821015610681575f5260205f2001905f90565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603260045260245ffdfea2646970667358221220058e521511339354c3c1b25aa24fe14d273f48589fa09fdd1e7a7429e6786ce564736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "60806040526004361015610011575f80fd5b5f3560e01c80631ffbb0641461050e57806384e7984214610314576397a6278e1461003a575f80fd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff8116809103610310576100cc73ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610595565b6100d46105fa565b5f8281526020918252604080822080547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff001690557ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fc928390529020547ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fb90806101c6575b8333817fcab5a0bfe0b79d2c4b1c2e02599fa044d115b7511f9659307cb42769509677097ff6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b5f80a47fed9c8ad8d5a0a66898ea49d2956929c93ae2e8bd50281b2ed897c5d1a6737e0b5f80a2005b6101f37fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8354018361066c565b90549060031b1c8061025f61022a7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff85018661066c565b81939154907fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9060031b92831b921b19161790565b90555f528260205260405f2055805480156102e3577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff01906102a1828261066c565b7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82549160031b1b1916905555815f526020525f604081205560015f80610158565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603160045260245ffd5b5f80fd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff8116809103610310576103a673ffffffffffffffffffffffffffffffffffffffff7f56c55e4db2eee5c0ab5c61dd8eef753314135e0494b9730986c41f9a0703700054163314610595565b6103ae6105fa565b5f8281526020918252604080822080547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff001660011790557ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fc928390529020547ff863931ed9f3027fda9bf3370c9c1c3993f97021a82a0b86d07c896c898613fb90156104a3575b8233817fcab5a0bfe0b79d2c4b1c2e02599fa044d115b7511f9659307cb42769509677097f2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d5f80a47ff68e73cec97f2d70aa641fb26e87a4383686e2efacb648f2165aeb02ac562ec55f80a2005b8054680100000000000000008110156104e1576104ca61022a82600187940185558461066c565b90555490825f5260205260405f2055600182610435565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b346103105760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc3601126103105760043573ffffffffffffffffffffffffffffffffffffffff811681036103105773ffffffffffffffffffffffffffffffffffffffff61057a6105fa565b91165f52602052602060ff60405f2054166040519015158152f35b1561059c57565b60646040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f4552433137333a2073656e646572206d757374206265206f776e6572000000006044820152fd5b604051602081017f0a5718ba4a9c7d49af7d8560fe1376aa11e103e4fc96efed849e2ddafc197374815260208252604082019180831067ffffffffffffffff8411176104e1577fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00926040525190201690565b8054821015610681575f5260205f2001905f90565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603260045260245ffdfea2646970667358221220058e521511339354c3c1b25aa24fe14d273f48589fa09fdd1e7a7429e6786ce564736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "352800",
+              "executionCost": "400",
+              "totalCost": "353200"
+            },
+            "external": {
+              "addAgent(address)": "107009",
+              "isAgent(address)": "2525",
+              "removeAgent(address)": "infinite"
+            }
+          },
+          "methodIdentifiers": {
+            "addAgent(address)": "84e79842",
+            "isAgent(address)": "1ffbb064",
+            "removeAgent(address)": "97a6278e"
+          }
+        }
+      }
+    }
+  }
+}

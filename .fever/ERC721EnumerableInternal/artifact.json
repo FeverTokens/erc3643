@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/token/ERC721/extensions/ERC721EnumerableInternal.sol": {
+      "ERC721EnumerableInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

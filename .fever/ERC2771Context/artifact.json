@@ -1,0 +1,65 @@
+{
+  "contracts": {
+    "contracts/metatx/ERC2771Context.sol": {
+      "ERC2771Context": {
+        "abi": [
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "forwarder",
+                "type": "address"
+              }
+            ],
+            "name": "isTrustedForwarder",
+            "outputs": [
+              {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "trustedForwarder",
+            "outputs": [
+              {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "60808060405234601557610125908161001a8239f35b5f80fdfe60808060405260043610156011575f80fd5b5f3560e01c908163572b6c051460815750637da0a87714602f575f80fd5b34607d575f7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc360112607d57602073ffffffffffffffffffffffffffffffffffffffff5f5416604051908152f35b5f80fd5b34607d5760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc360112607d576004359073ffffffffffffffffffffffffffffffffffffffff8216809203607d5760209173ffffffffffffffffffffffffffffffffffffffff5f5416148152f3fea2646970667358221220514551a3bd3cb81d06786960d0cf9343a66acb8dc3544bbffdaaf6d66655f46464736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "60808060405260043610156011575f80fd5b5f3560e01c908163572b6c051460815750637da0a87714602f575f80fd5b34607d575f7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc360112607d57602073ffffffffffffffffffffffffffffffffffffffff5f5416604051908152f35b5f80fd5b34607d5760207ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc360112607d576004359073ffffffffffffffffffffffffffffffffffffffff8216809203607d5760209173ffffffffffffffffffffffffffffffffffffffff5f5416148152f3fea2646970667358221220514551a3bd3cb81d06786960d0cf9343a66acb8dc3544bbffdaaf6d66655f46464736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "58600",
+              "executionCost": "117",
+              "totalCost": "58717"
+            },
+            "external": {
+              "isTrustedForwarder(address)": "2294",
+              "trustedForwarder()": "2277"
+            }
+          },
+          "methodIdentifiers": {
+            "isTrustedForwarder(address)": "572b6c05",
+            "trustedForwarder()": "7da0a877"
+          }
+        }
+      }
+    }
+  }
+}

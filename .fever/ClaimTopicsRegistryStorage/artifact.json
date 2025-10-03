@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "contracts/erc3643/claim/ClaimTopicsRegistryStorage.sol": {
+      "ClaimTopicsRegistryStorage": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220f8ef41436387b2a3fe6dfbd15d2942648563c574ff526c5283ec550263db518e64736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220f8ef41436387b2a3fe6dfbd15d2942648563c574ff526c5283ec550263db518e64736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "layout()": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

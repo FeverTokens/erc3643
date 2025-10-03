@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/metatx/ERC2771ContextInternal.sol": {
+      "ERC2771ContextInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

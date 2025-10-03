@@ -1,0 +1,69 @@
+{
+  "contracts": {
+    "contracts/initializable/IInitializable.sol": {
+      "IInitializable": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "InitializableFailedInitialization",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "InitializableInvalidInitialization",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "InitializableNotInitializing",
+            "type": "error"
+          },
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "storageSlot",
+                "type": "bytes32"
+              }
+            ],
+            "name": "Initialized",
+            "type": "event"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "bytes32",
+                "name": "storageSlot_",
+                "type": "bytes32"
+              }
+            ],
+            "name": "getInitializing",
+            "outputs": [
+              {
+                "internalType": "enum InitializationStatus",
+                "name": "",
+                "type": "uint8"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {
+            "getInitializing(bytes32)": "679f1605"
+          }
+        }
+      }
+    }
+  }
+}

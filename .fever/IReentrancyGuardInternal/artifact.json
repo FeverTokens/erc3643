@@ -1,0 +1,25 @@
+{
+  "contracts": {
+    "contracts/security/IReentrancyGuardInternal.sol": {
+      "IReentrancyGuardInternal": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "ReentrancyGuard__ReentrantCall",
+            "type": "error"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

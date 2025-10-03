@@ -1,0 +1,52 @@
+{
+  "contracts": {
+    "contracts/utils/SafeCast.sol": {
+      "SafeCast": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "SafeCast__NegativeValue",
+            "type": "error"
+          },
+          {
+            "inputs": [],
+            "name": "SafeCast__ValueDoesNotFit",
+            "type": "error"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220e4ec4f0a268c758fbc1891696e0d5d7f068e3119c5828e7d360f47e6572c7f8264736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220e4ec4f0a268c758fbc1891696e0d5d7f068e3119c5828e7d360f47e6572c7f8264736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "toInt128(int256)": "infinite",
+              "toInt16(int256)": "infinite",
+              "toInt256(uint256)": "infinite",
+              "toInt32(int256)": "infinite",
+              "toInt64(int256)": "infinite",
+              "toInt8(int256)": "infinite",
+              "toUint128(uint256)": "infinite",
+              "toUint16(uint256)": "infinite",
+              "toUint224(uint256)": "infinite",
+              "toUint256(int256)": "infinite",
+              "toUint32(uint256)": "infinite",
+              "toUint64(uint256)": "infinite",
+              "toUint8(uint256)": "infinite",
+              "toUint96(uint256)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

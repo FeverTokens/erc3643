@@ -1,0 +1,38 @@
+{
+  "contracts": {
+    "contracts/utils/UintUtils.sol": {
+      "UintUtils": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "UintUtils__InsufficientHexLength",
+            "type": "error"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea2646970667358221220863d5564de421265a4cb529a114c59368eedf91ea75a4b2ff343f6a82fa3840664736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea2646970667358221220863d5564de421265a4cb529a114c59368eedf91ea75a4b2ff343f6a82fa3840664736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "add(uint256,int256)": "infinite",
+              "sub(uint256,int256)": "infinite",
+              "toHexString(uint256)": "infinite",
+              "toHexString(uint256,uint256)": "infinite",
+              "toString(uint256)": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

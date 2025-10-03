@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/metatx/IERC2771ContextInternal.sol": {
+      "IERC2771ContextInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

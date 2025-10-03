@@ -1,0 +1,29 @@
+{
+  "contracts": {
+    "contracts/proxy/Proxy.sol": {
+      "Proxy": {
+        "abi": [
+          {
+            "inputs": [],
+            "name": "Proxy__ImplementationIsNotContract",
+            "type": "error"
+          },
+          {
+            "stateMutability": "payable",
+            "type": "fallback"
+          }
+        ],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

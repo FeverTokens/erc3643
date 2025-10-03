@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/token/ERC20/extensions/IERC20MetadataInternal.sol": {
+      "IERC20MetadataInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "contracts": {
+    "contracts/security/PausableStorage.sol": {
+      "PausableStorage": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": "6080806040523460175760399081601c823930815050f35b5f80fdfe5f80fdfea26469706673582212208e3571faba44402c0e6abbb6e505b095b488e7c00e74b247f60d5b14da28b56964736f6c634300081a0033"
+          },
+          "deployedBytecode": {
+            "object": "5f80fdfea26469706673582212208e3571faba44402c0e6abbb6e505b095b488e7c00e74b247f60d5b14da28b56964736f6c634300081a0033"
+          },
+          "gasEstimates": {
+            "creation": {
+              "codeDepositCost": "11400",
+              "executionCost": "infinite",
+              "totalCost": "infinite"
+            },
+            "internal": {
+              "layout()": "infinite"
+            }
+          },
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}

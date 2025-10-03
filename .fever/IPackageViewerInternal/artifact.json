@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "contracts/diamond/view/IPackageViewerInternal.sol": {
+      "IPackageViewerInternal": {
+        "abi": [],
+        "evm": {
+          "bytecode": {
+            "object": ""
+          },
+          "deployedBytecode": {
+            "object": ""
+          },
+          "gasEstimates": null,
+          "methodIdentifiers": {}
+        }
+      }
+    }
+  }
+}
