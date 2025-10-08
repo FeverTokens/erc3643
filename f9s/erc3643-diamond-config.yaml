@@ -11,13 +11,31 @@ spec:
       type: privateKey
       value: "${PRIVATE_KEY}"
 
+  dependencies:
+    packageController:
+      name: PackageController
+    packageViewer:
+      name: PackageViewer
+    initializablePackage:
+      name: InitializablePackage
+    agentRole:
+      name: AgentRole
+    identityRegistry:
+      name: IdentityRegistry
+    compliance:
+      name: Compliance
+    token:
+      name: Token
+    bondManagement:
+      name: BondManagement
+
   diamond:
     name: ERC3643Diamond
     constructorArguments:
-      - "0x28F45B9d6b14bC71702e9B268f841B53114BBfA3" # PackageController
-      - "0xB0c3D7c364aB389A507040fa81d4C09026262916" # PackageViewer
-      - "0xcB44cdc9777bfFd205f10E364EB823379eC5acE4" # InitializablePackage
-      - "0xBF368Aa13B1c7be776577F85729ab5DBbd368664" # AgentRole
+      - $dependencies.packageController.address
+      - $dependencies.packageViewer.address
+      - $dependencies.initializablePackage.address
+      - $dependencies.agentRole.address
       - "${ADMIN_ADDRESS}" # Admin address
 
   packages:
@@ -47,7 +65,7 @@ spec:
         - "0x97a012f7"
         - "0x3b239a7f"
         - "0x8e098ca1"
-      address: "0x10673825B3BF5197a687F4c476c2115ED7e4A7Eb"
+      address: $dependencies.identityRegistry.address
     - name: Compliance
       functions:
         - "0x3ff5aa02"
@@ -58,7 +76,7 @@ spec:
         - "0x993e8b95"
         - "0x8baf29b4"
         - "0x40db3b50"
-      address: "0xDA087f3E9981fe9e957b83EA755416cDE89737e6"
+      address: $dependencies.compliance.address
     - name: Token
       functions:
         - "0xdd62ed3e"
@@ -98,7 +116,7 @@ spec:
         - "0x1fe56f7d"
         - "0x3f4ba83a"
         - "0x54fd4d50"
-      address: "0xc7251Cd74fCea32cf5c18eE4bfCaf2f2CCf3032C"
+      address: $dependencies.token.address
     - name: BondManagement
       functions:
         - "0x3fb3ff11" # calculateAccruedInterest()
@@ -113,7 +131,7 @@ spec:
         - "0xda781cc5" # redeemAtMaturity()
         - "0xd37633db" # redeemBond(address)
         - "0xc1fdfd2f" # setTermSheet(uint256,uint256,uint256,uint256,uint256)
-      address: "0x4E9292446992bbb4FfE0db206895A83e64D90Fd0" # BondManagement contract address
+      address: $dependencies.bondManagement.address
 
   network:
     chainId: "${CHAIN_ID}" # Blockchain chain ID
