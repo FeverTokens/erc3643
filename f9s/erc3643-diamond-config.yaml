@@ -26,8 +26,6 @@ spec:
       name: Compliance
     token:
       name: Token
-    bondManagement:
-      name: BondManagement
 
   diamond:
     name: ERC3643Diamond
@@ -117,21 +115,6 @@ spec:
         - "0x3f4ba83a"
         - "0x54fd4d50"
       address: $dependencies.token.address
-    - name: BondManagement
-      functions:
-        - "0x3fb3ff11" # calculateAccruedInterest()
-        - "0x96d6b995" # calculateInvestorAccruedInterest(address)
-        - "0x7193ed8f" # calculateOutstandingAmount()
-        - "0x20357825" # getTermSheet()
-        - "0xecaa0600" # initializeBondToken(string,string)
-        - "0x7f2b6a0d" # isMatured()
-        - "0x6b5a7fde" # issueBond(address,uint256)
-        - "0xa15a211c" # payInterest()
-        - "0x68f80376" # payInvestorInterest(address)
-        - "0xda781cc5" # redeemAtMaturity()
-        - "0xd37633db" # redeemBond(address)
-        - "0xc1fdfd2f" # setTermSheet(uint256,uint256,uint256,uint256,uint256)
-      address: $dependencies.bondManagement.address
 
   network:
     chainId: "${CHAIN_ID}" # Blockchain chain ID
