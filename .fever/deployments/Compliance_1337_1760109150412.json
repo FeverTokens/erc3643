@@ -1,0 +1,13 @@
+{
+  "contractName": "Compliance",
+  "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+  "deploymentTx": "0x592d96a88a2bf675f0363dff821866e8fc2f193c08935205b4db255226514182",
+  "network": {
+    "chainId": 1337,
+    "name": "Local Development Chain"
+  },
+  "blockExplorer": null,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "deployedAt": "2025-10-10T15:12:30.412Z",
+  "constructorArgs": []
+}

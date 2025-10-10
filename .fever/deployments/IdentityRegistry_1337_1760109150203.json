@@ -1,0 +1,13 @@
+{
+  "contractName": "IdentityRegistry",
+  "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+  "deploymentTx": "0x1cd61ed5b70eb1de7fa16e3d6ad51e6f1d673927d47d73b6e56238c682e2758f",
+  "network": {
+    "chainId": 1337,
+    "name": "Local Development Chain"
+  },
+  "blockExplorer": null,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "deployedAt": "2025-10-10T15:12:30.203Z",
+  "constructorArgs": []
+}

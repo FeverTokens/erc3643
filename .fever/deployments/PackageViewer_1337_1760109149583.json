@@ -1,0 +1,13 @@
+{
+  "contractName": "PackageViewer",
+  "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  "deploymentTx": "0xd23b1d1c4c4c9111d8b0729b135878224d0feb6feea82409e7e48a961bfde768",
+  "network": {
+    "chainId": 1337,
+    "name": "Local Development Chain"
+  },
+  "blockExplorer": null,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "deployedAt": "2025-10-10T15:12:29.583Z",
+  "constructorArgs": []
+}
