@@ -295,15 +295,15 @@ describe("ERC3643 Diamond", function () {
 
   describe("Agent privileges", function () {
     it("allows agents to transfer without allowance", async function () {
-      const { token, admin, user1, user2 } = fixture;
+      const { token, identityRegistry, admin, user1, user2 } = fixture;
 
       const user1Address = await user1.getAddress();
       const user2Address = await user2.getAddress();
 
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user1Address, user1Address, 1n);
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user2Address, user2Address, 1n);
 
@@ -322,12 +322,12 @@ describe("ERC3643 Diamond", function () {
     });
 
     it("blocks non-agents without allowance", async function () {
-      const { token, admin, user1, user2 } = fixture;
+      const { token, identityRegistry, admin, user1, user2 } = fixture;
 
       const user1Address = await user1.getAddress();
       const user2Address = await user2.getAddress();
 
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user1Address, user1Address, 1n);
       await token.connect(admin).mint(user1Address, parseEther("10"));
@@ -340,15 +340,15 @@ describe("ERC3643 Diamond", function () {
     });
 
     it("allows forced transfers for agents", async function () {
-      const { token, admin, user1, user2 } = fixture;
+      const { token, identityRegistry, admin, user1, user2 } = fixture;
 
       const user1Address = await user1.getAddress();
       const user2Address = await user2.getAddress();
 
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user1Address, user1Address, 1n);
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user2Address, user2Address, 1n);
 
@@ -367,12 +367,12 @@ describe("ERC3643 Diamond", function () {
     });
 
     it("prevents forced transfers for non-agents", async function () {
-      const { token, admin, user1, user2 } = fixture;
+      const { token, identityRegistry, admin, user1, user2 } = fixture;
 
       const user1Address = await user1.getAddress();
       const user2Address = await user2.getAddress();
 
-      await token
+      await identityRegistry
         .connect(admin)
         .registerIdentity(user1Address, user1Address, 1n);
       await token.connect(admin).mint(user1Address, parseEther("10"));

@@ -3,6 +3,10 @@ pragma solidity ^0.8.26;
 
 import "./IIdentityRegistryInternal.sol";
 import "./IdentityRegistryStorage.sol";
+import "../IIdentity.sol";
+import "../IIdentityRegistryStorage.sol";
+import "../claim/IClaimTopicsRegistry.sol";
+import "../issuer/ITrustedIssuersRegistry.sol";
 import "../agent/AgentRoleInternal.sol";
 
 abstract contract IdentityRegistryInternal is
@@ -31,7 +35,7 @@ abstract contract IdentityRegistryInternal is
 
     function _registerIdentity(
         address _userAddress,
-        address _identityAddr,
+        IIdentity _identityContract,
         uint16 _country
     ) internal onlyAgent {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
@@ -40,18 +44,19 @@ abstract contract IdentityRegistryInternal is
         if (l.identityExists[_userAddress]) {
             revert IdentityAlreadyRegistered(_userAddress);
         }
-        if (_identityAddr == address(0)) {
-            revert InvalidIdentityAddress(_identityAddr);
+        address identityAddr = address(_identityContract);
+        if (identityAddr == address(0)) {
+            revert InvalidIdentityAddress(identityAddr);
         }
 
         l.identities[_userAddress] = IdentityData({
-            identity: _identityAddr,
+            identity: identityAddr,
             country: _country
         });
         l.identityExists[_userAddress] = true;
 
-        emit IdentityRegistered(_userAddress, _identityAddr);
-        emit IdentityStored(_userAddress, _identityAddr);
+        emit IdentityRegistered(_userAddress, _identityContract);
+        emit IdentityStored(_userAddress, _identityContract);
     }
 
     function _deleteIdentity(address _userAddress) internal onlyAgent {
@@ -62,7 +67,7 @@ abstract contract IdentityRegistryInternal is
             revert IdentityNotRegistered(_userAddress);
         }
 
-        address oldIdentity = l.identities[_userAddress].identity;
+        IIdentity oldIdentity = IIdentity(l.identities[_userAddress].identity);
         delete l.identities[_userAddress];
         l.identityExists[_userAddress] = false;
 
@@ -89,7 +94,7 @@ abstract contract IdentityRegistryInternal is
 
     function _updateIdentity(
         address _userAddress,
-        address _identityAddr
+        IIdentity _identityContract
     ) internal onlyAgent {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
@@ -97,20 +102,21 @@ abstract contract IdentityRegistryInternal is
         if (!l.identityExists[_userAddress]) {
             revert IdentityNotRegistered(_userAddress);
         }
-        if (_identityAddr == address(0)) {
-            revert InvalidIdentityAddress(_identityAddr);
+        address identityAddr = address(_identityContract);
+        if (identityAddr == address(0)) {
+            revert InvalidIdentityAddress(identityAddr);
         }
 
-        address oldIdentity = l.identities[_userAddress].identity;
-        l.identities[_userAddress].identity = _identityAddr;
+        IIdentity oldIdentity = IIdentity(l.identities[_userAddress].identity);
+        l.identities[_userAddress].identity = identityAddr;
 
-        emit IdentityUpdated(oldIdentity, _identityAddr);
-        emit IdentityModified(oldIdentity, _identityAddr);
+        emit IdentityUpdated(oldIdentity, _identityContract);
+        emit IdentityModified(oldIdentity, _identityContract);
     }
 
     function _batchRegisterIdentity(
         address[] calldata _userAddresses,
-        address[] calldata _identities,
+        IIdentity[] calldata _identities,
         uint16[] calldata _countries
     ) internal onlyAgent {
         require(
@@ -134,10 +140,10 @@ abstract contract IdentityRegistryInternal is
         return _contains(_userAddress);
     }
 
-    function _identity(address _userAddress) internal view returns (address) {
+    function _identity(address _userAddress) internal view returns (IIdentity) {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
-        return l.identities[_userAddress].identity;
+        return IIdentity(l.identities[_userAddress].identity);
     }
 
     function _investorCountry(
@@ -148,23 +154,35 @@ abstract contract IdentityRegistryInternal is
         return l.identities[_userAddress].country;
     }
 
-    function _issuersRegistry() internal view returns (address) {
+    function _issuersRegistry()
+        internal
+        view
+        returns (ITrustedIssuersRegistry)
+    {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
-        return l.trustedIssuersRegistry;
+        return ITrustedIssuersRegistry(l.trustedIssuersRegistry);
     }
 
-    function _topicsRegistry() internal view returns (address) {
+    function _topicsRegistry()
+        internal
+        view
+        returns (IClaimTopicsRegistry)
+    {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
-        return l.claimTopicsRegistry;
+        return IClaimTopicsRegistry(l.claimTopicsRegistry);
     }
 
     // Storage functions
-    function _identityStorage() internal view returns (address) {
+    function _identityStorage()
+        internal
+        view
+        returns (IIdentityRegistryStorage)
+    {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
-        return l.identityStorage;
+        return IIdentityRegistryStorage(l.identityStorage);
     }
 
     function _setIdentityRegistryStorage(
@@ -178,10 +196,10 @@ abstract contract IdentityRegistryInternal is
 
     function _storedIdentity(
         address _userAddress
-    ) internal view returns (address) {
+    ) internal view returns (IIdentity) {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
-        return l.identities[_userAddress].identity;
+        return IIdentity(l.identities[_userAddress].identity);
     }
 
     function _storedInvestorCountry(
@@ -194,26 +212,26 @@ abstract contract IdentityRegistryInternal is
 
     function _addIdentityToStorage(
         address _userAddress,
-        address _identityAddr,
+        IIdentity _identityContract,
         uint16 _country
     ) internal {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
 
         l.identities[_userAddress] = IdentityData({
-            identity: _identityAddr,
+            identity: address(_identityContract),
             country: _country
         });
         l.identityExists[_userAddress] = true;
 
-        emit IdentityStored(_userAddress, _identityAddr);
+        emit IdentityStored(_userAddress, _identityContract);
     }
 
     function _removeIdentityFromStorage(address _userAddress) internal {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
 
-        address oldIdentity = l.identities[_userAddress].identity;
+        IIdentity oldIdentity = IIdentity(l.identities[_userAddress].identity);
         delete l.identities[_userAddress];
         l.identityExists[_userAddress] = false;
 
@@ -233,14 +251,14 @@ abstract contract IdentityRegistryInternal is
 
     function _modifyStoredIdentity(
         address _userAddress,
-        address _identityAddr
+        IIdentity _identityContract
     ) internal {
         IdentityRegistryStorage.Layout storage l = IdentityRegistryStorage
             .layout();
 
-        address oldIdentity = l.identities[_userAddress].identity;
-        l.identities[_userAddress].identity = _identityAddr;
-        emit IdentityModified(oldIdentity, _identityAddr);
+        IIdentity oldIdentity = IIdentity(l.identities[_userAddress].identity);
+        l.identities[_userAddress].identity = address(_identityContract);
+        emit IdentityModified(oldIdentity, _identityContract);
     }
 
     function _bindIdentityRegistry(

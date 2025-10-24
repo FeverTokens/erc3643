@@ -3,6 +3,8 @@ pragma solidity ^0.8.26;
 
 import "../token/ERC20/IERC20.sol";
 import "./IERC3643Internal.sol";
+import "./identity/IIdentityRegistry.sol";
+import "./compliance/ICompliance.sol";
 
 /**
  * @title ERC3643 Compliant Token Interface
@@ -25,15 +27,15 @@ interface IERC3643 is IERC3643Internal, IERC20 {
 
     /**
      * @notice Returns the address of the identity registry
-     * @return address The identity registry contract address
+     * @return IIdentityRegistry The identity registry contract address
      */
-    function identityRegistry() external view returns (address);
+    function identityRegistry() external view returns (IIdentityRegistry);
 
     /**
      * @notice Returns the address of the compliance contract
-     * @return address The compliance contract address
+     * @return ICompliance The compliance contract address
      */
-    function compliance() external view returns (address);
+    function compliance() external view returns (ICompliance);
 
     /**
      * @notice Returns whether the token contract is paused
