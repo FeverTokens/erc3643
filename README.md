@@ -95,7 +95,7 @@ This implementation provides all required ERC-3643 functionality:
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v20 or higher)
 - Hardhat development environment
 - Basic understanding of ERC-3643 standard and security tokens
 
@@ -114,10 +114,40 @@ cd erc3643
 npm ci
 ```
 
-3. Compile the smart contracts:
+3. Authenticate with your FeverTokens account:
 
 ```bash
-npm run compile
+fever login
+```
+
+4. Create the project in your FeverTokens account:
+
+```bash
+fever projects create --name ERC3643
+```
+
+5. Compile the smart contracts:
+
+```bash
+fever compile --all
+```
+
+6. Upload the artifacts:
+
+```bash
+fever artifacts sync
+```
+
+7. Define environment variables for blockchain configuration:
+
+```bash
+cp .env.anvil .env
+```
+
+8. Deploy the Diamond configuration:
+
+```bash
+fever compose -f f9s/erc3643-diamond-config.yaml
 ```
 
 ### Development Commands

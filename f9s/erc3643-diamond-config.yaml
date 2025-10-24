@@ -1,0 +1,121 @@
+apiVersion: beta/v1
+kind: Diamond
+
+metadata:
+  name: erc3643-diamond
+  version: 1.0.0
+
+spec:
+  deployer:
+    wallet:
+      type: privateKey
+      value: "${PRIVATE_KEY}"
+
+  dependencies:
+    packageController:
+      name: PackageController
+    packageViewer:
+      name: PackageViewer
+    initializablePackage:
+      name: InitializablePackage
+    agentRole:
+      name: AgentRole
+    identityRegistry:
+      name: IdentityRegistry
+    compliance:
+      name: Compliance
+    token:
+      name: Token
+
+  diamond:
+    name: ERC3643Diamond
+    constructorArguments:
+      - $dependencies.packageController.address
+      - $dependencies.packageViewer.address
+      - $dependencies.initializablePackage.address
+      - $dependencies.agentRole.address
+      - "${ADMIN_ADDRESS}" # Admin address
+
+  packages:
+    - name: IdentityRegistry
+      functions:
+        - "0xa53410dd"
+        - "0x653dc9f1"
+        - "0x690a49f9"
+        - "0x5dbe47e8"
+        - "0xa8d29d1d"
+        - "0xf0eb5e54"
+        - "0xf11abfd8"
+        - "0x7e42683b"
+        - "0xb9209e33"
+        - "0xb4f3fcb7"
+        - "0xbf9eb959"
+        - "0xe805cf86"
+        - "0x9f3418d5"
+        - "0x454a03e0"
+        - "0xcf191bcd"
+        - "0x670af6a9"
+        - "0x26d941ae"
+        - "0xe744d789"
+        - "0x7988d3a5"
+        - "0x727e13bc"
+        - "0x3b3e12f4"
+        - "0x97a012f7"
+        - "0x3b239a7f"
+        - "0x8e098ca1"
+      address: $dependencies.identityRegistry.address
+    - name: Compliance
+      functions:
+        - "0x3ff5aa02"
+        - "0xe46638e6"
+        - "0x5f8dead3"
+        - "0x8d2ea772"
+        - "0x6a3edf28"
+        - "0x993e8b95"
+        - "0x8baf29b4"
+        - "0x40db3b50"
+      address: $dependencies.compliance.address
+    - name: Token
+      functions:
+        - "0xdd62ed3e"
+        - "0x095ea7b3"
+        - "0x70a08231"
+        - "0x4a6cc677"
+        - "0x42a47abc"
+        - "0xfc7e5fa8"
+        - "0x68573107"
+        - "0x1a7af379"
+        - "0x88d695b2"
+        - "0x4710362d"
+        - "0x9dc29fac"
+        - "0x6290865d"
+        - "0x313ce567"
+        - "0x9fc1d0e7"
+        - "0x125c4a33"
+        - "0x158b1a57"
+        - "0x134e18f4"
+        - "0xe5839836"
+        - "0x40c10f19"
+        - "0x06fdde03"
+        - "0xaba63705"
+        - "0x8456cb59"
+        - "0x5c975abb"
+        - "0x9285948a"
+        - "0xc69c09cf"
+        - "0xf8981789"
+        - "0xcbf3f861"
+        - "0xc47f0027"
+        - "0x3d1ddc5b"
+        - "0xb84c8246"
+        - "0x95d89b41"
+        - "0x18160ddd"
+        - "0xa9059cbb"
+        - "0x23b872dd"
+        - "0x1fe56f7d"
+        - "0x3f4ba83a"
+        - "0x54fd4d50"
+      address: $dependencies.token.address
+
+  network:
+    chainId: "${CHAIN_ID}" # Blockchain chain ID
+    rpcUrl: "${RPC_URL}" # Blockchain RPC

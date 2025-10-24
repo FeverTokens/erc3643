@@ -1,0 +1,20 @@
+apiVersion: beta/v1
+kind: Deployment
+
+metadata:
+  name: erc3643-trusted-issuers-registry-deployment
+  version: 1.0.0
+  description: "ERC3643 TrustedIssuersRegistry package deployment"
+
+spec:
+  package:
+    name: TrustedIssuersRegistry
+
+  deployer:
+    wallet:
+      type: "privateKey" # Options: privateKey, mnemonic, keystore
+      value: "${PRIVATE_KEY}" # Environment variable reference
+
+  network:
+    chainId: "${CHAIN_ID}" # Blockchain chain ID
+    rpcUrl: "${RPC_URL}" # Blockchain RPC
