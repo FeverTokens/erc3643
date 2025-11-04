@@ -1,8 +1,8 @@
 apiVersion: beta/v1
-kind: Diamond
+kind: PackageSystem
 
 metadata:
-  name: erc3643-diamond
+  name: erc3643-system
   version: 1.0.0
 
 spec:
@@ -27,7 +27,7 @@ spec:
     token:
       name: Token
 
-  diamond:
+  system:
     name: ERC3643PackageSystem
     constructorArguments:
       - $dependencies.packageController.address
@@ -115,7 +115,3 @@ spec:
         - "0x3f4ba83a"
         - "0x54fd4d50"
       address: $dependencies.token.address
-
-  network:
-    chainId: "${CHAIN_ID}" # Blockchain chain ID
-    rpcUrl: "${RPC_URL}" # Blockchain RPC
