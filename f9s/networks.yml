@@ -1,0 +1,11 @@
+apiVersion: beta/v1
+kind: Network
+defaultNetwork: 1337
+networks:
+  - chainId: 1337
+    name: Localhost
+    symbol: ETH
+    type: local
+    rpcUrl: http://localhost:8545
+    isCustom: false
+    addedAt: '2025-11-04T17:18:27.258Z'
