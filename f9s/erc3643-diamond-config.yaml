@@ -28,7 +28,7 @@ spec:
       name: Token
 
   diamond:
-    name: ERC3643Diamond
+    name: ERC3643PackageSystem
     constructorArguments:
       - $dependencies.packageController.address
       - $dependencies.packageViewer.address

@@ -12,7 +12,7 @@ import {Proxy} from "./diamond/proxy/Proxy.sol";
 /**
  * @title Diamond proxy reference implementation inspired from SolidState
  */
-contract ERC3643Diamond is
+contract ERC3643PackageSystem is
     IDiamondBase,
     DiamondBase,
     PackageControllerInternal
