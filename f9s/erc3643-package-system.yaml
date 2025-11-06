@@ -23,7 +23,7 @@ spec:
 
   system:
     name: ERC3643PackageSystem
-    constructorArguments:
+    constructorArgs:
       - $dependencies.packageController.address
       - $dependencies.packageViewer.address
       - $dependencies.initializablePackage.address
