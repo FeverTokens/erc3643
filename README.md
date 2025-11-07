@@ -144,10 +144,10 @@ fever artifacts sync
 cp .env.anvil .env
 ```
 
-8. Deploy the Diamond configuration:
+8. Deploy the PackageSystem configuration:
 
 ```bash
-fever compose -f f9s/erc3643-diamond-config.yaml
+fever apply -f f9s/erc3643-package-system.yaml
 ```
 
 ### Development Commands

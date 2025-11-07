@@ -1,8 +1,8 @@
 apiVersion: beta/v1
-kind: Diamond
+kind: PackageSystem
 
 metadata:
-  name: erc3643-diamond
+  name: erc3643-system
   version: 1.0.0
 
 spec:
@@ -20,16 +20,10 @@ spec:
       name: InitializablePackage
     agentRole:
       name: AgentRole
-    identityRegistry:
-      name: IdentityRegistry
-    compliance:
-      name: Compliance
-    token:
-      name: Token
 
-  diamond:
-    name: ERC3643Diamond
-    constructorArguments:
+  system:
+    name: ERC3643PackageSystem
+    constructorArgs:
       - $dependencies.packageController.address
       - $dependencies.packageViewer.address
       - $dependencies.initializablePackage.address
@@ -63,7 +57,6 @@ spec:
         - "0x97a012f7"
         - "0x3b239a7f"
         - "0x8e098ca1"
-      address: $dependencies.identityRegistry.address
     - name: Compliance
       functions:
         - "0x3ff5aa02"
@@ -74,7 +67,6 @@ spec:
         - "0x993e8b95"
         - "0x8baf29b4"
         - "0x40db3b50"
-      address: $dependencies.compliance.address
     - name: Token
       functions:
         - "0xdd62ed3e"
@@ -114,8 +106,3 @@ spec:
         - "0x1fe56f7d"
         - "0x3f4ba83a"
         - "0x54fd4d50"
-      address: $dependencies.token.address
-
-  network:
-    chainId: "${CHAIN_ID}" # Blockchain chain ID
-    rpcUrl: "${RPC_URL}" # Blockchain RPC

@@ -122,7 +122,7 @@ export async function deployErc3643DiamondFixture(): Promise<DiamondFixture> {
   );
   const agentRoleDeployment = await deployContract("AgentRole", admin);
 
-  const diamond = await deployContract("ERC3643Diamond", admin, [
+  const diamond = await deployContract("ERC3643PackageSystem", admin, [
     packageControllerDeployment.target,
     packageViewerDeployment.target,
     initializerDeployment.target,
