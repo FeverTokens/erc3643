@@ -111,7 +111,7 @@ cd erc3643
 2. Install dependencies:
 
 ```bash
-npm ci
+fever install
 ```
 
 3. Authenticate with your FeverTokens account:
